@@ -118,10 +118,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# Azureでadmin画面を表示するために必要。
-STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           os.pardir,
-                           'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # added
 # STATICFILES_DIRS = (
@@ -153,4 +150,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
+    # Azureでadmin画面を表示するために必要。
+    STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            os.pardir,
+                            'static')
