@@ -13,12 +13,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os, environ
 
-env = environ.Env()
-env.read_env('.env')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+# 本番環境では、.envファイルを絶対パスで指定する
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -27,12 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-
-
-
 
 # Application definition
 
@@ -76,17 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'A_plus_Tsukuba.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 # APIページにアクセスしたときに開発用ページを出さなくする
 REST_FRAMEWORK = {
@@ -153,7 +139,18 @@ try:
 except ImportError:
     pass
 
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 if not DEBUG:
     DATABASES = {
         'default': env.db(),
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
