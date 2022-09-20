@@ -1,4 +1,3 @@
-from concurrent.futures import thread
 from django.db import models
 from django.utils import timezone
 import uuid
@@ -60,3 +59,11 @@ class Reply(models.Model):
 
     def __str__(self):
         return str(self.reply_id)
+
+class Notice(models.Model):
+    message = models.TextField(verbose_name='お知らせ本文', blank=False, max_length=300)
+    is_show = models.BooleanField(verbose_name="公開する", default=False)
+    created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
+
+    def __str__(self):
+        return str(self.message)

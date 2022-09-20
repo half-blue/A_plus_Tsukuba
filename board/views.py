@@ -2,7 +2,7 @@ from concurrent.futures import thread
 from urllib import response
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Post, Reply, Subject, Thread
+from .models import Notice, Post, Reply, Subject, Thread
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.db.models import Count
@@ -81,5 +81,9 @@ class SearchView(ListView):
             )
 
         context["ranking"] = ranking
+
+        # Notice
+        notice = Notice.objects.filter(is_show=True).order_by('-created_at').values("message")
+        context["notice"] = notice
 
         return context

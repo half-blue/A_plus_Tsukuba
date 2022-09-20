@@ -149,10 +149,17 @@
                   </ol>
                   <br>
                   <h5 class="card-title">運営からのお知らせℹ️</h5>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      現在お知らせする情報はありません。
+                  <ul>
+                    {% if notice %}
+                    {% for info in notice %}
+                    <li>
+                      {{ info.message | safe }}
                     </li>
+                    {% endfor %}
+                    {% else %}
+                      現在お知らせする情報はありません。
+                    {% endif %}
+                  </ul>
                 </div>
               </div>
               <div class="card">
