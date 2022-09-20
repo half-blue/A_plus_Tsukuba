@@ -3,3 +3,4 @@ Django==3.2
 pytz==2022.1
 sqlparse==0.4.2
 djangorestframework==3.13.1
+django-environ==0.8.1
