@@ -83,7 +83,7 @@ class SearchView(ListView):
         context["ranking"] = ranking
 
         # Notice
-        notice = Notice.objects.filter(is_show=True).order_by('-created_at').values("message")
+        notice = Notice.objects.filter(is_show=True).order_by('created_at').values("message")
         context["notice"] = notice
 
         return context
