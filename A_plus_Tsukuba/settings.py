@@ -132,7 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 try:
     # 存在する場合、ローカルの設定読み込み
-    from .settings_local import *
+    from .local_settings import *
 except ImportError:
     pass
 
