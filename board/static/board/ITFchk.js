@@ -34,6 +34,8 @@ ITF_CHECK.quiz = function () {
 
 ITF_CHECK.check = function () {
     //すべてのページにおいて、ページ読み込み時にこの関数が実行されます。
+    if (ITF_CHECK.isGoogleBot()) return; //Googlebotは通過させる
+
     const ITFCookie = Cookies.get("ITF"); // return "true" or undifined
     if (!ITFCookie) {
         if (ITF_CHECK.quiz()) {
@@ -42,4 +44,9 @@ ITF_CHECK.check = function () {
             ITF_CHECK.move();
         }
     }
+}
+
+ITF_CHECK.isGoogleBot = function () {
+    const ua = navigator.userAgent;
+    return (ua.indexOf("Googlebot") !== -1);
 }
