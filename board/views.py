@@ -1,7 +1,5 @@
-from concurrent.futures import thread
-from urllib import response
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import Notice, Post, Reply, Subject, Thread
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
@@ -21,8 +19,12 @@ class ThreadView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         thread_id = self.kwargs['thread_id']
-        thread_title = Thread.objects.filter(id = thread_id).values()[0]["title"]
-        context['thread_title'] = thread_title
+        try:
+            thread = Thread.objects.get(id = thread_id)
+        except Thread.DoesNotExist:
+            raise Http404()
+
+        context['thread_title'] = thread.title
         context['thread_id'] = thread_id
 
         # 科目情報
