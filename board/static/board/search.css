@@ -2,6 +2,10 @@
     width: 20%;
 }
 
+.color-dark-blue {
+    color: #6290FF;
+}
+
 @media (max-width: 768px) {
     /* md 以下の画面 */
     .pc-only {
