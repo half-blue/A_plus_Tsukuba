@@ -24,8 +24,6 @@ class search_subjects(ListAPIView):
         q :str = self.request.query_params.get("q", "")
         return Subject.objects.filter(Q(name__icontains = q) | Q(code__startswith = q) | Q(schools__icontains = q) | Q(colleges__icontains = q)).order_by('code')[:500]
 
-
-
 class post_subthreads(ListCreateAPIView):
     serializer_class = PostPostSerializer
     queryset = Post.objects.all()
