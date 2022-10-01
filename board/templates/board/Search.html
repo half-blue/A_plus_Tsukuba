@@ -30,12 +30,37 @@
                   d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
               </svg>
             </span>
-            <input v-on:input="inputEvent" type="text" class="form-control" placeholder="科目名を入力してください。">
+            <input v-on:input="inputEvent" type="text" class="form-control" placeholder="科目名・科目番号・学類などを入力してください。">
           </div>
           <div v-if="!query" class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
             履修している講義スレッドに参加して、
             <br class="mobile-only">
-            協力してA+を目指そう！
+            協力してA+を目指そう！<br>
+            <span class="text-danger">＜新機能＞</span>学群雑談スレッドは
+            <a class="text-decoration-none" role="button" data-bs-toggle="collapse" data-bs-target="#collapseTalk"
+              aria-expanded="false" aria-controls="collapseExample">
+              こちら
+            </a>
+            <div class="container">
+              <div class="collapse" id="collapseTalk">
+                <div class="card card-body mb-3">
+                  <div class="row">
+                    <div class="col">
+                      <a href="/threads/6292/" class="text-decoration-none me-2 mb-2 color-dark-blue">人文・文化</a>
+                      <a href="/threads/6293/" class="text-decoration-none me-2 mb-2 color-dark-blue">社会・国際</a>
+                      <a href="/threads/6294/" class="text-decoration-none me-2 mb-2 color-dark-blue">人間</a>
+                      <a href="/threads/6295/" class="text-decoration-none me-2 mb-2 color-dark-blue">生命環境</a>
+                      <a href="/threads/6296/" class="text-decoration-none me-2 mb-2 color-dark-blue">理工</a>
+                      <a href="/threads/6297/" class="text-decoration-none me-2 mb-2 color-dark-blue">情報</a>
+                      <a href="/threads/6298/" class="text-decoration-none me-2 mb-2 color-dark-blue">医</a>
+                      <a href="/threads/6299/" class="text-decoration-none me-2 mb-2 color-dark-blue">体育専門</a>
+                      <a href="/threads/6300/" class="text-decoration-none me-2 mb-2 color-dark-blue">芸術専門</a>
+                      <a href="/threads/6301/" class="text-decoration-none me-2 mb-2 color-dark-blue">総合</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -82,7 +107,7 @@
 
       <!-- 情報カード（検索ボックスが空のときのみ表示） -->
       <div v-show="!query">
-        <div class="container" style="margin-top: 30px;">
+        <div class="container" style="margin-top: 15px;">
           <div class="row">
             <div class="card-group">
               <div class="card">
@@ -157,7 +182,7 @@
                     </li>
                     {% endfor %}
                     {% else %}
-                      現在お知らせする情報はありません。
+                    現在お知らせする情報はありません。
                     {% endif %}
                   </ul>
                 </div>
@@ -177,7 +202,8 @@
                         </svg>
                       </a>
                     </li>
-                    <li class="list-group-item"><a href="https://twins.tsukuba.ac.jp/campusweb/campusportal.do" target="_blank">
+                    <li class="list-group-item"><a href="https://twins.tsukuba.ac.jp/campusweb/campusportal.do"
+                        target="_blank">
                         🎓TWINS
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
@@ -188,7 +214,8 @@
                         </svg>
                       </a>
                     </li>
-                    <li class="list-group-item"><a href="https://make-it-tsukuba.github.io/alternative-tsukuba-kdb/" target="_blank">
+                    <li class="list-group-item"><a href="https://make-it-tsukuba.github.io/alternative-tsukuba-kdb/"
+                        target="_blank">
                         📒KdBもどき
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
@@ -199,10 +226,11 @@
                         </svg>
                       </a>
                     </li>
-                    </ul>
-                    <br>
-                    <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="https://www.tulips.tsukuba.ac.jp/opac/user/top" target="_blank">
+                  </ul>
+                  <br>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="https://www.tulips.tsukuba.ac.jp/opac/user/top"
+                        target="_blank">
                         📚Tulips マイライブラリ
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
@@ -307,8 +335,7 @@
                   <h5 class="card-title">開発チーム⚒️</h5>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                      <a
-                        href="https://github.com/half-blue/A_plus_Tsukuba/wiki/%E9%96%8B%E7%99%BA%E3%83%A1%E3%83%B3%E3%83%90%E3%83%BC%E7%B4%B9%E4%BB%8B"
+                      <a href="https://github.com/half-blue/A_plus_Tsukuba/wiki/%E9%96%8B%E7%99%BA%E3%83%A1%E3%83%B3%E3%83%90%E3%83%BC%E7%B4%B9%E4%BB%8B"
                         target="_blank">
                         👤開発メンバー
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
