@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 from .serializers import *
 from .models import Post, Thread, Reply
+from django.db.models import Q
 
 class get_subthreads(ListAPIView):
     serializer_class = GetPostSerializer
@@ -21,7 +22,9 @@ class search_subjects(ListAPIView):
 
     def get_queryset(self):
         q :str = self.request.query_params.get("q", "")
-        return Subject.objects.filter(name__icontains = q).order_by('code')[:500]
+        return Subject.objects.filter(Q(name__icontains = q) | Q(code__startswith = q) | Q(schools__icontains = q) | Q(colleges__icontains = q)).order_by('code')[:500]
+
+
 
 class post_subthreads(ListCreateAPIView):
     serializer_class = PostPostSerializer
