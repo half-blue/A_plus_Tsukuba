@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+
+<head>
+    {% include 'html_head.html' %}
+    <title>新しい質問 | A+つくば</title>
+    <meta property="og:title" content="新しい質問 | A+つくば" />
+    <meta property="og:type" content="artcle" />
+</head>
+
+<body class="bg-light">
+    {% include 'header.html' %}
+
+    <div id="main_container" class="container">
+        <h1>新しい質問🤗</h1>
+        <p class="lead">新着の質問を{{ post_list | length }}件表示しています。</p>
+        <div class="row row-cols-1 row-cols-md-4 g-1 card-group">
+            {% for newpost in post_list %}
+            <div class="col">
+                <div class="card bg-white h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <p class="card-text" style="overflow-wrap: anywhere;">
+                            {{newpost.text }}
+                        </p>
+                        <div class="text-end">
+                            <a href="{% url 'threads' newpost.thread_id %}" class="card-link">
+                                {{ newpost.thread.title | truncatechars:20}}
+                            </a>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% include 'footer.html' %}
+    </div>
+
+    {% include 'load_javascript.html' %}
+</body>
