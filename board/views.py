@@ -98,12 +98,14 @@ class NewQuestionsView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['post_list'] = self.model.objects.all().order_by('-created_at')[:40]
+        # context['post_list'] = self.model.objects.all().order_by('-created_at')[:40]
+        all_objects = self.model.objects.all().order_by('-created_at')[:40]
         current_time = datetime.datetime.now()
         # post_time is created_at
         post_time = []
         for i in range(0, 40):
-            post_time.append(context['post_list'][i].created_at)
+            # post_time.append(context['post_list'][i].created_at)
+            post_time.append(all_objects[i].created_at)
         # post_time = context['post_list'][0].created_at
         # 何日前か計算する
         # current_time is XXXX年XX月XX日XX:XX
@@ -119,10 +121,26 @@ class NewQuestionsView(ListView):
         days_ago = []
         for i in range(0, 40):
             days_ago.append((datetime.datetime.strptime(current_time2, "%Y/%m/%d") - datetime.datetime.strptime(post_time2[i], "%Y/%m/%d")).days)
-        context['days_ago'] = days_ago
+        
+        
+
+        # Added property(name) to all_objects
+        
+
+        for i in range(0, 40):
+            # all_objects[i].days_ago = days_ago[i]
+            all_objects[i].days_ago = 12
+        context['post_list'] = all_objects
+        # all_objects + days_ago
+        # context['post_list'] = zip(all_objects, days_ago)
+        # context['post_list'] =  all_objects
+        # context['post_list'] = zip(all_objects, days_ago)
+
+        context['aaa'] = days_ago
+        all_objects[0].created_at = 12
+        context['bbb'] = all_objects[0].created_at
         # context['days'] = (datetime.datetime.strptime(current_time2, "%Y/%m/%d") - datetime.datetime.strptime(post_time2, "%Y/%m/%d")).days
 
-        context['current_time'] = current_time
-        context['post_time'] = post_time
+        # context['current_time'] = current_time
 
         return context

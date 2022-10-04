@@ -11,12 +11,9 @@
 
 <body class="bg-light">
     {% include 'header.html' %}
-
     <div id="main_container" class="container">
         <h1>新しい質問🤗</h1>
-        {% for day_ago in days_ago %}
-                                {{ day_ago }}
-                            {% endfor %}
+        {{ bbb }}
         <p class="lead">新しい質問を{{ post_list | length }}件表示しています。</p>
         <div class="row row-cols-1 row-cols-md-4 g-1 card-group">
             {% for newpost in post_list %}
@@ -31,16 +28,16 @@
                                 {{ newpost.thread.title | truncatechars:30}}
                             </a>
                             <br>
-                            投稿日:{{newpost.created_at}}
-                            <br>{{ current_time}}
-                            <br>{{ post_time }}
-                            <br>
-                            <br>{{ days }}
+                            投稿日:{{newpost.created_at }}
+                            <br>{{ newpost.days_ago }}
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
+            {% for days in aaa %}
+        {{ days }}
+    {% endfor %}
         </div>
         <div class="text-center mt-3 mb-4">
             <a href="{% url 'search' %}">
