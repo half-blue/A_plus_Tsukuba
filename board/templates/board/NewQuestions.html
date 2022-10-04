@@ -14,6 +14,9 @@
 
     <div id="main_container" class="container">
         <h1>新しい質問🤗</h1>
+        {% for day_ago in days_ago %}
+                                {{ day_ago }}
+                            {% endfor %}
         <p class="lead">新しい質問を{{ post_list | length }}件表示しています。</p>
         <div class="row row-cols-1 row-cols-md-4 g-1 card-group">
             {% for newpost in post_list %}
@@ -29,6 +32,10 @@
                             </a>
                             <br>
                             投稿日:{{newpost.created_at}}
+                            <br>{{ current_time}}
+                            <br>{{ post_time }}
+                            <br>
+                            <br>{{ days }}
                         </div>
                     </div>
                 </div>
