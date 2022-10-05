@@ -4,7 +4,6 @@ from .models import Notice, Post, Reply, Subject, Thread
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.db.models import Count
-import datetime
 
 class Index(ListView):
     def get(self, request, *args, **kwargs):
