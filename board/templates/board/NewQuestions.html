@@ -14,33 +14,43 @@
     <div id="main_container" class="container">
         <h1>新しい質問🤗</h1>
         <p class="lead">新しい質問を{{ post_list | length }}件表示しています。</p>
-        <div class="row row-cols-1 row-cols-md-4 g-1 card-group">
-            {% for newpost in post_list %}
-            <div class="col">
-                <div class="card bg-white h-100">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <p class="card-text" style="overflow-wrap: anywhere;">
-                            {{newpost.text | linebreaksbr}}
-                        </p>
-                        <div class="text-end" style="font-size: 0.5em;">
-                            <a href="{% url 'threads' newpost.thread_id %}" class="card-link">
-                                {{ newpost.thread.title | truncatechars:30}}
-                            </a>
-                            <br>
-                            投稿日:{{newpost.created_at }}
+        <div id="new_questions_app">
+            <div class="row row-cols-1 row-cols-md-4 g-1 card-group">
+                {% for newpost in post_list %}
+                <div class="col">
+                    <div class="card bg-white h-100">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p class="card-text" style="overflow-wrap: anywhere;">
+                                {{newpost.text | linebreaksbr}}
+                            </p>
+                            <div class="text-end" style="font-size: 0.5em;">
+                                <a href="{% url 'threads' newpost.thread_id %}" class="card-link">
+                                    {{ newpost.thread.title | truncatechars:30}}
+                                </a>
+                                <br>
+                                [[ fromNowFilter('{{newpost.created_at | date:"r"}}') ]]
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
         <div class="text-center mt-3 mb-4">
             <a href="{% url 'search' %}">
                 トップページに戻る
-            </a>  
+            </a>
         </div>
         {% include 'footer.html' %}
     </div>
 
     {% include 'load_javascript.html' %}
+
+    <!-- load moment.js-->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js" 
+            integrity="sha256-80OqMZoXo/w3LuatWvSCub9qKYyyJlK0qnUCYEghBx8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/locale/ja.js" 
+            integrity="sha256-lyDeRZLdlIYfL6u1ERBTP+RGIPUX5QRI3YKKfy7vcAk=" crossorigin="anonymous"></script>
+
+    <script src="{% static 'board/new_questions.js' %}"></script>
 </body>
