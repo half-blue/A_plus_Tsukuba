@@ -112,7 +112,14 @@
             <div class="card-group">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">新しい質問🤗</h5>
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title">
+                      新しい質問🤗
+                    </h5>
+                    <span class="text-end">
+                      <a href="{% url 'new_questions' %}" class="btn btn-outline-secondary btn-sm">もっと見る</a>
+                    </span>
+                  </div>
                   <ol class="list-group list-group-flush">
                     {% for newpost in post_list %}
                     <li class="list-group-item">
