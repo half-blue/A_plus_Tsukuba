@@ -9,7 +9,7 @@ ITF_CHECK.PROMPT_MSG = "このサービスは筑波大生専用のサービス�
 ITF_CHECK.CONFIRM_MSG = "答えが間違っています。もう一度挑戦しますか？";
 ITF_CHECK.MOVE_MSG = "筑波大のWebサイトに遷移します。";
 ITF_CHECK.MOVE_TO = "https://www.tsukuba.ac.jp/";
-ITF_CHECK.ANSWER = "ITF";
+ITF_CHECK.ANSWERS = ["ITF", "ITF."];
 ITF_CHECK.EXPIRES = 365; //DAYS
 
 ITF_CHECK.move = function () {
@@ -21,7 +21,7 @@ ITF_CHECK.quiz = function () {
     //クイズを行い、成否を返す。
     const input = window.prompt(ITF_CHECK.PROMPT_MSG);
     if (!input) return false; // in case of "cancel" or "no input"
-    if (input == ITF_CHECK.ANSWER) {
+    if (ITF_CHECK.ANSWERS.includes(input)) {
         return true;
     } else {
         if (confirm(ITF_CHECK.CONFIRM_MSG)) {
