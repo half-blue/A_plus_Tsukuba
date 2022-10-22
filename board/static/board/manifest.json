@@ -1,7 +1,7 @@
 {
-    "name": "FirstLayout",
-    "short_name": "FirstLayout",
-    "description": "FirstLayout のブログ",
+    "name": "A+つくば",
+    "short_name": "A+つくば",
+    "description": "A+つくばのアプリ",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
@@ -10,8 +10,8 @@
     "start_url": "/",
     "icons": [
       {
-        "src": "{% static 'board/twitter_ogp192.png' %}",
-        "sizes": "192x192",
+        "src": "twitter_ogp.png",
+        "sizes": "640x640",
         "type": "image/png"
       }
     ]
