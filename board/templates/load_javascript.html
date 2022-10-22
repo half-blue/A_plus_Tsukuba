@@ -34,3 +34,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 
 <script src="{% static 'board/common.js' %}"></script>
+
+<!-- PWA -->
+<amp-install-serviceworker
+    src="{% static 'board/sw.js' %}"
+    data-iframe-src="install-sw.html"
+    layout="nodisplay">
+</amp-install-serviceworker>
