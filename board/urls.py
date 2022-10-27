@@ -16,4 +16,5 @@ urlpatterns = [
     path('about/', views.AboutView.as_view(), name = "about"),
     path('terms/', views.TermsView.as_view(), name = "terms"),
     path('privacy/', views.PrivacyView.as_view(), name = "privacy"),
+    path('sw.js', views.ServiceWorkerView.as_view(), name = "sw_js"),
 ]

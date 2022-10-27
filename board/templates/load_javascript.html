@@ -36,8 +36,8 @@
 <script src="{% static 'board/common.js' %}"></script>
 
 <!-- PWA -->
-<amp-install-serviceworker
-    src="{% static 'board/sw.js' %}"
-    data-iframe-src="install-sw.html"
-    layout="nodisplay">
-</amp-install-serviceworker>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  };
+</script>
