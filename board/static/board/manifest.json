@@ -1,7 +1,7 @@
 {
     "name": "A+つくば",
     "short_name": "A+つくば",
-    "description": "「A+つくば」のモバイルアプリです！！スマートフォンでA+つくばが使いやすくなります！！（同じ端末のブラウザとブックマークは同期できます。）",
+    "description": "「A+つくば」のモバイルアプリです！！スマートフォンでA+つくばが使いやすくなります！！",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
