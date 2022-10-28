@@ -106,3 +106,6 @@ class ServiceWorkerView(ListView):
         swjs += "AMP_SW.init();"
         response = HttpResponse(swjs, content_type='application/javascript')
         return response
+
+class GetAppView(TemplateView):
+    template_name = "board/App.html"
