@@ -29,3 +29,18 @@ Vue.createApp({
         window.addEventListener("beforeinstallprompt", this.preventDefaultInstallPrompt)
     }
 }).mount('#get_app_app')
+
+// copy self_address to clipboard
+Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {
+        return {
+            self_address: location.href
+        }
+    },
+    methods: {
+        copySelfAddress() {
+            navigator.clipboard.writeText(this.self_address);
+        }
+    }
+}).mount('#copy_to_clipboard_app')

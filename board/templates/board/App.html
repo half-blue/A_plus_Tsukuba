@@ -20,25 +20,50 @@
             アプリストアからはインストールできません。このページの内容をよくご確認ください。
         </div>
         <h1>アプリを入手しよう！</h1>
-        <div id="get_app_app">
+        <div>
             <p>
                 「A+つくば」のモバイルアプリ(PWA)を使えば、スマートフォンで「A+つくば」がより使いやすくなります！
               お使いのデバイスに合わせて、アプリをインストールしましょう。             
             </p>
             <div class="accordion accordion-flush" id="accordionFlushDeviceSelect">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            iPhone / iPad
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                        data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            iOS Safari ではインストール・プロンプトが出せないので、ここでインストール方法を事細かに説明してください。
+                <div id="copy_to_clipboard_app">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                iPhone / iPad
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <ol class="list-group list-group-numbered list-group-flush">
+                                    <li class="list-group-item">
+                                        「<b>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        Copy Link
+                                        </b>」を押して、アプリをインストールします。
+                                        <div class="">
+                                        <button type="button" class="btn btn-success btn-lg w-100"
+                                        v-on:click="copySelfAddress">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        Copy Link</button>                                            
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        Safariで開き、アドレスバーにコピーしたURLを貼り付けます。
+                                    </li>
+                                    <li class="list-group-item">
+                                        画面下の
+                                        「<b><svg role="img" xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24" aria-labelledby="shareiOSIconTitle" stroke="#2329D6" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="shareiOSIconTitle">Share</title> <path d="M12,3 L12,15"/> <polyline points="9 5 12 2 15 5"/> <rect width="12" height="12" x="6" y="9"/> </svg>
+                                            </b>」を押して、「ホーム画面に追加<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2329D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM12 8v8m-4-4h8"/></svg>」を押します。
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div id="get_app_app">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -93,8 +118,9 @@
                         </div>
                     </div>
                 </div>
-                {% include 'footer.html' %}
             </div>
+                {% include 'footer.html' %}
+        </div>
 
             {% include 'load_javascript.html' %}
             <script src="{% static 'board/get_app.js' %}"></script>
