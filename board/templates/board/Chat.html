@@ -5,6 +5,7 @@
 <head>
   {% include 'html_head.html' %}
   <link rel="stylesheet" href="{% static 'board/chat.css' %}">
+  <link rel="stylesheet" href="{% static 'board/share.css' %}">
   <title>{{ sub_title }} | A+つくば</title>
   <meta property="og:description" content="A+つくばは課題に苦しむ筑波大生のための匿名掲示板サービスです。" />
   <meta property="og:url" content="https://www.aplus-tsukuba.net/threads/{{ thread_id }}/" />
@@ -35,7 +36,7 @@
   </script>
   <script src="{% static 'board/col7.js' %}"></script>
   <script src="{% static 'board/send.js' %}"></script>
-  <script src="{% static 'board/col5.js' %}"></script>
+  <script src="{% static 'board/share.js' %}"></script>
   <script src="{% static 'board/bookmark_btn.js' %}"></script>
 </body>
 

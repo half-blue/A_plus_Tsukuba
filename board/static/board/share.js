@@ -21,4 +21,4 @@ Vue.createApp({
             window.open(url, '_blank')
         },
     },
-}).mount('#col5_app')
+}).mount('#share_app')
