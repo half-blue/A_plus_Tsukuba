@@ -1,0 +1,29 @@
+{
+    "name": "A+つくば",
+    "short_name": "A+つくば",
+    "description": "「A+つくば」のモバイルアプリです！！スマートフォンでA+つくばが使いやすくなります！！",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "screenshots": [
+      {
+        "src": "pma_screenshots/home.png",
+        "sizes": "1170x2532",
+        "type": "image/png"
+      },
+      {
+        "src": "pma_screenshots/thread.png",
+        "sizes": "1170x2532",
+        "type": "image/png"
+      }
+   ],
+    "icons": [
+      {
+        "src": "twitter_ogp.png",
+        "sizes": "640x640",
+        "type": "image/png"
+      }
+    ]
+  }

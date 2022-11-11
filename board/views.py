@@ -99,3 +99,13 @@ class NewQuestionsView(ListView):
         context = super().get_context_data(*args, **kwargs)
         context['post_list'] = self.model.objects.all().order_by('-created_at')[:40]
         return context
+
+class ServiceWorkerView(ListView):
+    def get(self, request, *args, **kwargs):
+        swjs = "importScripts('https://cdn.ampproject.org/sw/amp-sw.js');"
+        swjs += "AMP_SW.init();"
+        response = HttpResponse(swjs, content_type='application/javascript')
+        return response
+
+class GetAppView(TemplateView):
+    template_name = "board/App.html"

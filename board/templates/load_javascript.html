@@ -34,3 +34,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 
 <script src="{% static 'board/common.js' %}"></script>
+
+<!-- PWA -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  };
+</script>
