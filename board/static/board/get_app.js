@@ -50,7 +50,7 @@ Vue.createApp({
             })
         },
         ChangeAlert() {
-            alert("copied!")
+            alert("コピーしました!")
         }
     }
 }).mount('#copy_to_clipboard_app')
