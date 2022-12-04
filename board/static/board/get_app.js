@@ -42,7 +42,6 @@ Vue.createApp({
         copySelfAddress() {
             navigator.clipboard.writeText(this.self_address)
             .then(() => {
-                console.log("copied!")
                 this.ChangeAlert()
             })
             .catch(e => {
