@@ -40,7 +40,16 @@ Vue.createApp({
     },
     methods: {
         copySelfAddress() {
-            navigator.clipboard.writeText(this.self_address);
+            navigator.clipboard.writeText(this.self_address)
+            .then(() => {
+                this.ChangeAlert()
+            })
+            .catch(e => {
+                console.error(e)
+            })
+        },
+        ChangeAlert() {
+            alert("コピーしました!")
         }
     }
 }).mount('#copy_to_clipboard_app')
