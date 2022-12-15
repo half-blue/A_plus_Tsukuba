@@ -18,9 +18,46 @@ class ThreadViewTest(TestCase):
         post = Post.objects.create(sender_name="test sender", text="test text", thread=thread)
         reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post)
 
-    def test_thread_view(self):
-        response = self.client.get(reverse('threads', kwargs={'thread_id': 1}))
+    # 存在するスレッドにアクセスした時のステータスコードが200か
+    def test_status_code_200(self):
+        response = self.client.get(reverse('threads', args=[1])) # /threads/1/ にアクセス
         self.assertEqual(response.status_code, 200)
+
+    # 存在しないスレッドにアクセスした時のステータスコードが404か
+    def test_status_code_404(self):
+        response = self.client.get(reverse('threads', args=[2])) # /threads/2/ にアクセス
+        self.assertEqual(response.status_code, 404)
+
+    # テンプレートが正しいか
+    def test_template(self):
+        response = self.client.get(reverse('threads', args=[1]))
+        self.assertTemplateUsed(response, 'board/Chat.html')
+
+    # 新しい投稿が上に来るか
+    def test_ordering(self):
+        thread = Thread.objects.get(id=1)
+        Post.objects.create(sender_name="new sender2", text="new text2", thread=thread)
+        response = self.client.get(reverse('threads', args=[1]))
+        self.assertEqual(response.context['object_list'][0].text, "new text2")
+
+    def test_context(self):
+        response = self.client.get(reverse('threads', args=[1]))
+        self.assertEqual(response.context['thread_title'], "test thread")
+        self.assertEqual(response.context['thread_id'], 1)
+        self.assertEqual(response.context['sub_title'], "test name")
+        self.assertEqual(response.context['sub_teachers'], "test teachers")
+        self.assertEqual(response.context['sub_codes'], "test code")
+
+    def test_404(self):
+        response = self.client.get(reverse('threads', args=[2]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_queryset(self):
+        response = self.client.get(reverse('threads', args=[1]))
+        self.assertEqual(response.context['object_list'].count(), 1)
+
+
+        
 
 
 
