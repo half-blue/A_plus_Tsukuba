@@ -154,7 +154,7 @@ class SearchViewTest(TestCase):
 #         context['post_list'] = self.model.objects.all().order_by('-created_at')[:40]
 #         return context
 
-class  NewQuestionsView(TestCase):
+class  NewQuestionsViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
         for i in range(41):
@@ -164,6 +164,7 @@ class  NewQuestionsView(TestCase):
         
      # NewQuestionsページのステータスコードが200か
     def test_new_questions_view(self):
+        # breakpoint()
         response = self.client.get(reverse('new_questions'))
         self.assertEqual(response.status_code, 200)
 
@@ -172,3 +173,47 @@ class  NewQuestionsView(TestCase):
         response = self.client.get(reverse('new_questions'))
         self.assertTemplateUsed(response, 'board/NewQuestions.html')
 
+    # 新しい質問は新しい投稿が上に来るか
+    def test_ordering(self):
+        thread_new = Thread.objects.create(title="test_new thread")
+        subject_new = Subject.objects.create(code="test_new code", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
+        post_new = Post.objects.create(sender_name="test_new sender", text="test_new text", thread=thread_new)
+        response = self.client.get(reverse('new_questions'))
+        self.assertEqual(response.context['post_list'][0].text, "test_new text")
+        self.assertEqual(response.context['post_list'][1].text, "test text")
+
+    # 40件以上の投稿は40件までしか表示されないか
+    def test_post_count(self):
+        response = self.client.get(reverse('new_questions'))
+        self.assertEqual(len(response.context['post_list']), 40)
+
+# class ServiceWorkerView(ListView):
+#     def get(self, request, *args, **kwargs):
+#         swjs = "importScripts('https://cdn.ampproject.org/sw/amp-sw.js');"
+#         swjs += "AMP_SW.init();"
+#         response = HttpResponse(swjs, content_type='application/javascript')
+#         return response
+
+class ServicWorkerViewTest(TestCase):
+    # ServiceWorkerページのステータスコードが200か
+    def test_service_worker_view(self):
+        response = self.client.get('/sw.js')
+        self.assertEqual(response.status_code, 200)
+
+    # /sw.jsにアクセスするとimportScripts('https://cdn.ampproject.org/sw/amp-sw.js');AMP_SW.init();が返ってくるか
+    def test_service_worker_view(self):
+        response = self.client.get('/sw.js')
+        swjs = "importScripts('https://cdn.ampproject.org/sw/amp-sw.js');"
+        swjs += "AMP_SW.init();"
+        self.assertEqual(response.content.decode('utf-8'), swjs)
+
+class GetAppViewTest(TestCase):
+    # GetAppページのステータスコードが200か
+    def test_get_app_view(self):
+        response = self.client.get(reverse('get_app'))
+        self.assertEqual(response.status_code, 200)
+
+    # GetAppページのテンプレートが正しいか
+    def test_get_app_template(self):
+        response = self.client.get(reverse('get_app'))
+        self.assertTemplateUsed(response, 'board/App.html')
