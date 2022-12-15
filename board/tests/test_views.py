@@ -52,7 +52,6 @@ class ThreadViewTest(TestCase):
         self.assertEqual(response.context['sub_teachers'], "test teachers")
         self.assertEqual(response.context['sub_codes'], "test code")
 
-
     def test_queryset(self):
         response = self.client.get(reverse('threads', args=[1]))
         self.assertEqual(response.context['object_list'].count(), 1)
@@ -67,7 +66,6 @@ class AboutViewTest(TestCase):
     def test_about_template(self):
         response = self.client.get(reverse('about'))
         self.assertTemplateUsed(response, 'board/About.html')
-
 
 class TermsViewTest(TestCase):
     # termsページのステータスコードが200か
@@ -140,19 +138,7 @@ class SearchViewTest(TestCase):
     def test_notice(self):
         notice = Notice.objects.create(message="test notice", is_show=True)
         response = self.client.get(reverse('search'))
-        # print(response.context['notice'])
-        # breakpoint()
         self.assertEqual(response.context['notice'][0]['message'], "test notice")
-
-# class NewQuestionsView(ListView):
-#     """新規投稿一覧を表示するページ"""
-#     template_name = "board/NewQuestions.html"
-#     model = Post
-
-#     def get_context_data(self, *args, **kwargs):
-#         context = super().get_context_data(*args, **kwargs)
-#         context['post_list'] = self.model.objects.all().order_by('-created_at')[:40]
-#         return context
 
 class  NewQuestionsViewTest(TestCase):
     # テスト用のデータを作成
@@ -164,7 +150,6 @@ class  NewQuestionsViewTest(TestCase):
         
      # NewQuestionsページのステータスコードが200か
     def test_new_questions_view(self):
-        # breakpoint()
         response = self.client.get(reverse('new_questions'))
         self.assertEqual(response.status_code, 200)
 
@@ -187,20 +172,13 @@ class  NewQuestionsViewTest(TestCase):
         response = self.client.get(reverse('new_questions'))
         self.assertEqual(len(response.context['post_list']), 40)
 
-# class ServiceWorkerView(ListView):
-#     def get(self, request, *args, **kwargs):
-#         swjs = "importScripts('https://cdn.ampproject.org/sw/amp-sw.js');"
-#         swjs += "AMP_SW.init();"
-#         response = HttpResponse(swjs, content_type='application/javascript')
-#         return response
-
 class ServicWorkerViewTest(TestCase):
     # ServiceWorkerページのステータスコードが200か
     def test_service_worker_view(self):
         response = self.client.get('/sw.js')
         self.assertEqual(response.status_code, 200)
 
-    # /sw.jsにアクセスするとimportScripts('https://cdn.ampproject.org/sw/amp-sw.js');AMP_SW.init();が返ってくるか
+    # /sw.jsにアクセスすると適切な内容が返ってくるか
     def test_service_worker_view(self):
         response = self.client.get('/sw.js')
         swjs = "importScripts('https://cdn.ampproject.org/sw/amp-sw.js');"
