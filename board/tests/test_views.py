@@ -8,7 +8,6 @@ class IndexTest(TestCase):
     # searchにリダイレクトするか
     def test_redirects_to_search(self):
         response = self.client.get(reverse('index'))
-        # breakpoint()
         self.assertRedirects(response, reverse('search'))
 
 class ThreadViewTest(TestCase):
@@ -20,12 +19,12 @@ class ThreadViewTest(TestCase):
         reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post)
 
     # 存在するスレッドにアクセスした時のステータスコードが200か
-    def test_status_code_200(self):
+    def test_thread_view_200(self):
         response = self.client.get(reverse('threads', args=[1])) # /threads/1/ にアクセス
         self.assertEqual(response.status_code, 200)
 
     # 存在しないスレッドにアクセスした時のステータスコードが404か
-    def test_status_code_404(self):
+    def test_thread_view_404(self):
         response = self.client.get(reverse('threads', args=[2])) # /threads/2/ にアクセス
         self.assertEqual(response.status_code, 404)
 
