@@ -38,8 +38,6 @@ class ThreadViewTest(TestCase):
         thread = Thread.objects.get(id=1)
         Post.objects.create(sender_name="new sender2", text="new text2", thread=thread)
         response = self.client.get(reverse('threads', args=[1]))
-        # breakpoint()
-        # print(response.context['object_list'][0])
         self.assertEqual(response.context['object_list'][0].text, "new text2")
 
     # コンテキストが正しいか
