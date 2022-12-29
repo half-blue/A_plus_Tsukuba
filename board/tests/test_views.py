@@ -1,7 +1,10 @@
+import datetime
+import pytz
+
 from django.test import TestCase, Client
 from django.http import HttpRequest
-from board.views import Index, ThreadView, SearchView, NewQuestionsView, AboutView, TermsView, PrivacyView, ServiceWorkerView, GetAppView
 from django.urls import reverse, resolve
+from board.views import Index, ThreadView, SearchView, NewQuestionsView, AboutView, TermsView, PrivacyView, ServiceWorkerView, GetAppView
 from board.models import Thread, Post, Reply, Subject, Notice
 
 class IndexTest(TestCase):
@@ -15,8 +18,12 @@ class ThreadViewTest(TestCase):
     def setUp(self) -> None:
         thread = Thread.objects.create(title="test thread")
         subject = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread)
-        post = Post.objects.create(sender_name="test sender", text="test text", thread=thread)
-        reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post)
+        
+        post_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        reply_created_at = post_created_at + datetime.timedelta(minutes=1)
+
+        post = Post.objects.create(sender_name="test sender", text="test text", thread=thread, created_at=post_created_at)
+        reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post, created_at=reply_created_at)
 
     # 存在するスレッドにアクセスした時のステータスコードが200か
     def test_thread_view_200(self):
@@ -91,13 +98,16 @@ class SearchViewTest(TestCase):
     def setUp(self) -> None:
         thread1 = Thread.objects.create(title="test thread")
         subject1 = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread1)
-        post1 = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread1)
+        post1_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        post1 = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread1, created_at=post1_created_at)
         thread2 = Thread.objects.create(title="test thread2")
         subject2 = Subject.objects.create(code="test code2", name="test name2", teachers="test teachers2", thread_id=thread2)
-        post2 = Post.objects.create(sender_name="test sender2", text="test text2", emotion=1, thread=thread2)
+        post2_created_at = post1_created_at + datetime.timedelta(seconds=30)
+        post2 = Post.objects.create(sender_name="test sender2", text="test text2", emotion=1, thread=thread2, created_at=post2_created_at)
         thread3 = Thread.objects.create(title="test thread3")
         subject3 = Subject.objects.create(code="test code3", name="test name3", teachers="test teachers3", thread_id=thread3)
-        post3 = Post.objects.create(sender_name="test sender3", text="test text3", emotion=0, thread=thread3)
+        post3_created_at = post2_created_at + datetime.timedelta(seconds=10)
+        post3 = Post.objects.create(sender_name="test sender3", text="test text3", emotion=0, thread=thread3, created_at=post3_created_at)
 
     # searchページのステータスコードが200か
     def test_search_view(self):
@@ -140,10 +150,12 @@ class SearchViewTest(TestCase):
 class  NewQuestionsViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
+        created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
         for i in range(41):
             thread = Thread.objects.create(title="test thread")
             subject = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread)
-            post = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread)
+            tdelta = datetime.timedelta(minutes=i)
+            post = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread, created_at=created_at+tdelta)
         
      # NewQuestionsページのステータスコードが200か
     def test_new_questions_view(self):
