@@ -34,7 +34,7 @@ class ThreadViewTest(TestCase):
     # 存在しないスレッドにアクセスした時のステータスコードが404か
     def test_thread_view_404(self):
         max_id = Thread.objects.all().aggregate(Max("id"))["id__max"]
-        response = self.client.get(reverse('threads', args=[max_id+1])) # /threads/2/ にアクセス
+        response = self.client.get(reverse('threads', args=[max_id+1])) # /threads/max(thread.id)+1/ にアクセス
         self.assertEqual(response.status_code, 404)
 
     # テンプレートが正しいか
