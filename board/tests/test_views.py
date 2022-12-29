@@ -33,7 +33,6 @@ class ThreadViewTest(TestCase):
 
     # 存在しないスレッドにアクセスした時のステータスコードが404か
     def test_thread_view_404(self):
-        # cf. https://docs.djangoproject.com/en/3.2/ref/databases/#storage-engines
         max_id = Thread.objects.all().aggregate(Max("id"))["id__max"]
         response = self.client.get(reverse('threads', args=[max_id+1])) # /threads/2/ にアクセス
         self.assertEqual(response.status_code, 404)
