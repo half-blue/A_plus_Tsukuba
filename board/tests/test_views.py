@@ -1,6 +1,7 @@
 import datetime
 import pytz
 
+from django.db.models import Max
 from django.test import TestCase, Client
 from django.http import HttpRequest
 from django.urls import reverse, resolve
@@ -16,35 +17,36 @@ class IndexTest(TestCase):
 class ThreadViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
-        thread = Thread.objects.create(title="test thread")
-        subject = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=thread)
+        self.thread = Thread.objects.create(title="test thread") # 再利用するためselfにする
+        subject = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=self.thread)
         
         post_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
         reply_created_at = post_created_at + datetime.timedelta(minutes=1)
 
-        post = Post.objects.create(sender_name="test sender", text="test text", thread=thread, created_at=post_created_at)
+        post = Post.objects.create(sender_name="test sender", text="test text", thread=self.thread, created_at=post_created_at)
         reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post, created_at=reply_created_at)
 
     # 存在するスレッドにアクセスした時のステータスコードが200か
     def test_thread_view_200(self):
-        response = self.client.get(reverse('threads', args=[1])) # /threads/1/ にアクセス
+        response = self.client.get(reverse('threads', args=[self.thread.id])) # /threads/setUPで作成したスレッドのid/ にアクセス
         self.assertEqual(response.status_code, 200)
 
     # 存在しないスレッドにアクセスした時のステータスコードが404か
     def test_thread_view_404(self):
-        response = self.client.get(reverse('threads', args=[2])) # /threads/2/ にアクセス
+        # cf. https://docs.djangoproject.com/en/3.2/ref/databases/#storage-engines
+        max_id = Thread.objects.all().aggregate(Max("id"))["id__max"]
+        response = self.client.get(reverse('threads', args=[max_id+1])) # /threads/2/ にアクセス
         self.assertEqual(response.status_code, 404)
 
     # テンプレートが正しいか
     def test_template(self):
-        response = self.client.get(reverse('threads', args=[1]))
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertTemplateUsed(response, 'board/Chat.html')
 
     # 新しい投稿が上に来るか
     def test_ordering(self):
-        thread = Thread.objects.get(id=1)
-        Post.objects.create(sender_name="new sender2", text="new text2", thread=thread)
-        response = self.client.get(reverse('threads', args=[1]))
+        Post.objects.create(sender_name="new sender2", text="new text2", thread=self.thread)
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertEqual(response.context['object_list'][0].text, "new text2")
 
     # コンテキストが正しいか
@@ -57,7 +59,7 @@ class ThreadViewTest(TestCase):
         self.assertEqual(response.context['sub_codes'], "TST0001")
 
     def test_queryset(self):
-        response = self.client.get(reverse('threads', args=[1]))
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertEqual(response.context['object_list'].count(), 1)
 
 class AboutViewTest(TestCase):
