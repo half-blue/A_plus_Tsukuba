@@ -130,14 +130,16 @@ class SearchViewTest(TestCase):
 
     # emergency rankingが正しいか
     def test_emergency_ranking(self):
+        thread1 = Thread.objects.get(title="test thread")
         thread3 = Thread.objects.get(title="test thread3")
         post3_2 = Post.objects.create(sender_name="test sender3_2", text="test text3_2", emotion=0, thread=thread3)
         reply3_1 = Reply.objects.create(sender_name="test sender3_3", text="test text3_3", emotion=0, post_id=post3_2)
         response = self.client.get(reverse('search'))
-        self.assertEqual(response.context['ranking'][0][0], 3)
+        # (tid, title, num)
+        self.assertEqual(response.context['ranking'][0][0], thread3.id)
         self.assertEqual(response.context['ranking'][0][1], "test thread3")
         self.assertEqual(response.context['ranking'][0][2], 3)
-        self.assertEqual(response.context['ranking'][1][0], 1)
+        self.assertEqual(response.context['ranking'][1][0], thread1.id)
         self.assertEqual(response.context['ranking'][1][1], "test thread")
         self.assertEqual(response.context['ranking'][1][2], 1)
 
