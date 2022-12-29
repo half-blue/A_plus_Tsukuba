@@ -17,7 +17,7 @@ class ThreadViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
         thread = Thread.objects.create(title="test thread")
-        subject = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread)
+        subject = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=thread)
         
         post_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
         reply_created_at = post_created_at + datetime.timedelta(minutes=1)
@@ -54,7 +54,7 @@ class ThreadViewTest(TestCase):
         self.assertEqual(response.context['thread_id'], 1)
         self.assertEqual(response.context['sub_title'], "test name")
         self.assertEqual(response.context['sub_teachers'], "test teachers")
-        self.assertEqual(response.context['sub_codes'], "test code")
+        self.assertEqual(response.context['sub_codes'], "TST0001")
 
     def test_queryset(self):
         response = self.client.get(reverse('threads', args=[1]))
@@ -97,15 +97,15 @@ class SearchViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
         thread1 = Thread.objects.create(title="test thread")
-        subject1 = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread1)
+        subject1 = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=thread1)
         post1_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
         post1 = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread1, created_at=post1_created_at)
         thread2 = Thread.objects.create(title="test thread2")
-        subject2 = Subject.objects.create(code="test code2", name="test name2", teachers="test teachers2", thread_id=thread2)
+        subject2 = Subject.objects.create(code="TST0002", name="test name2", teachers="test teachers2", thread_id=thread2)
         post2_created_at = post1_created_at + datetime.timedelta(seconds=30)
         post2 = Post.objects.create(sender_name="test sender2", text="test text2", emotion=1, thread=thread2, created_at=post2_created_at)
         thread3 = Thread.objects.create(title="test thread3")
-        subject3 = Subject.objects.create(code="test code3", name="test name3", teachers="test teachers3", thread_id=thread3)
+        subject3 = Subject.objects.create(code="TST0003", name="test name3", teachers="test teachers3", thread_id=thread3)
         post3_created_at = post2_created_at + datetime.timedelta(seconds=10)
         post3 = Post.objects.create(sender_name="test sender3", text="test text3", emotion=0, thread=thread3, created_at=post3_created_at)
 
@@ -122,7 +122,7 @@ class SearchViewTest(TestCase):
     # 新しい質問は新しい投稿が上に来るか
     def test_ordering(self):
         thread_new = Thread.objects.create(title="test_new thread")
-        subject_new = Subject.objects.create(code="test_new code", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
+        subject_new = Subject.objects.create(code="TST0004", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
         post_new = Post.objects.create(sender_name="test_new sender", text="test_new text", thread=thread_new)
         response = self.client.get(reverse('search'))
         self.assertEqual(response.context['post_list'][0].text, "test_new text")
@@ -153,7 +153,7 @@ class  NewQuestionsViewTest(TestCase):
         created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
         for i in range(41):
             thread = Thread.objects.create(title="test thread")
-            subject = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread)
+            subject = Subject.objects.create(code=f"TST00{i}", name="test name", teachers="test teachers", thread_id=thread)
             tdelta = datetime.timedelta(minutes=i)
             post = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread, created_at=created_at+tdelta)
         
@@ -170,7 +170,7 @@ class  NewQuestionsViewTest(TestCase):
     # 新しい質問は新しい投稿が上に来るか
     def test_ordering(self):
         thread_new = Thread.objects.create(title="test_new thread")
-        subject_new = Subject.objects.create(code="test_new code", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
+        subject_new = Subject.objects.create(code="TSTNEW01", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
         post_new = Post.objects.create(sender_name="test_new sender", text="test_new text", thread=thread_new)
         response = self.client.get(reverse('new_questions'))
         self.assertEqual(response.context['post_list'][0].text, "test_new text")
