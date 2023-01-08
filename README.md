@@ -20,5 +20,3 @@ A+つくばは、筑波大学情報学群が開講する
 プロジェクトに含まれるファイルの内`kdb.json`は
 [Make-IT-TSUKUBA](https://github.com/Make-IT-TSUKUBA)
 さんが公開している[`kdb.json`](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/blob/master/src/kdb.json)をMPL-2.0 licenseのもとで利用しております。
-
-また、`static/admin`フォルダ下のファイルはdjangoフレームワークによって生成されたファイルです。
