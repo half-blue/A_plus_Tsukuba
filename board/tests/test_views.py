@@ -1,7 +1,11 @@
+import datetime
+import pytz
+
+from django.db.models import Max
 from django.test import TestCase, Client
 from django.http import HttpRequest
-from board.views import Index, ThreadView, SearchView, NewQuestionsView, AboutView, TermsView, PrivacyView, ServiceWorkerView, GetAppView
 from django.urls import reverse, resolve
+from board.views import Index, ThreadView, SearchView, NewQuestionsView, AboutView, TermsView, PrivacyView, ServiceWorkerView, GetAppView
 from board.models import Thread, Post, Reply, Subject, Notice
 
 class IndexTest(TestCase):
@@ -13,31 +17,35 @@ class IndexTest(TestCase):
 class ThreadViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
-        thread = Thread.objects.create(title="test thread")
-        subject = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread)
-        post = Post.objects.create(sender_name="test sender", text="test text", thread=thread)
-        reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post)
+        self.thread = Thread.objects.create(title="test thread") # 再利用するためselfにする
+        subject = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=self.thread)
+        
+        post_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        reply_created_at = post_created_at + datetime.timedelta(minutes=1)
+
+        post = Post.objects.create(sender_name="test sender", text="test text", thread=self.thread, created_at=post_created_at)
+        reply = Reply.objects.create(sender_name="test sender", text="test text", post_id=post, created_at=reply_created_at)
 
     # 存在するスレッドにアクセスした時のステータスコードが200か
     def test_thread_view_200(self):
-        response = self.client.get(reverse('threads', args=[1])) # /threads/1/ にアクセス
+        response = self.client.get(reverse('threads', args=[self.thread.id])) # /threads/setUPで作成したスレッドのid/ にアクセス
         self.assertEqual(response.status_code, 200)
 
     # 存在しないスレッドにアクセスした時のステータスコードが404か
     def test_thread_view_404(self):
-        response = self.client.get(reverse('threads', args=[2])) # /threads/2/ にアクセス
+        max_id = Thread.objects.all().aggregate(Max("id"))["id__max"]
+        response = self.client.get(reverse('threads', args=[max_id+1])) # /threads/max(thread.id)+1/ にアクセス
         self.assertEqual(response.status_code, 404)
 
     # テンプレートが正しいか
     def test_template(self):
-        response = self.client.get(reverse('threads', args=[1]))
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertTemplateUsed(response, 'board/Chat.html')
 
     # 新しい投稿が上に来るか
     def test_ordering(self):
-        thread = Thread.objects.get(id=1)
-        Post.objects.create(sender_name="new sender2", text="new text2", thread=thread)
-        response = self.client.get(reverse('threads', args=[1]))
+        Post.objects.create(sender_name="new sender2", text="new text2", thread=self.thread)
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertEqual(response.context['object_list'][0].text, "new text2")
 
     # コンテキストが正しいか
@@ -47,10 +55,10 @@ class ThreadViewTest(TestCase):
         self.assertEqual(response.context['thread_id'], 1)
         self.assertEqual(response.context['sub_title'], "test name")
         self.assertEqual(response.context['sub_teachers'], "test teachers")
-        self.assertEqual(response.context['sub_codes'], "test code")
+        self.assertEqual(response.context['sub_codes'], "TST0001")
 
     def test_queryset(self):
-        response = self.client.get(reverse('threads', args=[1]))
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertEqual(response.context['object_list'].count(), 1)
 
 class AboutViewTest(TestCase):
@@ -90,14 +98,17 @@ class SearchViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
         thread1 = Thread.objects.create(title="test thread")
-        subject1 = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread1)
-        post1 = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread1)
+        subject1 = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=thread1)
+        post1_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        post1 = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread1, created_at=post1_created_at)
         thread2 = Thread.objects.create(title="test thread2")
-        subject2 = Subject.objects.create(code="test code2", name="test name2", teachers="test teachers2", thread_id=thread2)
-        post2 = Post.objects.create(sender_name="test sender2", text="test text2", emotion=1, thread=thread2)
+        subject2 = Subject.objects.create(code="TST0002", name="test name2", teachers="test teachers2", thread_id=thread2)
+        post2_created_at = post1_created_at + datetime.timedelta(seconds=30)
+        post2 = Post.objects.create(sender_name="test sender2", text="test text2", emotion=1, thread=thread2, created_at=post2_created_at)
         thread3 = Thread.objects.create(title="test thread3")
-        subject3 = Subject.objects.create(code="test code3", name="test name3", teachers="test teachers3", thread_id=thread3)
-        post3 = Post.objects.create(sender_name="test sender3", text="test text3", emotion=0, thread=thread3)
+        subject3 = Subject.objects.create(code="TST0003", name="test name3", teachers="test teachers3", thread_id=thread3)
+        post3_created_at = post2_created_at + datetime.timedelta(seconds=10)
+        post3 = Post.objects.create(sender_name="test sender3", text="test text3", emotion=0, thread=thread3, created_at=post3_created_at)
 
     # searchページのステータスコードが200か
     def test_search_view(self):
@@ -112,7 +123,7 @@ class SearchViewTest(TestCase):
     # 新しい質問は新しい投稿が上に来るか
     def test_ordering(self):
         thread_new = Thread.objects.create(title="test_new thread")
-        subject_new = Subject.objects.create(code="test_new code", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
+        subject_new = Subject.objects.create(code="TST0004", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
         post_new = Post.objects.create(sender_name="test_new sender", text="test_new text", thread=thread_new)
         response = self.client.get(reverse('search'))
         self.assertEqual(response.context['post_list'][0].text, "test_new text")
@@ -120,14 +131,16 @@ class SearchViewTest(TestCase):
 
     # emergency rankingが正しいか
     def test_emergency_ranking(self):
+        thread1 = Thread.objects.get(title="test thread")
         thread3 = Thread.objects.get(title="test thread3")
         post3_2 = Post.objects.create(sender_name="test sender3_2", text="test text3_2", emotion=0, thread=thread3)
         reply3_1 = Reply.objects.create(sender_name="test sender3_3", text="test text3_3", emotion=0, post_id=post3_2)
         response = self.client.get(reverse('search'))
-        self.assertEqual(response.context['ranking'][0][0], 3)
+        # (tid, title, num)
+        self.assertEqual(response.context['ranking'][0][0], thread3.id)
         self.assertEqual(response.context['ranking'][0][1], "test thread3")
         self.assertEqual(response.context['ranking'][0][2], 3)
-        self.assertEqual(response.context['ranking'][1][0], 1)
+        self.assertEqual(response.context['ranking'][1][0], thread1.id)
         self.assertEqual(response.context['ranking'][1][1], "test thread")
         self.assertEqual(response.context['ranking'][1][2], 1)
 
@@ -140,10 +153,12 @@ class SearchViewTest(TestCase):
 class  NewQuestionsViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
+        created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
         for i in range(41):
             thread = Thread.objects.create(title="test thread")
-            subject = Subject.objects.create(code="test code", name="test name", teachers="test teachers", thread_id=thread)
-            post = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread)
+            subject = Subject.objects.create(code=f"TST00{i}", name="test name", teachers="test teachers", thread_id=thread)
+            tdelta = datetime.timedelta(minutes=i)
+            post = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread, created_at=created_at+tdelta)
         
      # NewQuestionsページのステータスコードが200か
     def test_new_questions_view(self):
@@ -158,7 +173,7 @@ class  NewQuestionsViewTest(TestCase):
     # 新しい質問は新しい投稿が上に来るか
     def test_ordering(self):
         thread_new = Thread.objects.create(title="test_new thread")
-        subject_new = Subject.objects.create(code="test_new code", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
+        subject_new = Subject.objects.create(code="TSTNEW01", name="test_new name", teachers="test_new teachers", thread_id=thread_new)
         post_new = Post.objects.create(sender_name="test_new sender", text="test_new text", thread=thread_new)
         response = self.client.get(reverse('new_questions'))
         self.assertEqual(response.context['post_list'][0].text, "test_new text")
