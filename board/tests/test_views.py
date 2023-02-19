@@ -50,9 +50,9 @@ class ThreadViewTest(TestCase):
 
     # コンテキストが正しいか
     def test_context(self):
-        response = self.client.get(reverse('threads', args=[1]))
+        response = self.client.get(reverse('threads', args=[self.thread.id]))
         self.assertEqual(response.context['thread_title'], "test thread")
-        self.assertEqual(response.context['thread_id'], 1)
+        self.assertEqual(response.context['thread_id'], self.thread.id)
         self.assertEqual(response.context['sub_title'], "test name")
         self.assertEqual(response.context['sub_teachers'], "test teachers")
         self.assertEqual(response.context['sub_codes'], "TST0001")
