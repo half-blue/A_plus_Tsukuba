@@ -26,20 +26,20 @@
         <div class="modal-body">
           <div class="text-center m-3">
             <button type="button" class="btn btn-danger"
-              onclick="location.href='https://www.aplus-tsukuba.net/threads/6304/'">
+              onclick="location.href='{% url 'threads' 6304 %}'">
               🐣新入生雑談スレッド
             </button><br>
             ㊗新入生の皆さん、ご入学おめでとうございます🌸
           </div>
           学群ごとの雑談スレッド：
           <ul class="list-group list-group-horizontal">
-            <a href="https://www.aplus-tsukuba.net/threads/6292/" 
+            <a href="{% url 'threads' 6292 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-primary">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">📕人文・文化</div>
                 </div>
             </a>
-            <a href="https://www.aplus-tsukuba.net/threads/6293/"
+            <a href="{% url 'threads' 6293 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-secondary">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">🌎社会・国際</div>
@@ -47,13 +47,13 @@
             </a>
             </ul>
             <ul class="list-group list-group-horizontal">
-            <a href="https://www.aplus-tsukuba.net/threads/6294/"
+            <a href="{% url 'threads' 6294 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-success">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">👶人間</div>
                   </div>
             </a>
-            <a href="https://www.aplus-tsukuba.net/threads/6295/" 
+            <a href="{% url 'threads' 6295 %}" 
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-danger">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">🧬生命環境</div>
@@ -61,13 +61,13 @@
             </a>
             </ul>
             <ul class="list-group list-group-horizontal">
-            <a href="https://www.aplus-tsukuba.net/threads/6296/"
+            <a href="{% url 'threads' 6296 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-warning">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">🧪 理工</div>
                   </div>
             </a>
-            <a href="https://www.aplus-tsukuba.net/threads/6297/"
+            <a href="{% url 'threads' 6297 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-info">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">💻情報</div>
@@ -75,13 +75,13 @@
             </a>
           </ul>
           <ul class="list-group list-group-horizontal">
-            <a href="https://www.aplus-tsukuba.net/threads/6298/"
+            <a href="{% url 'threads' 6298 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-light">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">👨‍⚕️医学</div>
                   </div>
             </a>
-            <a href="https://www.aplus-tsukuba.net/threads/6299/" 
+            <a href="{% url 'threads' 6299 %}" 
                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-dark">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">💪体育</div>
@@ -89,13 +89,13 @@
             </a>
           </ul>
           <ul class="list-group list-group-horizontal">
-            <a href="https://www.aplus-tsukuba.net/threads/6300/"
+            <a href="{% url 'threads' 6300 %}"
               class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-danger">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">🎨芸術</div>
                   </div>
             </a>
-            <a href="https://www.aplus-tsukuba.net/threads/6301/" 
+            <a href="{% url 'threads' 6301 %}" 
               class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-success">
               <div class="ms-2 me-auto">
                   <div class="fw-bold">🫠総合</div>
@@ -452,7 +452,7 @@
                       📨<a href="mailto:info@aplus-tsukuba.net">メールでのお問い合わせ</a>
                     </li>
                     <li class="list-group-item">
-                      📋<a href="/threads/6291">運営へのお問い合わせスレッド</a>
+                      📋<a href="{% url 'threads' 6291 %}">運営へのお問い合わせスレッド</a>
                     </li>
                   </ul>
                 </div>
