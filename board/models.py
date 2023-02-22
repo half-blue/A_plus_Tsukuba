@@ -3,7 +3,7 @@ from django.utils import timezone
 import uuid
 
 class Thread(models.Model):
-    title    = models.CharField(verbose_name='スレタイ',blank=False, null=False, max_length=250)
+    title    = models.CharField(verbose_name='スレタイ',blank=False, null=False, max_length=1024)
     def __str__(self):
         return self.title
 
