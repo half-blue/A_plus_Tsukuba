@@ -15,6 +15,101 @@
 </head>
 
 <body class="bg-light">
+  <!-- 雑談スレッドへのモーダル -->
+  <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+    <div class="modal-dialog pt-5">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="chatModalLabel">雑談スレッド</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="戻る"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center m-3">
+            <button type="button" class="btn btn-danger"
+              onclick="location.href='{% url 'threads' 6304 %}'">
+              🐣新入生雑談スレッド
+            </button><br>
+            ㊗新入生の皆さん、ご入学おめでとうございます🌸
+          </div>
+          学群ごとの雑談スレッド：
+          <ul class="list-group list-group-horizontal">
+            <a href="{% url 'threads' 6292 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-primary">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">📕人文・文化</div>
+                </div>
+            </a>
+            <a href="{% url 'threads' 6293 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-secondary">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">🌎社会・国際</div>
+                  </div>
+            </a>
+            </ul>
+            <ul class="list-group list-group-horizontal">
+            <a href="{% url 'threads' 6294 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-success">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">👶人間</div>
+                  </div>
+            </a>
+            <a href="{% url 'threads' 6295 %}" 
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-danger">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">🧬生命環境</div>
+                  </div>
+            </a>
+            </ul>
+            <ul class="list-group list-group-horizontal">
+            <a href="{% url 'threads' 6296 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-warning">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">🧪 理工</div>
+                  </div>
+            </a>
+            <a href="{% url 'threads' 6297 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-info">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">💻情報</div>
+                  </div>
+            </a>
+          </ul>
+          <ul class="list-group list-group-horizontal">
+            <a href="{% url 'threads' 6298 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-light">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">👨‍⚕️医学</div>
+                  </div>
+            </a>
+            <a href="{% url 'threads' 6299 %}" 
+               class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-dark">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">💪体育</div>
+                  </div>
+            </a>
+          </ul>
+          <ul class="list-group list-group-horizontal">
+            <a href="{% url 'threads' 6300 %}"
+              class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-danger">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">🎨芸術</div>
+                  </div>
+            </a>
+            <a href="{% url 'threads' 6301 %}" 
+              class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-success">
+              <div class="ms-2 me-auto">
+                  <div class="fw-bold">🫠総合</div>
+                </div>
+          </a>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {% include 'header.html' %}
 
   <div id="main_container" class="container-fluid">
@@ -40,34 +135,9 @@
             履修している講義スレッドに参加して、
             <br class="mobile-only">
             協力してA+を目指そう！<br>
-            雑談スレッドは
-            <a class="text-decoration-none" role="button" data-bs-toggle="collapse" data-bs-target="#collapseTalk"
-              aria-expanded="false" aria-controls="collapseExample">
-              こちら
-            </a>
-            <div class="container">
-              <div class="collapse" id="collapseTalk">
-                <div class="card card-body mb-3">
-                  <div class="row">
-                    <div class="col">
-                      <a href="/threads/6292/" class="text-decoration-none me-2 mb-2 color-dark-blue">人文・文化</a>
-                      <a href="/threads/6293/" class="text-decoration-none me-2 mb-2 color-dark-blue">社会・国際</a>
-                      <a href="/threads/6294/" class="text-decoration-none me-2 mb-2 color-dark-blue">人間</a>
-                      <a href="/threads/6295/" class="text-decoration-none me-2 mb-2 color-dark-blue">生命環境</a>
-                      <a href="/threads/6296/" class="text-decoration-none me-2 mb-2 color-dark-blue">理工</a>
-                      <a href="/threads/6297/" class="text-decoration-none me-2 mb-2 color-dark-blue">情報</a>
-                      <a href="/threads/6298/" class="text-decoration-none me-2 mb-2 color-dark-blue">医</a>
-                      <a href="/threads/6299/" class="text-decoration-none me-2 mb-2 color-dark-blue">体育専門</a>
-                      <a href="/threads/6300/" class="text-decoration-none me-2 mb-2 color-dark-blue">芸術専門</a>
-                      <a href="/threads/6301/" class="text-decoration-none me-2 mb-2 color-dark-blue">総合</a>
-                      <a href="/threads/6302/" class="text-decoration-none me-2 mb-2 color-dark-blue">学園祭</a>
-                      <a href="/threads/6304/" class="text-decoration-none me-2 mb-2 color-dark-blue">新入生向け</a>                      
-                      <span class="text-danger">←NEW!</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#chatModal">
+              雑談スレッドはこちら
+            </button>
           </div>
         </div>
       </div>
@@ -382,7 +452,7 @@
                       📨<a href="mailto:info@aplus-tsukuba.net">メールでのお問い合わせ</a>
                     </li>
                     <li class="list-group-item">
-                      📋<a href="/threads/6291">運営へのお問い合わせスレッド</a>
+                      📋<a href="{% url 'threads' 6291 %}">運営へのお問い合わせスレッド</a>
                     </li>
                   </ul>
                 </div>
@@ -395,7 +465,7 @@
     </div>
     {% include 'footer.html' %}
   </div>
-
+  
   {% include 'load_javascript.html' %}
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <script src="{% static 'board/search.js' %}"></script>
