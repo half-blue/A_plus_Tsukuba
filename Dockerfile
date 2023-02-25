@@ -28,12 +28,13 @@ COPY ./pyproject.toml* ./poetry.lock* ./
 RUN poetry install --no-root
 # Cast a spell "--no-root" cf. https://github.com/python-poetry/poetry/issues/689 
 
+# Copy .env for local
+COPY ./.env_local /a_plus_tsukuba/.env
+
+# Copy files
 COPY ./init /a_plus_tsukuba/init
 COPY ./manage.py /a_plus_tsukuba/
 COPY ./pytest.ini /a_plus_tsukuba/
 
 COPY ./A_plus_Tsukuba /a_plus_tsukuba/A_plus_Tsukuba
 COPY ./board /a_plus_tsukuba/board
-
-# Copy .env for local
-COPY ./.env_local /a_plus_tsukuba/.env
