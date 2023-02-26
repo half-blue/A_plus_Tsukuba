@@ -1,5 +1,4 @@
 # 引数がpytestならば関数pytestを実行し、startならば関数startを実行する
-import os
 import subprocess
 
 def pytest():
