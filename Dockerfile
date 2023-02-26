@@ -21,6 +21,9 @@ RUN curl -sSL https://install.python-poetry.org | python - && \
     poetry config virtualenvs.create false
     # venv is not used in the container
 
+# Set working dir
+WORKDIR /a_plus_tsukuba
+
 # Copy poetry files
 COPY ./pyproject.toml* ./poetry.lock* ./
 
@@ -29,12 +32,12 @@ RUN poetry install --no-root
 # Cast a spell "--no-root" cf. https://github.com/python-poetry/poetry/issues/689 
 
 # Copy .env for local
-COPY ./.env_local /a_plus_tsukuba/.env
+COPY ./.env_local ./.env
 
 # Copy files
-COPY ./init /a_plus_tsukuba/init
-COPY ./manage.py /a_plus_tsukuba/
-COPY ./pytest.ini /a_plus_tsukuba/
+COPY ./init ./init
+COPY ./manage.py ./
+COPY ./pytest.ini ./
 
-COPY ./A_plus_Tsukuba /a_plus_tsukuba/A_plus_Tsukuba
-COPY ./board /a_plus_tsukuba/board
+COPY ./A_plus_Tsukuba ./A_plus_Tsukuba
+COPY ./board ./board
