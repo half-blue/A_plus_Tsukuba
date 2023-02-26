@@ -23,7 +23,7 @@ services:
     build: .
     ports:
       - 8000:8000
-    command: python /a_plus_tsukuba/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       my_sql:
         condition: service_healthy # wait db starting
