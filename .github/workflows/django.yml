@@ -13,11 +13,8 @@ jobs:
     - name: Checkout
         uses: actions/checkout@v2
     - name: generate .env
-        # 権限を755に変えてset-up-env.test.shを実行します
-        # 権限を変えないとpermisson deniedと怒られ、実行できなくなります
-        run: chmod +x set-up-env.test.sh && sh set-up-env.test.sh
-        # 後述のsecretsを設定します
-        # secretsの環境変数の値をMYSQL_ROOT_PASSWORDなどの変数に代入します
+        run: |
+          chmod +x set-up-env.test.sh && sh set-up-env.test.sh
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DEBUG: ${{ secrets.DEBUG }}
