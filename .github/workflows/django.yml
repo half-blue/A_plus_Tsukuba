@@ -11,21 +11,21 @@ jobs:
 
     steps:
     - name: Checkout
-        uses: actions/checkout@v2
+      uses: actions/checkout@v2
     - name: generate .env
-        run: |
-          chmod +x set-up-env.test.sh && sh set-up-env.test.sh
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DEBUG: ${{ secrets.DEBUG }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
-      # テストを実行
-      - name: Test
-        run: |
-          docker-compose up -d --build
-          docker-compose exec -T app poetry run pytest --cov=board/tests/
+      run: |
+        chmod +x set-up-env.test.sh && sh set-up-env.test.sh
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DEBUG: ${{ secrets.DEBUG }}
+        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
+    # テストを実行
+    - name: Test
+      run: |
+        docker-compose up -d --build
+        docker-compose exec -T app poetry run pytest --cov=board/tests/
 
 
   
