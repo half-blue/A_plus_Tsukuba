@@ -22,9 +22,11 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
     # テストを実行
-    - name: Test
+    - name: build
       run: |
         docker-compose up -d --build
+    - name: Test
+      run: |
         docker-compose exec -T a_plus_tsukuba-web-1 pytest
 
 
