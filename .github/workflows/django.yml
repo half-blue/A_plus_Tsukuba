@@ -25,7 +25,7 @@ jobs:
     - name: Test
       run: |
         docker-compose up -d --build
-        docker-compose exec -T app poetry run pytest --cov=board/tests/
+        docker-compose exec -T a_plus_tsukuba-web-1 pytest
 
 
   
