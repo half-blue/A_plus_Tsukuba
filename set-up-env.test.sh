@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "SECRET_KEY=$SECRET_KEY" >> .env
+echo "DEBUG=$DEBUG" >> .env
+echo "ALLOWED_HOSTS=$ALLOWED_HOSTS" >> .env
+echo "DATABASE_URL=$DATABASE_URL" >> .env
+echo "DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE" >> .env
