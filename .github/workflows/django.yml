@@ -20,6 +20,7 @@ jobs:
       run: |
         docker-compose exec -T a_plus_tsukuba-web-1 python manage.py makemigrations board
         docker-compose exec -T a_plus_tsukuba-web-1 python manage.py migrate
+        docker ps
     - name: Test
       run: |
         docker-compose exec -T a_plus_tsukuba-web-1 pytest
