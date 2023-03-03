@@ -16,6 +16,7 @@ jobs:
     - name: build
       run: |
         docker-compose up -d --build
+        sleep 15s
     - name: create tables
       run: |
         docker ps
@@ -26,4 +27,3 @@ jobs:
         docker-compose exec -T a_plus_tsukuba-web-1 pytest
 
 
-  
