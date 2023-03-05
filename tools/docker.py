@@ -12,6 +12,10 @@ def dbonly():
     subprocess.run(["docker-compose", "up", "-d", "--build"])
     subprocess.run(["docker", "stop", "a_plus_tsukuba-web"])
 
+def stop():
+    subprocess.run(["docker", "stop", "a_plus_tsukuba-web"])
+    subprocess.run(["docker", "stop", "a_plus_tsukuba-db"])
+
 if __name__ == '__main__':
     arg = sys.argv[1] if len(sys.argv) > 1 else ""
     if arg == "pytest" :
@@ -20,5 +24,8 @@ if __name__ == '__main__':
     elif arg == "dbonly" :
         print("Running the DB CONTAINER ONLY (stop the web container)...")
         dbonly()
+    elif arg == "stop" :
+        print("Stop containers...")
+        stop()
     else:
         print("argument error")

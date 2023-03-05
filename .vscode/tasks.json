@@ -44,6 +44,12 @@
             "type": "shell",
             "command": "python tools/docker.py dbonly",
             "problemMatcher": []
+        },
+        {
+            "label": "Stop all containers...",
+            "type": "shell",
+            "command": "python tools/docker.py stop",
+            "problemMatcher": []
         }
     ]
 }
