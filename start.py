@@ -4,12 +4,12 @@ import subprocess
 def pytest():
     subprocess.run(["docker-compose", "build"])
     subprocess.run(["docker-compose", "up", "-d"])
-    subprocess.run(["docker", "exec", "a_plus_tsukuba-web-1", "pytest"])
+    subprocess.run(["docker", "exec", "a_plus_tsukuba-web", "pytest"])
 
 def start():
     subprocess.run(["docker-compose", "build"])
     subprocess.run(["docker-compose", "up", "-d"])
-    subprocess.run(["docker", "stop", "a_plus_tsukuba-web-1"])
+    subprocess.run(["docker", "stop", "a_plus_tsukuba-web"])
 
 if __name__ == '__main__':
     import sys

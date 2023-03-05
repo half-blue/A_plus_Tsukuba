@@ -4,6 +4,7 @@ services:
  my_sql:
    platform: linux/amd64
    image: mariadb:10.0.33 # Same as ConoHa DB Server
+   container_name: a_plus_tsukuba-db
    environment:
      MYSQL_PORT: 3306
      MYSQL_ROOT_PASSWORD: rootpass
@@ -21,6 +22,7 @@ services:
      
  web:
     build: .
+    container_name: a_plus_tsukuba-web
     ports:
       - 8000:8000
     command: python manage.py runserver 0.0.0.0:8000
