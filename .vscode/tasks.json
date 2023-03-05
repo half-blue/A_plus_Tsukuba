@@ -1,0 +1,49 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Pytest in container...",
+            "type": "shell",
+            "command": "python tools/docker.py pytest",
+            "problemMatcher": [
+                {
+                    "owner": "pytest_docker",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceRoot}/"
+                    ],
+                    "pattern": [
+                        {
+                            "regexp": "^(.*):(\\d+):(.*Error)$",
+                            "file": 1,
+                            "line": 2,
+                            "message": 3
+                        }
+                    ]
+                }
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build and Run docker a_puls_tsukuba...",
+            "type": "shell",
+            "command": "docker-compose up -d --build",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run the DB container only...",
+            "type": "shell",
+            "command": "python tools/docker.py dbonly",
+            "problemMatcher": []
+        }
+    ]
+}
