@@ -40,4 +40,4 @@ COPY ./manage.py ./
 COPY ./pytest.ini ./
 
 # NOTICE
-# ./A_plus_Tsukuba and ./board are synchronized by volume configs in docker-compose.yaml
+# ./A_plus_Tsukuba and ./board are synchronized by volume configs in docker-compose.yml
