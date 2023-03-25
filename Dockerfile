@@ -39,5 +39,5 @@ COPY ./init ./init
 COPY ./manage.py ./
 COPY ./pytest.ini ./
 
-COPY ./A_plus_Tsukuba ./A_plus_Tsukuba
-COPY ./board ./board
+# NOTICE
+# ./A_plus_Tsukuba and ./board are synchronized by volume configs in docker-compose.yaml

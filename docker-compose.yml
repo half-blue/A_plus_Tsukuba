@@ -29,6 +29,11 @@ services:
     depends_on:
       my_sql:
         condition: service_healthy # wait db starting
+    # プログラムフォルダをボリューム指定する
+    ## .envファイルなどを考慮して、以下のフォルダのみを対象にする。
+    volumes:
+      - ./A_plus_Tsukuba:/a_plus_tsukuba/A_plus_Tsukuba
+      - ./board:/a_plus_tsukuba/board
  
 volumes:
  data-volume:
