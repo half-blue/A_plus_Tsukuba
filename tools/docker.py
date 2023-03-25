@@ -5,7 +5,6 @@ import subprocess
 import sys
 
 def pytest():
-    subprocess.run(["docker-compose", "up", "-d", "--build"])
     subprocess.run(["docker", "exec", "a_plus_tsukuba-web", "pytest"])
 
 def dbonly():
