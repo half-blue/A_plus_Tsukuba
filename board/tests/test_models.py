@@ -1,5 +1,6 @@
 from django.test import TestCase
 from board.models import Thread, Subject, Post, Reply, Notice
+import uuid
 
 """
 現在のmariaDBの設定はStrict Modeではないため、厳密なmodelのテストは行えない。
@@ -32,20 +33,6 @@ class ThreadModelTest(TestCase):
     def test_str_method(self):
         self.assertEqual(str(self.thread), self.thread.title)
 
-"""
-class Subject(models.Model):
-    internal_id = models.AutoField(verbose_name="内部id", primary_key=True)
-    code = models.CharField(verbose_name="科目番号", max_length=10, default="")
-    name = models.CharField(verbose_name='講義名',blank=False, null=False, max_length=150)
-    teachers =  models.TextField(verbose_name='教員名', blank=True, max_length=100, default="")
-    subtype =  models.TextField(verbose_name='種類', blank=True, max_length=32, default="")
-    schools = models.CharField(verbose_name="学群等", max_length=40, default="", blank=True)
-    colleges = models.CharField(verbose_name="学類等", max_length=40, default="", blank=True)
-    thread_id = models.ForeignKey(Thread, verbose_name="スレッドid", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.code + " " + self.name
-"""
 class SubjectModelTest(TestCase):
     def setUp(self) -> None:
         self.thread = Thread.objects.create(title="test thread") # 再利用するためselfにする
@@ -104,32 +91,20 @@ class SubjectModelTest(TestCase):
     def test_str_method(self):
         self.assertEqual(str(self.subject), self.subject.code + " " + self.subject.name)
 
-"""
-class Post(models.Model):
-    EMOTION = (
-        (0, "非常事態(´•_•; )"),  # (DB値, 読みやすい値)
-        (1, "考え中(-ω-;)ｳｰﾝ"),
-        (2, "助かった(*´▽`人)"),
-        (3, "提案(^^)/~~~"),
-        (4, "ウンウン(´ー｀*)"),
-        (5, "大丈夫？( *´艸｀)"),
-    )
-
-    post_id = models.UUIDField(verbose_name='投稿者id', primary_key=True, default=uuid.uuid4, editable=False)
-    sender_name = models.CharField(verbose_name='投稿者名(匿名)', max_length=40, blank=False)
-    text = models.TextField(verbose_name='本文', blank=False, max_length=500)
-    created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
-    thread  = models.ForeignKey(Thread, on_delete=models.CASCADE)
-    emotion = models.IntegerField(choices=EMOTION, default=0)
-
-    def __str__(self):
-        return str(self.post_id)
-"""
-
 class PostModelTest(TestCase):
     def setUp(self) -> None:
         self.thread = Thread.objects.create(title="test thread") # 再利用するためselfにする
         self.post = Post.objects.create(sender_name="test name", text="test text", thread=self.thread)
+
+    def test_post_id_editable(self):
+        editable = self.post._meta.get_field('post_id').editable
+        self.assertFalse(editable)
+        # 本来はこんな感じ
+        # pre_id = self.post.post_id
+        # self.post.post_id = uuid.uuid4()
+        # self.post.save()
+        # self.assertEqual(pre_id, self.post.post_id)
+
 
     def test_sender_name_max_length(self):
         max_length = self.post._meta.get_field('sender_name').max_length
@@ -153,3 +128,56 @@ class PostModelTest(TestCase):
 
     def test_str_method(self):
         self.assertEqual(str(self.post), str(self.post.post_id))
+
+class ReplyModelTest(TestCase):
+    def setUp(self) -> None:
+        self.thread = Thread.objects.create(title="test thread") # 再利用するためselfにする
+        self.post = Post.objects.create(sender_name="test name", text="test text", thread=self.thread)
+        self.reply = Reply.objects.create(sender_name="test name", text="test text", post_id=self.post)
+
+    def test_post_id_on_delete(self):
+        self.post.delete()
+        self.assertEqual(Reply.objects.count(), 0)
+
+    def test_reply_id_editable(self):
+        editable = self.reply._meta.get_field('reply_id').editable
+        self.assertFalse(editable)
+        # 本来はこんな感じ
+        # pre_id = self.reply.reply_id
+        # self.reply.reply_id = uuid.uuid4()
+        # self.reply.save()
+        # self.assertEqual(pre_id, self.reply.reply_id)
+
+    def test_sender_name_max_length(self):
+        max_length = self.reply._meta.get_field('sender_name').max_length
+        self.assertEquals(max_length, 40)
+
+    def test_sender_name_blank(self):
+        blank = self.reply._meta.get_field('sender_name').blank
+        self.assertFalse(blank)
+
+    def test_text_max_length(self):
+        max_length = self.reply._meta.get_field('text').max_length
+        self.assertEquals(max_length, 500)
+
+    def test_text_blank(self):
+        blank = self.reply._meta.get_field('text').blank
+        self.assertFalse(blank)
+
+    def test_str_method(self):
+        self.assertEqual(str(self.reply), str(self.reply.reply_id))
+
+class NoticeModelTest(TestCase):
+    def setUp(self) -> None:
+        self.notice = Notice.objects.create(message="test message")
+
+    def test_message_max_length(self):
+        max_length = self.notice._meta.get_field('message').max_length
+        self.assertEquals(max_length, 300)
+
+    def test_message_blank(self):
+        blank = self.notice._meta.get_field('message').blank
+        self.assertFalse(blank)
+
+    def test_str_method(self):
+        self.assertEqual(str(self.notice), str(self.notice.message))
