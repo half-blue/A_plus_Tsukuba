@@ -1,30 +1,25 @@
 from django.test import TestCase
-from board.models import Thread, Subject, Post, Reply
+from board.models import Thread, Subject, Post, Reply, Notice
 
-"""
- class Thread(models.Model):
-    title    = models.CharField(verbose_name='スレタイ',blank=False, null=False, max_length=150)
-    def __str__(self):
-        return self.title
-"""
 class ThreadModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
+    # テスト用のデータを作成
+    def setUp(self) -> None:
         Thread.objects.create(title='test thread')
 
     def test_title_label(self):
-        thread = Thread.objects.get(id=1)
+        thread = Thread.objects.get(title='test thread')
         field_label = thread._meta.get_field('title').verbose_name
         self.assertEquals(field_label, 'スレタイ')
 
     def test_title_max_length(self):
-        th_title = "a" * 151
-        thread = Thread(title = th_title)
-        thread.save()
-        self.assertTrue(thread.title)
-        # thread = Thread.objects.get(id=1)
-        # max_length = thread._meta.get_field('title').max_length
-        # self.assertEquals(max_length, 150)
+        thread = Thread.objects.get(title='test thread')
+        max_length = thread._meta.get_field('title').max_length
+        self.assertEquals(max_length, 150)
+
+    def test_str_method(self):
+        thread = Thread.objects.get(title='test thread')
+        self.assertEqual(str(thread), thread.title)
+
 
     # def test_object_name_is_title(self):
     #     thread = Thread.objects.get(id=1)
