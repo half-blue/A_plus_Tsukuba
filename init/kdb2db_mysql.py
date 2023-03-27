@@ -2,13 +2,16 @@ import json
 import uuid
 import MySQLdb
 
-HOST = ""
+# Dockerコンテナのためのデフォルト値を設定しています，
+# 必要に応じて変更してください
+HOST = "my_sql"
 PORT = 3306
-DB = "***"
-USER = "**"
-PASSWORD="****"
+DB = "vhoi5_aplus_tsukuba"
+USER = "root"
+PASSWORD = "rootpass"
 
-conn = MySQLdb.connect(host=HOST, port=PORT, db=DB, user=USER, password=PASSWORD)
+conn = MySQLdb.connect(host=HOST, port=PORT, db=DB, user=USER, password=PASSWORD, 
+                       use_unicode=True, charset="utf8")
 cur = conn.cursor()
 
 with open("init/kdb.json","r", encoding="utf-8") as f:

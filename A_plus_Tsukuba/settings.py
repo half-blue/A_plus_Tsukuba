@@ -17,7 +17,7 @@ import os, environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-# 本番環境では、.envファイルを絶対パスで指定する
+# .envファイルを絶対パスで指定する
 env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
@@ -130,27 +130,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-try:
-    # 存在する場合、ローカルの設定読み込み
-    from .local_settings import *
-except ImportError:
-    pass
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if not DEBUG:
-    DATABASES = {
-        'default': env.db(),
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-    # Azureでadmin画面を表示するために必要。
-    STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            os.pardir,
-                            'static')
+DATABASES = {
+    'default': env.db(),
+}
