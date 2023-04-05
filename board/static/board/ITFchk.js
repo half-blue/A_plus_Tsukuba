@@ -7,7 +7,8 @@ ITF_CHECK.PROMPT_MSG = "このサービスは筑波大生専用のサービス�
     "筑波大学でアルファベット3文字といえば何でしょう？\n" +
     "（半角英字大文字で入力してください。）";
 ITF_CHECK.CONFIRM_MSG = "答えが間違っています。もう一度挑戦しますか？";
-ITF_CHECK.MOVE_MSG = "Aboutページに遷移します。";
+ITF_CHECK.MOVE_MSG = "クイズの答えが間違っている、または、クイズがキャンセルされたため、Aboutページに遷移します。\n\n" 
+                    + "再度挑戦する場合は、「講義スレッド検索に進む」を押してください。";
 ITF_CHECK.MOVE_TO = "/about/";
 ITF_CHECK.ANSWERS = ["ITF", "ITF."];
 ITF_CHECK.EXPIRES = 365; //DAYS
