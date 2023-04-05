@@ -12,8 +12,8 @@ services:
      TZ: Asia/Tokyo  
    ports:
      - 3307:3306 # To avoid port conflict, use 3307.
-   # Change default charset
-   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci 
+   # Change default charset and set strict mode
+   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
    volumes:
      - data-volume:/var/lib/mysql
    healthcheck:
