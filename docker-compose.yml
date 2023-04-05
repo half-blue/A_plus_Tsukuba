@@ -12,8 +12,10 @@ services:
      TZ: Asia/Tokyo  
    ports:
      - 3307:3306 # To avoid port conflict, use 3307.
-   # Change default charset and set strict mode
-   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+   # 文字コード設定とsql_modeをconohaに合わせる 
+   # ConoHa DBサーバーではデータベース権限しかもらえない
+   # utf8mb4とsql_modeの設定は.env側（django側＝セッションスコープ変数）で行うことで権限不足を回避する
+   command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --sql_mode=""
    volumes:
      - data-volume:/var/lib/mysql
    healthcheck:
