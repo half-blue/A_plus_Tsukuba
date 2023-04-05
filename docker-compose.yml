@@ -13,8 +13,7 @@ services:
    ports:
      - 3307:3306 # To avoid port conflict, use 3307.
    # Change default charset
-   command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci 
-   ## `utf8mb4`を指定するのが正しいが，productionがutf8となっている問題があるため同じにしている．
+   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci 
    volumes:
      - data-volume:/var/lib/mysql
    healthcheck:
