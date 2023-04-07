@@ -16,9 +16,9 @@ class ThreadModelAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 class SubjectModelAdmin(admin.ModelAdmin):
-    list_display = ('code', 'name', 'teachers', 'schools', 'colleges')
+    list_display = ('code', 'name', 'teachers', 'schools', 'colleges', 'year')
     list_display_links = ('code', 'name')
-    list_filter = ('schools', 'colleges')
+    list_filter = ('schools', 'colleges', 'year')
     search_fields = ['code', 'name', 'teachers']
 
 admin.site.register(Post, PostModelAdmin)
