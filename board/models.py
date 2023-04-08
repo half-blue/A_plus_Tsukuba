@@ -15,6 +15,7 @@ class Subject(models.Model):
     subtype =  models.TextField(verbose_name='種類', blank=True, max_length=1024, default="")
     schools = models.CharField(verbose_name="学群等", max_length=1024, default="", blank=True)
     colleges = models.CharField(verbose_name="学類等", max_length=1024, default="", blank=True)
+    year = models.IntegerField(verbose_name="開講年度", null=True, default=None)
     thread_id = models.ForeignKey(Thread, verbose_name="スレッドid", on_delete=models.CASCADE)
 
     def __str__(self):
