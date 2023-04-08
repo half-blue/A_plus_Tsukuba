@@ -35,7 +35,6 @@ RUN poetry install --no-root
 COPY ./.env_local ./.env
 
 # Copy files
-COPY ./init ./init
 COPY ./manage.py ./
 COPY ./pytest.ini ./
 
