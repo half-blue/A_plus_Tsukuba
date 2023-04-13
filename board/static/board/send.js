@@ -63,6 +63,7 @@ Vue.createApp({
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
             CHATAPP.reply_to = null;
-        }
+            window.document.getElementById("allow_tweet_dropdown").style = "";
+        },
     },
 }).mount('#send_app');
