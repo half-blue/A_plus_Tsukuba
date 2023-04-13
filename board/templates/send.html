@@ -32,6 +32,12 @@
         <div class="text-end">
           残り [[ 500 - inputText.length ]] 文字
         </div>
+        公式Twitterからの投稿 :
+        <select class="form-select" v-model="selectTwitterBot">
+          <option value="0">Twitterには投稿しない</option>
+          <option value="1">Twitterにも投稿する</option>
+        </select>
+        ※公式Twitterへの反映は新しい質問のみに適用されます。
         <br>
         <input type="button" class="form-control btn btn-primary" value="投稿する" data-bs-dismiss="offcanvas"
           v-on:click="onPostButtonClick" />

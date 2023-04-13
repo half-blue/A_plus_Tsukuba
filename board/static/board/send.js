@@ -8,6 +8,7 @@ Vue.createApp({
             inputName: "名無し",
             selectEmotion: 1,
             inputText: "",
+            selectTwitterBot: 0,
             thread_id: document.getElementById('thread_id').value,
         }
     },
