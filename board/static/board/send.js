@@ -22,6 +22,7 @@ Vue.createApp({
                     thread: this.thread_id,
                     sender_name: this.inputName,
                     text: this.inputText,
+                    twitterbot: this.selectTwitterBot,
                 }
             );
             return res;

@@ -37,6 +37,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
     thread  = models.ForeignKey(Thread, on_delete=models.CASCADE)
     emotion = models.IntegerField(choices=EMOTION, default=0)
+    twitterbot = models.IntegerField(verbose_name="ツイッターボット", default=0)
 
     def __str__(self):
         return str(self.post_id)
