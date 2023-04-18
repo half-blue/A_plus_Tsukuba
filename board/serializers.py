@@ -19,7 +19,7 @@ class SearchSubjectSerializer(serializers.ModelSerializer):
 class PostPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post                   
-        fields = ["post_id","sender_name","text","created_at","emotion", "thread", "twitterbot"]  
+        fields = ["post_id","sender_name","text","created_at","emotion", "thread", "allow_tweet"]  
         read_only_fields = ('post_id',"created_at")
 
 class PostReplySerializer(serializers.ModelSerializer):
