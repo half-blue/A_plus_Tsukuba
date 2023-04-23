@@ -8,6 +8,7 @@ Vue.createApp({
             inputName: "名無し",
             selectEmotion: 1,
             inputText: "",
+            selectTwitterBot: 1,
             thread_id: document.getElementById('thread_id').value,
         }
     },
@@ -21,6 +22,7 @@ Vue.createApp({
                     thread: this.thread_id,
                     sender_name: this.inputName,
                     text: this.inputText,
+                    allow_tweet: this.selectTwitterBot,
                 }
             );
             return res;
@@ -61,6 +63,7 @@ Vue.createApp({
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
             CHATAPP.reply_to = null;
-        }
+            window.document.getElementById("allow_tweet_dropdown").style = "";
+        },
     },
 }).mount('#send_app');

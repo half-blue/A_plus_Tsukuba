@@ -113,6 +113,7 @@ Vue.createApp({
             //コメントするボタンが押されるとき
             //グローバル空間のCHATAPPに返信先を書き込む
             CHATAPP.reply_to = post_id;
+            window.document.getElementById("allow_tweet_dropdown").style = "display:none;";
         }
     },
     mounted() {
