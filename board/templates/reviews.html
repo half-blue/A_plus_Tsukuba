@@ -1,6 +1,6 @@
 {% load static %}
-<h5>レビュー情報</h5>
-  <div class="row">
+<h5>みんなのレビュー</h5>
+<div class="row">
     <h6>総合評価</h6>
     <div class="d-flex justify-content-center align-items-center">
         <span class="star5_rating" id="star5-rating" data-rate="4.0"></span>
@@ -8,62 +8,107 @@
         <p class="d-inline-block mb-0">(16件の評価)</p>
     </div>
     <div class="col d-flex justify-content-center">
-      <table class="table table-sm table-borderless" style="width: 90%;">
-        <tbody>
-          <tr>
-            <th scope="row">楽単度</th>
-            <td class="fw-bolder">4.2</td>
-          </tr>
-          <tr>
-            <th scope="row">充実度</th>
-            <td class="fw-bolder">2.2</td>
-          </tr>
-          <tr>
-          <td>評価項目の詳細情報はこちら</td>
-          </tr>
-        </tbody>
+        <table class="table table-sm table-borderless" style="width: 90%;">
+            <tbody>
+                <tr>
+                    <th scope="row">楽単度</th>
+                    <td class="fw-bolder">4.2</td>
+                </tr>
+                <tr>
+                    <th scope="row">充実度</th>
+                    <td class="fw-bolder">2.2</td>
+                </tr>
+            </tbody>
 
-      </table>
+        </table>
     </div>
-  </div>
-    <div class="col d-block justify-content-center mt-2 mb-4 w-75 mx-auto">
-        <span class="badge rounded-pill bg-danger w-auto">鬼単(22)</span>
-        <span class="badge rounded-pill bg-danger w-auto">先生劣(21)</span>
-        <span class="badge rounded-pill bg-primary w-auto">レポートあり(16)</span>
-        <span class="badge rounded-pill bg-primary w-auto">中間試験あり(12)</span>
-        <span class="badge rounded-pill bg-dark w-auto">出席点数(8)</span>
-        <span class="badge rounded-pill bg-dark w-auto">先生優(3)</span>
-        <span class="badge rounded-pill bg-dark w-auto">持ち込み可(1)</span>
-    </div>
-    <h6>コメント一覧</h6>
-    <div class="col d-flex justify-content-center">
-      <table class="table table-sm table-borderless" style="width: 90%;">
+</div>
+
+<div class="col d-flex justify-content-end mb-4 me-2">
+    <a role="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#reviewDetailsModalToggle">
+        <span class="ms-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-info-circle" width="18" height="18"
+                viewBox="0 0 24 24">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path
+                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+            </svg>
+            評価項目についてはこちら
+        </span>
+    </a>
+</div>
+
+<div class="col d-block justify-content-center mb-4 w-75 mx-auto">
+    <span class="badge rounded-pill bg-danger w-auto">鬼単(22)</span>
+    <span class="badge rounded-pill bg-danger w-auto">先生劣(21)</span>
+    <span class="badge rounded-pill bg-primary w-auto">レポートあり(16)</span>
+    <span class="badge rounded-pill bg-primary w-auto">中間試験あり(12)</span>
+    <span class="badge rounded-pill bg-dark w-auto">出席点数(8)</span>
+    <span class="badge rounded-pill bg-dark w-auto">先生優(3)</span>
+    <span class="badge rounded-pill bg-dark w-auto">持ち込み可(1)</span>
+</div>
+<h6>コメント一覧</h6>
+<div class="col d-flex justify-content-center">
+    <table class="table table-sm table-borderless" style="width: 90%;">
         <tbody>
-          <tr>
-            <td class="review-anon-icon align-middle">
-              <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
-            </td>
-            <td class="fw-light">
-            <div class="review-comment-box">
-              先生の話を聞くだけなのに出席取るのは最悪です。
-              この講義は受ける価値はありませんが、単位は出ます。
-            </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="review-anon-icon align-middle">
-              <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
-            </td>
-            <td class="fw-light">
-            <div class="review-comment-box">
-              先生の話を聞くだけなのに出席取るのは最悪です。
-              この講義は受ける価値はありませんが、単位は出ます。
-            </div>
-            </td>
-          </tr>
+            <tr>
+                <td class="review-anon-icon align-middle">
+                    <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
+                </td>
+                <td class="fw-light">
+                    <div class="review-comment-box">
+                        先生の話を聞くだけなのに出席取るのは最悪です。
+                        この講義は受ける価値はありませんが、単位は出ます。
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="review-anon-icon align-middle">
+                    <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
+                </td>
+                <td class="fw-light">
+                    <div class="review-comment-box">
+                        先生の話を聞くだけなのに出席取るのは最悪です。
+                        この講義は受ける価値はありませんが、単位は出ます。
+                    </div>
+                </td>
+            </tr>
         </tbody>
-    </table>    
+    </table>
+</div>
+<div class="col d-flex justify-content-center mb-4">
+    <a data-bs-toggle="collapse" href="#collapseReviewComments" role="button" aria-expanded="false"
+        aria-controls="collapseExample">
+        さらにコメントを展開(2件)▼
+    </a>
+</div>
+<div class="collapse" id="collapseReviewComments">
+    <div class="col d-flex justify-content-center">
+        <table class="table table-sm table-borderless" style="width: 90%;">
+            <tbody>
+                <tr>
+                    <td class="review-anon-icon align-middle">
+                        <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
+                    </td>
+                    <td class="fw-light">
+                        <div class="review-comment-box">
+                            先生の話を聞くだけなのに出席取るのは最悪です。
+                            この講義は受ける価値はありませんが、単位は出ます。
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="review-anon-icon align-middle">
+                        <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
+                    </td>
+                    <td class="fw-light">
+                        <div class="review-comment-box">
+                            先生の話を聞くだけなのに出席取るのは最悪です。
+                            この講義は受ける価値はありませんが、単位は出ます。
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="d-md-none">
-        <a href="#top">BACK TO TOP</a>
-    </div>
+</div>

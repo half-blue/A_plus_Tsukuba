@@ -1,1 +1,36 @@
 {% load static %}
+<div class="modal fade" id="reviewDetailsModalToggle" aria-hidden="true" aria-labelledby="reviewDetailsModalToggle"
+    tabindex="-1">
+    <div class="modal-dialog pt-5">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel">みんなのレビューの評価項目について</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-precautions">
+                <ol>
+                    <li class="fs-4">総合評価(★の数)について</li>
+                    <p class="text-secondary">
+                        その授業を<b>どれぐらい後輩におすすめしたいか</b>を表しています。
+                    </p>
+                    <li class="fs-4">楽単度について</li>
+                    <p class="text-secondary">
+                        その授業の単位を取得するのがどれぐらい簡単であるのか表した指標です。
+                        数が大きいほどその授業は楽単であると評価されています。
+                    </p>
+                    <li class="fs-4">充実度について</li>
+                    <p class="text-secondary">
+                        その授業の学びの多さを表した指標です。数が大きいほど充実しています。
+                    </p>
+                    <li class="fs-4">タグについて</li>
+                    <p class="text-secondary">
+                        授業に関する情報をタグとして追加することができます。
+                    </p>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
