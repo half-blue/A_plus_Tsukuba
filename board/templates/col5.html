@@ -1,5 +1,6 @@
 {% load static %}
 <div class="col-md-5">
+  <div id="lecture_info" class="post_anker"></div>
   <h5>科目情報</h5>
   <div class="row">
     <div class="col d-flex justify-content-center">
@@ -21,6 +22,8 @@
       </table>
     </div>
   </div>
+  {% include 'reviews.html' %}
+
   <div class="row" id="share_app">
       <div class="col text-center ad-box">
         <template v-if="NavigatorShareAPI">
@@ -43,6 +46,11 @@
         </button>
       </div>
   </div>
+
+  <div class="d-md-none d-flex justify-content-center mb-3">
+    <a href="#top">ページトップへ戻る</a>
+  </div>
+
   <div class="row">
     <div class="col text-center ad-box col-lg-8 mx-auto">
       広告<br>
@@ -59,4 +67,5 @@
      </a>
     </div>
   </div>
+
 </div>
