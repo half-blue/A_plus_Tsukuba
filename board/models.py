@@ -69,3 +69,28 @@ class Notice(models.Model):
 
     def __str__(self):
         return str(self.message)
+
+class Review(models.Model):
+    RATINGS = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    )
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    ratings_overall = models.IntegerField(choices=RATINGS, verbose_name='総合評価',default=5)
+    ratings_easiness = models.IntegerField(choices=RATINGS, verbose_name='楽単度',default=5)
+    ratings_content = models.IntegerField(choices=RATINGS, verbose_name='充実度',default=5)
+    comment = models.TextField(verbose_name='コメント',blank=True, null=True)
+    tags = models.ManyToManyField('Tag', verbose_name='タグ', blank=True, related_name='reviews')
+    created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
+
+    def __str__(self):
+        return self.subject.name + "のレビュー"
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
