@@ -3,7 +3,9 @@ from django.utils import timezone
 import uuid
 
 class Thread(models.Model):
-    title    = models.CharField(verbose_name='スレタイ',blank=False, null=False, max_length=4096)
+    title = models.CharField(verbose_name='スレタイ', blank=False, null=False, max_length=4096)
+    enable_review = models.BooleanField(verbose_name="レビュー機能を有効にする", default=True)
+
     def __str__(self):
         return self.title
 
@@ -70,6 +72,12 @@ class Notice(models.Model):
     def __str__(self):
         return str(self.message)
 
+class Tag(models.Model):
+    name = models.CharField(verbose_name='タグ名', max_length=50, blank=False)
+
+    def __str__(self):
+        return self.name
+
 class Review(models.Model):
     RATINGS = (
         (1, '1'),
@@ -78,19 +86,14 @@ class Review(models.Model):
         (4, '4'),
         (5, '5'),
     )
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+
+    thread = models.ForeignKey(Thread, verbose_name="スレッドid", on_delete=models.CASCADE)
     ratings_overall = models.IntegerField(choices=RATINGS, verbose_name='総合評価',default=5)
     ratings_easiness = models.IntegerField(choices=RATINGS, verbose_name='楽単度',default=5)
     ratings_content = models.IntegerField(choices=RATINGS, verbose_name='充実度',default=5)
-    comment = models.TextField(verbose_name='コメント',blank=True, null=True)
-    tags = models.ManyToManyField('Tag', verbose_name='タグ', blank=True, related_name='reviews')
+    comment = models.TextField(verbose_name='コメント', blank=True, max_length=100)
+    tags = models.ManyToManyField(Tag, verbose_name='タグ', blank=True)
     created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
 
     def __str__(self):
-        return self.subject.name + "のレビュー"
-
-class Tag(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
+        return self.thread.title + "のレビュー"

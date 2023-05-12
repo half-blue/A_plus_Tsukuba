@@ -12,8 +12,19 @@ class ReplyModelAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     list_filter = ('emotion',)
 
+@admin.action(description="選択したthreadのレビュー機能を無効化する")
+def disable_review(modeladmin, request, queryset):
+    queryset.update(enable_review=False)
+
+@admin.action(description="選択したthreadのレビュー機能を有効化する")
+def enable_review(modeladmin, request, queryset):
+    queryset.update(enable_review=True)
+
 class ThreadModelAdmin(admin.ModelAdmin):
-    search_fields = ['title']
+    list_display = ('title', 'enable_review')
+    search_fields = ['title',]
+    list_filter = ('enable_review',)
+    actions = [disable_review, enable_review]
 
 class SubjectModelAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'teachers', 'schools', 'colleges', 'year')
@@ -22,9 +33,8 @@ class SubjectModelAdmin(admin.ModelAdmin):
     search_fields = ['code', 'name', 'teachers']
 
 class ReviewModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'subject', 'ratings_overall', 'ratings_easiness', 'ratings_content', 'created_at')
-    list_filter = ('subject',)
-    search_fields = ('comment', 'tags__name')
+    list_display = ('thread', 'ratings_overall', 'ratings_easiness', 'ratings_content', 'comment','created_at')
+    search_fields = ('thread__title', 'comment')
     filter_horizontal = ('tags',)
 
 class TagModelAdmin(admin.ModelAdmin):
