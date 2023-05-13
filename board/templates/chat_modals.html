@@ -76,7 +76,14 @@
                     {{form.comment|add_class:"form-control"|attr:"id:commentTextarea"|attr:"rows:3"}}
                     <p class="error-message">{{ form.comment.errors.0 }}</p>
 
-                    {{form.tags|add_class:"btn-check"}}
+                    <div class="btn-group" data-toggle="buttons">
+                        {% for tag in form.tags %}
+                            <input type="checkbox" class="btn-check" id="{{ tag.id_for_label }}" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="{{ tag.id_for_label }}">
+                            {{ tag.choice_label }}
+                            </label>
+                        {% endfor %}
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
