@@ -3,6 +3,9 @@ from django.http import HttpResponse, Http404
 from .models import Notice, Post, Reply, Subject, Thread
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import FormMixin
+from .forms import ReviewForm
+from django.contrib import messages
 from django.db.models import Count
 
 class Index(ListView):
@@ -10,9 +13,10 @@ class Index(ListView):
         return redirect("search/")
 
 
-class ThreadView(ListView):
+class ThreadView(FormMixin, ListView):
     template_name = "board/Chat.html"
     model = Post
+    form_class = ReviewForm
     #context_object_name = 'post_data'
     ordering = ['-created_at']
 
@@ -37,6 +41,27 @@ class ThreadView(ListView):
         context['sub_codes'] = codes[:-2]
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        review = form.save(commit=False)
+        review.thread_id = self.kwargs['thread_id']
+        review.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        messages.warning(self.request, "レビューの投稿に失敗しました。")
+        return response
+    
+
 
 
 class AboutView(TemplateView):

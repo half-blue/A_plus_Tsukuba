@@ -1,10 +1,12 @@
 {% load static %}
+{% load widget_tweaks %}
+
 <div class="modal fade" id="reviewDetailsModalToggle" aria-hidden="true" aria-labelledby="reviewDetailsModalToggle"
     tabindex="-1">
     <div class="modal-dialog pt-5">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel">みんなのレビューの評価項目について</h5>
+                <h5 class="modal-title">みんなのレビューの評価項目について</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body modal-precautions">
@@ -34,3 +36,79 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="reviewFormsModalToggle" aria-hidden="true" aria-labelledby="reviewFormsModalToggle"
+    tabindex="-1">
+    <div class="modal-dialog pt-5">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">みんなのレビューの評価項目について</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-precautions">
+                <form action="" method="post" id="review_post_form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <h5>総合評価</h5>
+                    {{form.ratings_overall|add_class:"form-select"}}
+
+                    <label for="easinessRange" class="form-label">楽単度</label>
+                    {{form.ratings_easiness|add_class:"form-range"|attr:"id:easinessRange"|attr:"min:1"|attr:"max:5"}}
+                    <div class="d-flex justify-content-between">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                    </div>
+
+                    <label for="contentRange" class="form-label">充実度</label>
+                    {{form.ratings_content|add_class:"form-range"|attr:"id:contentRange"|attr:"min:1"|attr:"max:5"}}
+                    <div class="d-flex justify-content-between">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                    </div>
+
+                    <label for="commentTextarea" class="form-label">コメント</label>
+                    {{form.comment|add_class:"form-control"|attr:"id:commentTextarea"|attr:"rows:3"}}
+                    <p class="error-message">{{ form.comment.errors.0 }}</p>
+
+                    {{form.tags|add_class:"btn-check"}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ゴミ箱-->
+
+
+
+
+
+                <!-- <h6>授業タグ</h6>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">教科書購入必須</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">テストに持ち込み可</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">出席点の割合高</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">先生優</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">先生厳</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">出席点の割合高</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">教科書購入必須</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">テストに持ち込み可</label>
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">出席点の割合高</label> -->
