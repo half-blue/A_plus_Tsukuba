@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Notice, Post, Reply, Subject, Thread
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
@@ -7,6 +7,7 @@ from django.views.generic.edit import FormMixin
 from .forms import ReviewForm
 from django.contrib import messages
 from django.db.models import Count
+from django.urls import reverse_lazy
 
 class Index(ListView):
     def get(self, request, *args, **kwargs):
@@ -54,8 +55,10 @@ class ThreadView(FormMixin, ListView):
         review = form.save(commit=False)
         review.thread_id = self.kwargs['thread_id']
         review.save()
-        return super().form_valid(form)
-
+        # もう一度元のページに戻る
+        return HttpResponseRedirect(reverse_lazy(
+            "threads", kwargs={"thread_id": self.kwargs["thread_id"]}
+        ))
     def form_invalid(self, form):
         response = super().form_invalid(form)
         messages.warning(self.request, "レビューの投稿に失敗しました。")

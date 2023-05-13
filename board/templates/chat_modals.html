@@ -31,7 +31,7 @@
                 </ol>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
             </div>
         </div>
     </div>
@@ -41,12 +41,13 @@
     tabindex="-1">
     <div class="modal-dialog pt-5">
         <div class="modal-content">
+            <form action="" method="post" id="review_post_form">
             <div class="modal-header">
                 <h5 class="modal-title">みんなのレビューの評価項目について</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body modal-precautions">
-                <form action="" method="post" id="review_post_form">
+                
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <h5>総合評価</h5>
@@ -74,7 +75,6 @@
 
                     <label for="commentTextarea" class="form-label">コメント</label>
                     {{form.comment|add_class:"form-control"|attr:"id:commentTextarea"|attr:"rows:3"}}
-                    <p class="error-message">{{ form.comment.errors.0 }}</p>
 
                     <div class="btn-group" data-toggle="buttons">
                         {% for tag in form.tags %}
@@ -84,38 +84,14 @@
                             </label>
                         {% endfor %}
                     </div>
-                </form>
+                
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input class="btn btn-primary" type="submit" value="投稿"></input>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
             </div>
+        </form>
         </div>
     </div>
 </div>
 
-
-<!-- ゴミ箱-->
-
-
-
-
-
-                <!-- <h6>授業タグ</h6>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">教科書購入必須</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">テストに持ち込み可</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">出席点の割合高</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">先生優</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">先生厳</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">出席点の割合高</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">教科書購入必須</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">テストに持ち込み可</label>
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined">出席点の割合高</label> -->
