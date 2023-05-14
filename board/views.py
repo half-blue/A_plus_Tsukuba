@@ -1,18 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Notice, Post, Reply, Subject, Thread
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import FormMixin
+from .forms import ReviewForm
+from django.contrib import messages
 from django.db.models import Count
+from django.urls import reverse_lazy
 
 class Index(ListView):
     def get(self, request, *args, **kwargs):
         return redirect("search/")
 
 
-class ThreadView(ListView):
+class ThreadView(FormMixin, ListView):
     template_name = "board/Chat.html"
     model = Post
+    form_class = ReviewForm
     #context_object_name = 'post_data'
     ordering = ['-created_at']
 
@@ -37,6 +42,29 @@ class ThreadView(ListView):
         context['sub_codes'] = codes[:-2]
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        review = form.save(commit=False)
+        review.thread_id = self.kwargs['thread_id']
+        review.save()
+        # もう一度元のページに戻る
+        return HttpResponseRedirect(reverse_lazy(
+            "threads", kwargs={"thread_id": self.kwargs["thread_id"]}
+        ))
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        messages.warning(self.request, "レビューの投稿に失敗しました。")
+        return response
+    
+
 
 
 class AboutView(TemplateView):
