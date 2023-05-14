@@ -50,8 +50,8 @@
                 
                 {% csrf_token %}
                 {{ form.non_field_errors }}
-                <h5>総合評価</h5>
-                    {{form.ratings_overall|add_class:"form-select"}}
+                <span class="h5">総合評価</span> <span class="small">（その授業をどれぐらい後輩におすすめしたいか）</span>
+                    {{form.ratings_overall|add_class:"form-select mt-1"}}
 
                     <label for="easinessRange" class="form-label mt-2">楽単度</label>
                     {{form.ratings_easiness|add_class:"form-range"|attr:"id:easinessRange"|attr:"min:1"|attr:"max:5"}}

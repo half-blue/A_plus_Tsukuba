@@ -80,11 +80,11 @@ class Tag(models.Model):
 
 class Review(models.Model):
     RATINGS = (
-        (1, '★'),
-        (2, '★★'),
-        (3, '★★★'),
-        (4, '★★★★'),
-        (5, '★★★★★'),
+        (1, '★1'),
+        (2, '★★2'),
+        (3, '★★★3'),
+        (4, '★★★★4'),
+        (5, '★★★★★5'),
     )
 
     thread = models.ForeignKey(Thread, verbose_name="スレッドid", on_delete=models.CASCADE)
