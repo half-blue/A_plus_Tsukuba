@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Notice, Post, Reply, Subject, Thread
+from .models import Notice, Post, Reply, Subject, Thread, Review
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormMixin
 from .forms import ReviewForm
 from django.contrib import messages
-from django.db.models import Count
+from django.db.models import Count, Avg
 from django.urls import reverse_lazy
 
 class Index(ListView):
@@ -41,6 +41,34 @@ class ThreadView(FormMixin, ListView):
             codes += col["code"] + ", "
         context['sub_codes'] = codes[:-2]
 
+        # レビュー
+        reviews = Review.objects.filter(thread_id = thread_id)
+        context["review_count"] = reviews.count()
+
+        # 平均値を取得
+        ratings_overall = reviews.aggregate(Avg('ratings_overall'))
+        ratings_easiness = reviews.aggregate(Avg('ratings_easiness'))
+        ratings_content = reviews.aggregate(Avg('ratings_content'))
+        context.update(**ratings_overall, **ratings_easiness, **ratings_content)
+
+        # CSS用に.5刻みでoverallを計算 floatじゃないとうまくいかないので注意
+        if ratings_overall['ratings_overall__avg'] is not None:
+            context['ratings_overall_for_star'] = int(ratings_overall['ratings_overall__avg'] * 2) / 2.0
+        else:
+            context['ratings_overall_for_star'] = 0.0
+
+        # コメント
+        comments = reviews.exclude(comment='').order_by('-created_at').values('comment')
+        if len(comments) > 2:
+            context['review_recent_comments'] = comments[:2]
+            context['review_more_comments'] = comments[2:]
+        else:
+            context['review_recent_comments'] = comments
+            context['review_more_comments'] = []
+
+        # タグ
+        a = reviews.values("tags").all()
+        print(a)
         return context
 
     def post(self, request, *args, **kwargs):

@@ -11,24 +11,30 @@
 <div class="row">
     <h6>総合評価</h6>
     <div class="d-flex justify-content-center align-items-center">
-        <span class="star5_rating" id="star5-rating" data-rate="4.0"></span>
-        <p class="fs-2 fw-bold d-inline-block mb-0 mx-2">4.23 </p>
-        <p class="d-inline-block mb-0">(16件の評価)</p>
+        <span class="star5_rating" id="star5-rating" data-rate="{{ ratings_overall_for_star }}"></span>
+        <p class="fs-2 fw-bold d-inline-block mb-0 mx-2">{{ ratings_overall__avg | floatformat:2 }}</p>
+        <p class="d-inline-block mb-0">({{ review_count }}件の評価)</p>
     </div>
     <div class="col d-flex justify-content-center">
+        {% if review_count > 0 %}
         <table class="table table-sm table-borderless" style="width: 90%;">
             <tbody>
                 <tr>
                     <th scope="row">楽単度</th>
-                    <td class="fw-bolder">4.2</td>
+                    <td class="fw-bolder">{{ ratings_easiness__avg | floatformat:2 }}</td>
                 </tr>
                 <tr>
                     <th scope="row">充実度</th>
-                    <td class="fw-bolder">2.2</td>
+                    <td class="fw-bolder">{{ ratings_content__avg | floatformat:2 }}</td>
                 </tr>
             </tbody>
-
         </table>
+        {% else %}
+        <p class="text-center">
+        まだこの講義のレビューはないようです。<br>
+        みんなのために、レビューを投稿してみませんか？
+        </p>
+        {% endif %}
     </div>
 </div>
 
@@ -57,67 +63,57 @@
 </div>
 
 <h6>コメント一覧</h6>
+{% if review_recent_comments|length > 0 %}
 <div class="col d-flex justify-content-center">
     <table class="table table-sm table-borderless" style="width: 90%;">
         <tbody>
+            {% for row in review_recent_comments %}
             <tr>
                 <td class="review-anon-icon align-middle">
                     <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
                 </td>
                 <td class="fw-light">
                     <div class="review-comment-box">
-                        先生の話を聞くだけなのに出席取るのは最悪です。
-                        この講義は受ける価値はありませんが、単位は出ます。
+                        {{ row.comment }}
                     </div>
                 </td>
-            </tr>
-            <tr>
-                <td class="review-anon-icon align-middle">
-                    <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
-                </td>
-                <td class="fw-light">
-                    <div class="review-comment-box">
-                        先生の話を聞くだけなのに出席取るのは最悪です。
-                        この講義は受ける価値はありませんが、単位は出ます。
-                    </div>
-                </td>
-            </tr>
+            </tr> 
+            {% endfor %}
         </tbody>
     </table>
 </div>
+{% if review_more_comments|length > 0 %}
 <div class="col d-flex justify-content-center mb-4">
     <a data-bs-toggle="collapse" href="#collapseReviewComments" role="button" aria-expanded="false"
         aria-controls="collapseExample">
-        さらにコメントを展開(2件)▼
+        さらにコメントを展開({{ review_more_comments | length }}件)▼
     </a>
 </div>
 <div class="collapse" id="collapseReviewComments">
     <div class="col d-flex justify-content-center">
         <table class="table table-sm table-borderless" style="width: 90%;">
             <tbody>
+                {% for row in review_more_comments %}
                 <tr>
                     <td class="review-anon-icon align-middle">
                         <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
                     </td>
                     <td class="fw-light">
                         <div class="review-comment-box">
-                            先生の話を聞くだけなのに出席取るのは最悪です。
-                            この講義は受ける価値はありませんが、単位は出ます。
+                            {{ row.comment }}
                         </div>
                     </td>
-                </tr>
-                <tr>
-                    <td class="review-anon-icon align-middle">
-                        <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
-                    </td>
-                    <td class="fw-light">
-                        <div class="review-comment-box">
-                            先生の話を聞くだけなのに出席取るのは最悪です。
-                            この講義は受ける価値はありませんが、単位は出ます。
-                        </div>
-                    </td>
-                </tr>
+                </tr> 
+                {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+{% endif %}
+{% else %}
+<div class="col d-flex justify-content-center">
+    <p>
+        コメントはまだありません。
+    </p>
+</div>
+{% endif %}

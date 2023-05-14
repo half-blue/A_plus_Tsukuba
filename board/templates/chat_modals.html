@@ -79,7 +79,9 @@
                     <label class="form-label mt-2" for="tagBtnGroup">タグを選択</label><br>
                     <div id="tagBtnGroup">
                         {% for tag in form.tags %}
-                            <input type="checkbox" class="btn-check" id="{{ tag.id_for_label }}" autocomplete="off">
+                            <input type="checkbox" class="btn-check"  
+                                    name="tags" id="{{ tag.id_for_label }}" value="{{ tag }}"
+                                    autocomplete="off">
                             <label class="btn btn-outline-dark mt-1" for="{{ tag.id_for_label }}">
                             {{ tag.choice_label }}
                             </label>
