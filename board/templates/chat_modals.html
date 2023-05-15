@@ -53,8 +53,8 @@
                 <span class="h5">総合評価</span> <span class="small">（その授業をどれぐらい後輩におすすめしたいか）</span>
                     {{form.ratings_overall|add_class:"form-select mt-1"}}
 
-                    <label for="easinessRange" class="form-label mt-2">楽単度</label>
-                    {{form.ratings_easiness|add_class:"form-range"|attr:"id:easinessRange"|attr:"min:1"|attr:"max:5"}}
+                    <label for="{{ form.ratings_easiness.auto_id }}" class="form-label mt-2">楽単度</label>
+                    {{form.ratings_easiness|add_class:"form-range"|attr:"min:1"|attr:"max:5"}}
                     <div class="d-flex justify-content-between">
                         <div>1</div>
                         <div>2</div>
@@ -63,8 +63,8 @@
                         <div>5</div>
                     </div>
 
-                    <label for="contentRange" class="form-label mt-2">充実度</label>
-                    {{form.ratings_content|add_class:"form-range"|attr:"id:contentRange"|attr:"min:1"|attr:"max:5"}}
+                    <label for="{{ form.ratings_content.auto_id }}" class="form-label mt-2">充実度</label>
+                    {{form.ratings_content|add_class:"form-range"|attr:"min:1"|attr:"max:5"}}
                     <div class="d-flex justify-content-between">
                         <div>1</div>
                         <div>2</div>
@@ -73,21 +73,12 @@
                         <div>5</div>
                     </div>
 
-                    <label for="commentTextarea" class="form-label mt-2">コメント（オプション）</label>
-                    {{form.comment|add_class:"form-control"|attr:"id:commentTextarea"|attr:"rows:3"}}
+                    <label for="{{ form.comment.auto_id }}" class="form-label mt-2">コメント（オプション）</label>
+                    {{form.comment|add_class:"form-control"|attr:"rows:3"}}
 
-                    <label class="form-label mt-2" for="tagBtnGroup">タグを選択</label><br>
-                    <div id="tagBtnGroup">
-                        {% for tag in form.tags %}
-                            <input type="checkbox" class="btn-check"  
-                                    name="tags" id="{{ tag.id_for_label }}" value="{{ tag }}"
-                                    autocomplete="off">
-                            <label class="btn btn-outline-dark mt-1" for="{{ tag.id_for_label }}">
-                            {{ tag.choice_label }}
-                            </label>
-                        {% endfor %}
-                    </div>
-                
+                    <label class="form-label mt-2" for="{{ form.tags.auto_id }}">タグを選択</label><br>
+                    {{ form.tags }} <!-- use custom widgets -->
+                    
             </div>
             <div class="modal-footer">
                 <input class="btn btn-primary" type="submit" value="投稿"></input>

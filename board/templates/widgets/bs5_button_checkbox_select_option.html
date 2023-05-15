@@ -1,0 +1,2 @@
+{% include "widgets/bs5_button_checkbox_input.html" %}
+{% if widget.wrap_label %}<label class="btn btn-outline-dark mt-1" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>{% endif %}{% if widget.wrap_label %} {{ widget.label }}</label>{% endif %}

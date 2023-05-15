@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Notice, Post, Reply, Subject, Thread, Review
+from .models import Notice, Post, Reply, Subject, Thread, Review, Tag
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormMixin
@@ -44,6 +44,7 @@ class ThreadView(FormMixin, ListView):
         # レビュー
         reviews = Review.objects.filter(thread_id = thread_id)
         context["review_count"] = reviews.count()
+        context["review_is_enable"] = thread.enable_review
 
         # 平均値を取得
         ratings_overall = reviews.aggregate(Avg('ratings_overall'))
@@ -67,8 +68,13 @@ class ThreadView(FormMixin, ListView):
             context['review_more_comments'] = []
 
         # タグ
-        a = reviews.values("tags").all()
-        print(a)
+        tags = []
+        for row in reviews.values("tags").annotate(count=Count('id')):
+            if row["tags"] is not None:
+                name = Tag.objects.filter(id= row["tags"]).values("name")[0]["name"]
+                count = row["count"]
+                tags.append({"name" : name, "count" : count})
+        context["review_tag_counts"] = tags
         return context
 
     def post(self, request, *args, **kwargs):
@@ -83,6 +89,7 @@ class ThreadView(FormMixin, ListView):
         review = form.save(commit=False)
         review.thread_id = self.kwargs['thread_id']
         review.save()
+        form.save_m2m() 
         # もう一度元のページに戻る
         return HttpResponseRedirect(reverse_lazy(
             "threads", kwargs={"thread_id": self.kwargs["thread_id"]}

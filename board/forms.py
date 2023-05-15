@@ -1,5 +1,9 @@
 from django import forms
-from .models import Review, Tag
+from .models import Review
+
+class Bs5ButtonCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    template_name = 'widgets/bs5_button_checkbox_select.html'
+    option_template_name = 'widgets/bs5_button_checkbox_select_option.html'
 
 class ReviewForm(forms.ModelForm):
 
@@ -9,5 +13,5 @@ class ReviewForm(forms.ModelForm):
         widgets = { 
             'ratings_easiness': forms.TextInput(attrs={'type': 'range'}),
             'ratings_content': forms.TextInput(attrs={'type': 'range'}),
-            'tags': forms.CheckboxSelectMultiple(),
+            'tags': Bs5ButtonCheckboxSelectMultiple()
         }
