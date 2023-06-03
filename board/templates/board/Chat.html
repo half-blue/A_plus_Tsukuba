@@ -34,6 +34,9 @@
   <script>
     const CHATAPP = {};
     CHATAPP.reply_to = null;
+    document.querySelector(`#id_comment`).addEventListener(`keyup`, function () {
+      document.querySelector(`#word_count`).textContent = `残り${100 - document.querySelector(`#id_comment`).value.length}文字`;
+    })
   </script>
   <script src="{% static 'board/col7.js' %}"></script>
   <script src="{% static 'board/send.js' %}"></script>
