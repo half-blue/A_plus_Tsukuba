@@ -1,5 +1,7 @@
 const BOOK_MARK = {}
+const REVIEWED = {}
 BOOK_MARK.EXPIRES = 365 * 6; // Bachelor and Master period
+REVIEWED.EXPIRES = 365 * 6; // Bachelor and Master period
 
 BOOK_MARK.getCookies = function () { // return (JSON)object not (JSON)string
     const load_json_string = Cookies.get('bookmark');
@@ -43,3 +45,25 @@ Vue.createApp({
         }
     }
 }).mount('#bookmark_dropdown');
+
+REVIEWED.getCookies = function () { // return (JSON)object not (JSON)string
+    const load_json_string = Cookies.get('reviewed');
+
+    if (load_json_string) {
+        return JSON.parse(load_json_string);
+    } else {
+        return {};
+    }
+}
+
+REVIEWED.setCookie = function (name, json_object) { // receive (JSON)object not (JSON)string
+    Cookies.set(name, JSON.stringify(json_object), { expires: REVIEWED.EXPIRES });
+};
+
+REVIEWED.setReviewed = function (thread_id) {
+    let bookmark_json = REVIEWED.getCookies();
+
+    bookmark_json[thread_id] = true;
+    BOOK_MARK.setCookie("reviewed", bookmark_json);
+}
+
