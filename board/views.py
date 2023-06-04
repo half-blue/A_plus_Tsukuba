@@ -29,6 +29,7 @@ class ThreadView(FormMixin, ListView):
         except Thread.DoesNotExist:
             raise Http404()
 
+        # スレッド情報
         context['thread_title'] = thread.title
         context['thread_id'] = thread_id
 
@@ -46,19 +47,19 @@ class ThreadView(FormMixin, ListView):
         context["review_count"] = reviews.count()
         context["review_is_enable"] = thread.enable_review
 
-        # 平均値を取得
+        ## 平均値を取得
         ratings_overall = reviews.aggregate(Avg('ratings_overall'))
         ratings_easiness = reviews.aggregate(Avg('ratings_easiness'))
         ratings_content = reviews.aggregate(Avg('ratings_content'))
         context.update(**ratings_overall, **ratings_easiness, **ratings_content)
 
-        # CSS用に.5刻みでoverallを計算 floatじゃないとうまくいかないので注意
+        ## CSS用に.5刻みでoverallを計算 floatじゃないとうまくいかないので注意
         if ratings_overall['ratings_overall__avg'] is not None:
             context['ratings_overall_for_star'] = int(ratings_overall['ratings_overall__avg'] * 2) / 2.0
         else:
             context['ratings_overall_for_star'] = 0.0
 
-        # コメント
+        ## コメント
         comments = reviews.exclude(comment='').order_by('-created_at').values('comment')
         if len(comments) > 2:
             context['review_recent_comments'] = comments[:2]
@@ -67,14 +68,14 @@ class ThreadView(FormMixin, ListView):
             context['review_recent_comments'] = comments
             context['review_more_comments'] = []
 
-        # タグ
+        ## タグ
         tags = []
         for row in reviews.values("tags").annotate(count=Count('id')):
             if row["tags"] is not None:
                 name = Tag.objects.filter(id= row["tags"]).values("name")[0]["name"]
                 count = row["count"]
                 tags.append({"name" : name, "count" : count})
-        context["review_tag_counts"] = tags
+        context["review_tags"] = tags
         return context
 
     def post(self, request, *args, **kwargs):
