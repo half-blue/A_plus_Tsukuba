@@ -75,10 +75,10 @@
         <tbody>
             {% for row in review_recent_comments %}
             <tr>
-                <td class="review-anon-icon align-middle">
+                <td class="review-anon-icon align-top">
                     <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
                 </td>
-                <td class="fw-light">
+                <td class="fw-light h-auto">
                     <div class="review-comment-box">
                         {{ row.comment }}
                     </div>
@@ -101,7 +101,7 @@
             <tbody>
                 {% for row in review_more_comments %}
                 <tr>
-                    <td class="review-anon-icon align-middle">
+                    <td class="review-anon-icon align-top">
                         <img src="{% static 'board/anonymous_icon.jpeg' %}" alt="user icon" class="img-fluid mx-auto">
                     </td>
                     <td class="fw-light">
