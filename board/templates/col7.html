@@ -7,6 +7,7 @@
     </div>
 
     <div class="col-lg-3 d-flex justify-content-end">
+      {% if review_is_enable %}
       <div id="review-jump-temporary" class="d-md-none me-2">
       <a role="button" href="#lecture_info" class="btn btn-outline-primary">
         <span class="ms-1">
@@ -20,6 +21,7 @@
         </span>
         </a>
     </div>
+    {% endif %}
     <div id="bookmark_toggle">
       <input type="checkbox" class="btn-check" id="bookmark-btn-check-outlined" autocomplete="off" 
         v-bind:checked="bookmarkBtn_checked"

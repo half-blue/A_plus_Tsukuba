@@ -154,17 +154,23 @@
 
 /* 匿名アイコンのサイジング */
 .review-anon-icon {
-    width: 20%;
-}
-
-@media screen and (min-width:768px) {
-    .review-anon-icon {
-        width: 10%;
-    }
+    width: 55px;
 }
 
 .review-comment-box {
-    padding:10px;
+    padding: 10px;
     background-color: lavender;
     border-radius: 15px;
+    overflow-wrap: anywhere;
+    min-height: 57px;
 }
+
+@media screen and (min-width:576px) {
+    .review-anon-icon {
+        width: 45px;
+    }
+    .review-comment-box {
+        min-height: 47px;
+    }
+}
+
