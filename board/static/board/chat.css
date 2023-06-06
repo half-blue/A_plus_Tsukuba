@@ -164,7 +164,8 @@
 }
 
 .review-comment-box {
-    padding:10px;
+    padding: 10px;
     background-color: lavender;
     border-radius: 15px;
+    overflow-wrap: anywhere;
 }
