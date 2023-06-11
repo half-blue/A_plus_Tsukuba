@@ -92,14 +92,15 @@ class ThreadView(FormMixin, ListView):
         review = form.save(commit=False)
         review.thread_id = self.kwargs['thread_id']
         review.save()
-        form.save_m2m() 
+        form.save_m2m()
+        messages.success(self.request, "この度はレビューしていただきありがとうございます。") 
         # もう一度元のページに戻る
         return HttpResponseRedirect(reverse_lazy(
             "threads", kwargs={"thread_id": self.kwargs["thread_id"]}
         ))
     def form_invalid(self, form):
         response = super().form_invalid(form)
-        messages.warning(self.request, "レビューの投稿に失敗しました。")
+        messages.error(self.request, "レビューの投稿に失敗しました。")
         return response
     
 
