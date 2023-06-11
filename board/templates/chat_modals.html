@@ -72,11 +72,13 @@
                         <div>4</div>
                         <div>5</div>
                     </div>
-
-                    <label for="{{ form.comment.auto_id }}" class="form-label mt-2">コメント（オプション）</label>
-                    {{form.comment|add_class:"form-control"|attr:"rows:3"}}
-                    <div id="word_count" class="text-end">
-                        残り100文字
+                    <div id="word_count">
+                        <label for="{{ form.comment.auto_id }}" class="form-label mt-2">コメント（オプション）</label>
+                        <!-- {{form.comment|add_class:"form-control"|attr:"rows:3"}} -->
+                        {{form.comment|add_class:"form-control"|attr:"rows:3"|attr:"v-model.trim:inputComment"}}
+                        <div class="text-end">
+                            残り [[ 100 - inputComment.length ]] 文字
+                        </div>
                     </div>
 
                     <label class="form-label mt-2" for="{{ form.tags.auto_id }}">タグを選択</label><br>

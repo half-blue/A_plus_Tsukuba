@@ -67,3 +67,12 @@ Vue.createApp({
         },
     },
 }).mount('#send_app');
+
+Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+        return {
+            inputComment: "",
+        }
+    },
+}).mount('#word_count');
