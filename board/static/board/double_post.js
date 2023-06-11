@@ -7,7 +7,6 @@ Vue.createApp({
     },
     methods: {
         onPostClick() {
-            console.log("onPostClick");
             REVIEWED.setReviewed(this.thread_id);
         }
     },
