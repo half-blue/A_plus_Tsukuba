@@ -3,9 +3,13 @@
 {% if review_is_enable %}
 <div class="col d-flex justify-content-between mb-4 me-2">
     <h5>みんなのレビュー</h5>
-    <a role="button" class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#reviewFormsModalToggle">
-            レビューを投稿
-    </a>
+    <div id="PostedBoolean">
+        <template v-if="not_posted">
+            <a role="button" class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#reviewFormsModalToggle">
+                レビューを投稿
+            </a>
+        </template>
+    </div>
 </div>
 
 

@@ -84,8 +84,8 @@
                     {{ form.tags }} <!-- use custom widgets -->
                     
             </div>
-            <div class="modal-footer">
-                <input class="btn btn-primary" type="submit" value="投稿"></input>
+            <div id="review_Form_post_button" class="modal-footer">
+                <input class="btn btn-primary" v-on:click="onPostClick" type="submit" value="投稿"></input>
                 <button class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
             </div>
         </form>
