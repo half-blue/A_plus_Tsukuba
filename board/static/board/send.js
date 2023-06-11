@@ -75,4 +75,4 @@ Vue.createApp({
             inputComment: "",
         }
     },
-}).mount('#word_count');
+}).mount('#review_comment_word_count');
