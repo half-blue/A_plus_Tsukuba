@@ -75,6 +75,8 @@ class ThreadView(FormMixin, ListView):
                 name = Tag.objects.filter(id= row["tags"]).values("name")[0]["name"]
                 count = row["count"]
                 tags.append({"name" : name, "count" : count})
+
+        tags.sort(key=lambda x: x['count'], reverse=True) # descending order
         context["review_tags"] = tags
         return context
 
