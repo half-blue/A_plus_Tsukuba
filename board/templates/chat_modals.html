@@ -1,0 +1,95 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<div class="modal fade" id="reviewDetailsModalToggle" aria-hidden="true" aria-labelledby="reviewDetailsModalToggle"
+    tabindex="-1">
+    <div class="modal-dialog pt-5">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">みんなのレビューの評価項目について</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-precautions">
+                <ol>
+                    <li class="fs-4">総合評価(★の数)について</li>
+                    <p class="text-secondary">
+                        その授業を<b>どれぐらい後輩におすすめしたいか</b>を表しています。
+                    </p>
+                    <li class="fs-4">楽単度について</li>
+                    <p class="text-secondary">
+                        その授業の単位を取得するのがどれぐらい簡単であるのか表した指標です。
+                        数が大きいほどその授業は楽単であると評価されています。
+                    </p>
+                    <li class="fs-4">充実度について</li>
+                    <p class="text-secondary">
+                        その授業の学びの多さを表した指標です。数が大きいほど充実しています。
+                    </p>
+                    <li class="fs-4">タグについて</li>
+                    <p class="text-secondary">
+                        授業に関する情報をタグとして追加することができます。
+                    </p>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reviewFormsModalToggle" aria-hidden="true" aria-labelledby="reviewFormsModalToggle"
+    tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post" id="review_post_form">
+            <div class="modal-header">
+                <h5 class="modal-title">レビューを投稿</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-precautions">
+                
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <span class="h5">総合評価</span> <span class="small">（その授業をどれぐらい後輩におすすめしたいか）</span>
+                    {{form.ratings_overall|add_class:"form-select mt-1"}}
+
+                    <label for="{{ form.ratings_easiness.auto_id }}" class="form-label mt-2">楽単度</label>
+                    {{form.ratings_easiness|add_class:"form-range"|attr:"min:1"|attr:"max:5"}}
+                    <div class="d-flex justify-content-between">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                    </div>
+
+                    <label for="{{ form.ratings_content.auto_id }}" class="form-label mt-2">充実度</label>
+                    {{form.ratings_content|add_class:"form-range"|attr:"min:1"|attr:"max:5"}}
+                    <div class="d-flex justify-content-between">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                    </div>
+                    <div id="review_comment_word_count">
+                        <label for="{{ form.comment.auto_id }}" class="form-label mt-2">コメント（オプション）</label>
+                        {{form.comment|add_class:"form-control"|attr:"rows:3"|attr:"v-model.trim:inputComment"}}
+                        <div class="text-end">
+                            残り [[ 100 - inputComment.length ]] 文字
+                        </div>
+                    </div>
+
+                    <label class="form-label mt-2" for="{{ form.tags.auto_id }}">タグを選択</label><br>
+                    {{ form.tags }} <!-- use custom widgets -->
+                    
+            </div>
+            <div id="review_Form_post_button" class="modal-footer">
+                <input class="btn btn-primary" v-on:click="onPostClick" type="submit" value="投稿"></input>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+

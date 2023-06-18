@@ -15,6 +15,7 @@
   <meta name="twitter:card" content="summary" />
 </head>
 <body class="bg-light">
+  {% include 'chat_modals.html' %}
   {% include 'header.html' %}
 
   <div id="main_container" class="container-fluid">
@@ -38,6 +39,7 @@
   <script src="{% static 'board/send.js' %}"></script>
   <script src="{% static 'board/share.js' %}"></script>
   <script src="{% static 'board/bookmark_btn.js' %}"></script>
+  <script src="{% static 'board/double_post.js' %}"></script>
 </body>
 
 </html>

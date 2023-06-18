@@ -1,0 +1,139 @@
+{% load static %}
+
+{% if review_is_enable %}
+<div class="col d-flex justify-content-between mb-4 me-2">
+    <h5>みんなのレビュー</h5>
+    <div id="PostedBoolean">
+        <template v-if="not_posted">
+            <a role="button" class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#reviewFormsModalToggle">
+                レビューを投稿
+            </a>
+        </template>
+    </div>
+</div>
+
+
+<div class="row">
+    <h6>総合評価</h6>
+    <div class="d-flex justify-content-center align-items-center">
+        <span class="star5_rating" id="star5-rating" data-rate="{{ ratings_overall_for_star }}"></span>
+        <p class="fs-2 fw-bold d-inline-block mb-0 mx-2">{{ ratings_overall__avg | floatformat:2 }}</p>
+        <p class="d-inline-block mb-0">({{ review_count }}件の評価)</p>
+    </div>
+    <div class="col d-flex justify-content-center">
+        {% if review_count > 0 %}
+        <table class="table table-sm table-borderless" style="width: 90%;">
+            <tbody>
+                <tr>
+                    <th scope="row">楽単度</th>
+                    <td class="fw-bolder">{{ ratings_easiness__avg | floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">充実度</th>
+                    <td class="fw-bolder">{{ ratings_content__avg | floatformat:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">
+        まだこの講義のレビューはないようです。<br>
+        みんなのために、レビューを投稿してみませんか？
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="col d-block justify-content-center mb-4 w-75 mx-auto">
+    {% for row in review_tags %}
+        {% if row.count >= 5 %}
+        <span class="badge rounded-pill bg-danger w-auto">
+        {% elif row.count >= 3 %}
+        <span class="badge rounded-pill bg-warning w-auto text-dark">
+        {% else %}
+        <span class="badge rounded-pill bg-primary w-auto">
+        {% endif %}
+            {{ row.name }}({{ row.count }})
+        </span>
+    {% endfor %}
+</div>
+
+<div class="col d-flex justify-content-end mb-4 me-2">
+    <a role="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#reviewDetailsModalToggle">
+        <span class="ms-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-info-circle" width="18" height="18"
+                viewBox="0 0 24 24">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path
+                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+            </svg>
+            評価項目についてはこちら
+        </span>
+    </a>
+</div>
+
+<h6>コメント一覧</h6>
+{% if review_recent_comments|length > 0 %}
+<div class="col d-flex justify-content-center">
+    <table class="table table-sm table-borderless" style="width: 90%;">
+        <tbody>
+            {% for row in review_recent_comments %}
+            <tr>
+                <td class="review-anon-icon align-top">
+                    <img src="{% static 'board/anonymous_icon.png' %}" alt="user icon" class="img-fluid mx-auto mt-1">
+                </td>
+                <td class="fw-light h-auto">
+                    <div class="review-comment-box">
+                        {{ row.comment }}
+                    </div>
+                </td>
+            </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if review_more_comments|length > 0 %}
+<div class="col d-flex justify-content-center mb-4">
+    <a data-bs-toggle="collapse" href="#collapseReviewComments" role="button" aria-expanded="false"
+        aria-controls="collapseExample">
+        さらにコメントを展開({{ review_more_comments | length }}件)▼
+    </a>
+</div>
+<div class="collapse" id="collapseReviewComments">
+    <div class="col d-flex justify-content-center">
+        <table class="table table-sm table-borderless" style="width: 90%;">
+            <tbody>
+                {% for row in review_more_comments %}
+                <tr>
+                    <td class="review-anon-icon align-top">
+                        <img src="{% static 'board/anonymous_icon.png' %}" alt="user icon" class="img-fluid mx-auto mt-1">
+                    </td>
+                    <td class="fw-light">
+                        <div class="review-comment-box">
+                            {{ row.comment }}
+                        </div>
+                    </td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% else %}
+<div class="col d-flex justify-content-center">
+    <p>
+        コメントはまだありません。
+    </p>
+</div>
+{% endif %}
+
+{% else %}
+<h5>みんなのレビュー</h5>
+<div class="col d-flex justify-content-center">
+    <p>
+        このスレッドではレビュー機能が無効になっています。
+    </p>
+</div>
+
+
+{% endif %}

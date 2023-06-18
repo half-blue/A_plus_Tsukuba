@@ -1,18 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from .models import Notice, Post, Reply, Subject, Thread
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from .models import Notice, Post, Reply, Subject, Thread, Review, Tag
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
-from django.db.models import Count
+from django.views.generic.edit import FormMixin
+from .forms import ReviewForm
+from django.contrib import messages
+from django.db.models import Count, Avg
+from django.urls import reverse_lazy
 
 class Index(ListView):
     def get(self, request, *args, **kwargs):
         return redirect("search/")
 
 
-class ThreadView(ListView):
+class ThreadView(FormMixin, ListView):
     template_name = "board/Chat.html"
     model = Post
+    form_class = ReviewForm
     #context_object_name = 'post_data'
     ordering = ['-created_at']
 
@@ -24,6 +29,7 @@ class ThreadView(ListView):
         except Thread.DoesNotExist:
             raise Http404()
 
+        # スレッド情報
         context['thread_title'] = thread.title
         context['thread_id'] = thread_id
 
@@ -36,7 +42,68 @@ class ThreadView(ListView):
             codes += col["code"] + ", "
         context['sub_codes'] = codes[:-2]
 
+        # レビュー
+        reviews = Review.objects.filter(thread_id = thread_id)
+        context["review_count"] = reviews.count()
+        context["review_is_enable"] = thread.enable_review
+
+        ## 平均値を取得
+        ratings_overall = reviews.aggregate(Avg('ratings_overall'))
+        ratings_easiness = reviews.aggregate(Avg('ratings_easiness'))
+        ratings_content = reviews.aggregate(Avg('ratings_content'))
+        context.update(**ratings_overall, **ratings_easiness, **ratings_content)
+
+        ## CSS用に.5刻みでoverallを計算 floatじゃないとうまくいかないので注意
+        if ratings_overall['ratings_overall__avg'] is not None:
+            context['ratings_overall_for_star'] = int(ratings_overall['ratings_overall__avg'] * 2) / 2.0
+        else:
+            context['ratings_overall_for_star'] = 0.0
+
+        ## コメント
+        comments = reviews.exclude(comment='').order_by('-created_at').values('comment')
+        if len(comments) > 2:
+            context['review_recent_comments'] = comments[:2]
+            context['review_more_comments'] = comments[2:]
+        else:
+            context['review_recent_comments'] = comments
+            context['review_more_comments'] = []
+
+        ## タグ
+        tags = []
+        for row in reviews.values("tags").annotate(count=Count('id')):
+            if row["tags"] is not None:
+                name = Tag.objects.filter(id= row["tags"]).values("name")[0]["name"]
+                count = row["count"]
+                tags.append({"name" : name, "count" : count})
+
+        tags.sort(key=lambda x: x['count'], reverse=True) # descending order
+        context["review_tags"] = tags
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        review = form.save(commit=False)
+        review.thread_id = self.kwargs['thread_id']
+        review.save()
+        form.save_m2m()
+        messages.success(self.request, "この度はレビューしていただきありがとうございます。") 
+        # もう一度元のページに戻る
+        return HttpResponseRedirect(reverse_lazy(
+            "threads", kwargs={"thread_id": self.kwargs["thread_id"]}
+        ))
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        messages.error(self.request, "レビューの投稿に失敗しました。")
+        return response
+    
+
 
 
 class AboutView(TemplateView):
