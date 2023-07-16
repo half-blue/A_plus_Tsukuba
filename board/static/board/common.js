@@ -67,7 +67,6 @@ REVIEWED.setReviewed = function (thread_id) {
 
     // count reviewed
     let count = Object.keys(bookmark_json).length;
-    count += 1;
     BOOK_MARK.setCookie("reviewed_count", count);
     
     BOOK_MARK.setCookie("reviewed", bookmark_json);
