@@ -64,6 +64,9 @@ REVIEWED.setReviewed = function (thread_id) {
     let bookmark_json = REVIEWED.getCookies();
 
     bookmark_json[thread_id] = true;
+    // count number of reviewed threads
+    const count = Object.keys(bookmark_json).length;
+    console.log(count);
     BOOK_MARK.setCookie("reviewed", bookmark_json);
 }
 
