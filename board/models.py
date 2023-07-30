@@ -31,6 +31,26 @@ class Post(models.Model):
         (3, "提案(^^)/~~~"),
         (4, "ウンウン(´ー｀*)"),
         (5, "大丈夫？( *´艸｀)"),
+
+        # ランクに応じて追加される感情
+        # Bronze 
+        (10, "ｆｍ(( ˘ω ˘ *))ｆｍ"),
+        (11, "ぴえん🥺"),
+        # Silver
+        (20, "ありがとう🙏"),
+        (21, "そんな……😭"),
+        # Gold
+        (30, "もう無理😖"),
+        (31, "異議ありっ！！"),
+        (32, "🎖️GOLD🎖️"),
+        # Master
+        (40, "完全に理解した！"),
+        (41, "どしたん話聞こか？"),
+        (42, "🎓MASTER🎓"),
+        # Grand Master
+        (50, "IMAGINE THE FUTURE."),
+        (51, "DESIGN THE FUTURE."),
+        (52, "👑GRAND MASTER👑"),
     )
 
     post_id = models.UUIDField(verbose_name='投稿者id', primary_key=True, default=uuid.uuid4, editable=False)
