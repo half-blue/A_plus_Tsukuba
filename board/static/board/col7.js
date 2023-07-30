@@ -54,6 +54,20 @@ Vue.createApp({
                 3: 'badge rounded-pill bg-primary',
                 4: 'badge rounded-pill bg-gray',
                 5: 'badge rounded-pill bg-orange',
+
+                10: 'badge rounded-pill bg-gray',
+                11: 'badge rounded-pill bg-primary',
+                20: 'badge rounded-pill bg-pink',
+                21: 'badge rounded-pill bg-primary',
+                30: 'badge rounded-pill bg-gray',
+                31: 'badge rounded-pill bg-danger',
+                32: 'badge rounded-pill bg-success',
+                40: 'badge rounded-pill bg-danger',
+                41: 'badge rounded-pill bg-pink',
+                42: 'badge rounded-pill bg-success',
+                50: 'badge rounded-pill bg-tsukuba-itf text-light',
+                51: 'badge rounded-pill bg-tsukuba-purple text-light',
+                52: 'badge rounded-pill bg-dark',
             };
             return emotion_class_dict[emotion_code];
         },
@@ -66,6 +80,20 @@ Vue.createApp({
                 3: '提案(^^)/~~~',
                 4: `ウンウン(´ー｀*)`,
                 5: '大丈夫？( *´艸｀)',
+
+                10: "ｆｍ ˘ω ˘ *))ｆｍ",
+                11: "ぴえん🥺",
+                20: "ありがとう🙏",
+                21: "そんな……😭",
+                30: "もう無理😖",
+                31: "異議ありっ！！",
+                32: "🎖️GOLD🎖️",
+                40: "完全に理解した！",
+                41: "どしたん話聞こか？",
+                42: "🎓MASTER🎓",
+                50: "IMAGINE THE FUTURE.",
+                51: "DESIGN THE FUTURE.",
+                52: "👑GRAND MASTER👑",
             };
             return emotion_text_dict[emotion_code];
         },
