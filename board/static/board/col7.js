@@ -52,7 +52,7 @@ Vue.createApp({
                 1: 'badge rounded-pill bg-olive',
                 2: 'badge rounded-pill bg-pink',
                 3: 'badge rounded-pill bg-primary',
-                4: `badge rounded-pill bg-gray`,
+                4: 'badge rounded-pill bg-gray',
                 5: 'badge rounded-pill bg-orange',
             };
             return emotion_class_dict[emotion_code];
