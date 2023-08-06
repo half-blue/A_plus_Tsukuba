@@ -68,7 +68,6 @@ Vue.createApp({
             let bookmark_json = REVIEWED.getCookies();
             let count = Object.keys(bookmark_json).length;
             this.num_of_reviews = count;
-            console.log("count: " + count);
 
             CHATAPP.reply_to = null;
             window.document.getElementById("allow_tweet_dropdown").style = "";
