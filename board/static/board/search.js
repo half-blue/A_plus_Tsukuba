@@ -44,7 +44,6 @@ Vue.createApp({
         },
         loadrevcount() {
             this.num_of_reviews = REV_COUNT.COUNT;
-            console.log(this.num_of_reviews);
         }
     },
     mounted() {
