@@ -61,7 +61,7 @@ Vue.createApp({
                 21: 'badge rounded-pill bg-primary',
                 30: 'badge rounded-pill bg-gray',
                 31: 'badge rounded-pill bg-danger',
-                32: 'badge rounded-pill bg-success',
+                32: 'badge rounded-pill bg-tsukuba-gold text-light',
                 40: 'badge rounded-pill bg-danger',
                 41: 'badge rounded-pill bg-pink',
                 42: 'badge rounded-pill bg-success',
