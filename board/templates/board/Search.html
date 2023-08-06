@@ -118,7 +118,27 @@
       <!-- ロゴ・検索ボックス（常時表示）-->
       <div class="row">
         <div class="col-12">
-          <div class="text-center img-hidden" style="margin-bottom: 15px;">
+          <div v-if="num_of_reviews < 3" class="text-center img-hidden" style="margin-bottom: 15px;">
+            num_of_reviews: [[ num_of_reviews ]]
+            <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+          </div>
+          <div v-else-if="num_of_reviews < 10" class="text-center img-hidden" style="margin-bottom: 15px;">
+            num_of_reviews: [[ num_of_reviews ]]
+            <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+          </div>
+          <div v-else-if="num_of_reviews < 20" class="text-center img-hidden" style="margin-bottom: 15px;">
+            num_of_reviews: [[ num_of_reviews ]]
+            <img src="{% static 'board/new_logo_header.png' %}" alt="img" class="mx-auto d-block logo-img">
+          </div>
+          <div v-else-if="num_of_reviews < 30" class="text-center img-hidden" style="margin-bottom: 15px;">
+            num_of_reviews: [[ num_of_reviews ]]
+            <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+          </div>
+          <div v-else-if="num_of_reviews < 40" class="text-center img-hidden" style="margin-bottom: 15px;">
+            num_of_reviews: [[ num_of_reviews ]]
+            <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+          </div>
+          <div v-else class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
           </div>
           <div class="input-group mb-3">

@@ -4,7 +4,8 @@ Vue.createApp({
         return {
             results: {},                        //検索結果
             query: "",                          //検索キーワード
-            latest_request_time : Date.now()    //最新の検索実行要求時刻
+            latest_request_time : Date.now(),    //最新の検索実行要求時刻
+            num_of_reviews: 0,    //レビュー数
         };
     },
     methods: {
@@ -40,6 +41,13 @@ Vue.createApp({
             //readmoreFilter("ABCD", 2, "...") => "AB..."
             if (text.length < max_length) return text;
             return text.substring(0, max_length) + suffix;
+        },
+        loadrevcount() {
+            this.num_of_reviews = REV_COUNT.COUNT;
+            console.log(this.num_of_reviews);
         }
+    },
+    mounted() {
+        this.loadrevcount();
     }
 }).mount('#search_app')
