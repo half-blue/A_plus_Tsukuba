@@ -64,7 +64,7 @@ Vue.createApp({
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
 
-            // グローバル空間のBOOK_MARKのsetCookieを使う
+            // グローバル空間のREVIEWED.getCookies()を使用する
             let bookmark_json = REVIEWED.getCookies();
             let count = Object.keys(bookmark_json).length;
             this.num_of_reviews = count;

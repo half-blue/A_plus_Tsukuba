@@ -26,20 +26,34 @@
           <option value="5">大丈夫？( *´艸｀)</option>
           <option value="4">ウンウン(´ー｀*)</option>
 
+          <template v-if="num_of_reviews > 2">
+            <option value="10">ｆｍ(( ˘ω ˘ *))ｆｍ</option>
+            <option value="11">ぴえん🥺</option>
+          </template>
+
           <!-- Rankによって追加される感情 -->
-          <option value="10">ｆｍ(( ˘ω ˘ *))ｆｍ</option>
-          <option value="11">ぴえん🥺</option>
-          <option value="20">ありがとう🙏</option>
-          <option value="21">そんな……😭</option>
-          <option value="30">もう無理😖</option>
-          <option value="31">異議ありっ！！</option>
-          <option value="32">🎖️GOLD🎖️</option>
-          <option value="40">完全に理解した！</option>
-          <option value="41">どしたん話聞こか？</option>
-          <option value="42">🎓MASTER🎓</option>
-          <option value="50">IMAGINE THE FUTURE.</option>
-          <option value="51">DESIGN THE FUTURE.</option>
-          <option value="52">👑GRAND MASTER👑</option>
+          <template v-if="num_of_reviews > 9">
+            <option value="20">ありがとう🙏</option>
+            <option value="21">そんな……😭</option>
+          </template>
+
+          <template v-if="num_of_reviews > 19">
+            <option value="30">もう無理😖</option>
+            <option value="31">異議ありっ！！</option>
+            <option value="32">🎖️GOLD🎖️</option>
+          </template>
+
+          <template v-if="num_of_reviews > 29">
+            <option value="40">完全に理解した！</option>
+            <option value="41">どしたん話聞こか？</option>
+            <option value="42">🎓MASTER🎓</option>
+          </template>
+
+          <template v-if="num_of_reviews > 39">
+            <option value="50">IMAGINE THE FUTURE.</option>
+            <option value="51">DESIGN THE FUTURE.</option>
+            <option value="52">👑GRAND MASTER👑</option>
+          </template>
         </select>
         本文 :
         <textarea v-model.trim="inputText" class="form-control" rows="15" type="text" autocomplete="off" name="message"
