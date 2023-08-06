@@ -1,7 +1,11 @@
 const BOOK_MARK = {}
 const REVIEWED = {}
+const REV_COUNT = {}
 BOOK_MARK.EXPIRES = 365 * 6; // Bachelor and Master period
 REVIEWED.EXPIRES = 365 * 6; // Bachelor and Master period
+REV_COUNT.EXPIRES = 365 * 6; // Bachelor and Master period
+REV_COUNT.COUNT = 0;
+
 
 BOOK_MARK.getCookies = function () { // return (JSON)object not (JSON)string
     const load_json_string = Cookies.get('bookmark');

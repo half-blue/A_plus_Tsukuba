@@ -64,10 +64,8 @@ Vue.createApp({
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
 
-            // グローバル空間のREVIEWED.getCookies()を使用する
-            let bookmark_json = REVIEWED.getCookies();
-            let count = Object.keys(bookmark_json).length;
-            this.num_of_reviews = count;
+            this.num_of_reviews = REV_COUNT.COUNT;
+            console.log(this.num_of_reviews);
 
             CHATAPP.reply_to = null;
             window.document.getElementById("allow_tweet_dropdown").style = "";

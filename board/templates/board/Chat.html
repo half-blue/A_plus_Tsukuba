@@ -34,6 +34,9 @@
   <script>
     const CHATAPP = {};
     CHATAPP.reply_to = null;
+
+    let bookmark_json = REVIEWED.getCookies();
+    REV_COUNT.COUNT = Object.keys(bookmark_json).length;
   </script>
   <script src="{% static 'board/col7.js' %}"></script>
   <script src="{% static 'board/send.js' %}"></script>
