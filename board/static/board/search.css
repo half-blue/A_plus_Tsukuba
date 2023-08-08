@@ -25,4 +25,23 @@
     width: 100%;
     height: 500px;
 }
-  
+
+.bg-tsukuba-bronze {
+    background-color: #7c5830;
+}
+
+.bg-tsukuba-novice {
+    background-color: #6290FF;
+}
+
+.bg-tsukuba-silver {
+    background-color: #bec1c3;
+}
+
+.bg-tsukuba-gold {
+    background-color: #F8B400;
+}
+
+.bg-tsukuba-master {
+    background-color: #FF7F00;
+}

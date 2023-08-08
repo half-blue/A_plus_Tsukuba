@@ -120,22 +120,127 @@
         <div class="col-12">
           <div v-if="num_of_reviews < 3" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+              <div style="font-size: 1.2rem;">
+              A+つくばランク：
+              <span class="badge rounded-pill bg-tsukuba-novice text-dark">
+                NOVICE
+              </span>
+            </div>
+            <br>
+            <span class="badge rounded-pill bg-tsukuba-bronze text-dark">
+              BRONZE
+            </span>
+            ランク昇格まであと[[3 - num_of_reviews]]ポイント！
+            </div>
+
           </div>
           <div v-else-if="num_of_reviews < 10" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/Aplus-tsukuba-01.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+              <div style="font-size: 1.2rem;">
+              A+つくばランク：
+              <span class="badge rounded-pill bg-tsukuba-bronze text-dark">
+                BRONZE
+              </span>
+            </div>
+            <br>
+            <span class="badge rounded-pill bg-tsukuba-silver text-dark">
+              SILVER
+            </span>
+            ランク昇格まであと[[10 - num_of_reviews]]ポイント！
+            </div>
+
           </div>
           <div v-else-if="num_of_reviews < 20" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/Aplus-tsukuba-02.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+              <div style="font-size: 1.2rem;">
+              A+つくばランク：
+              <span class="badge rounded-pill bg-tsukuba-silver text-dark">
+                SILVER
+              </span>
+            </div>
+            <br>
+            <span class="badge rounded-pill bg-tsukuba-gold text-dark">
+              GOLD
+            </span>
+            ランク昇格まであと[[20 - num_of_reviews]]ポイント！
+            </div>
+
+
           </div>
           <div v-else-if="num_of_reviews < 30" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/Aplus-tsukuba-03.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+              <div style="font-size: 1.2rem;">
+              A+つくばランク：
+              <span class="badge rounded-pill bg-tsukuba-gold text-dark">
+                GOLD
+              </span>
+            </div>
+            <br>
+            <span class="badge rounded-pill bg-success text-light">
+              MASTER
+            </span>
+            ランク昇格まであと[[30 - num_of_reviews]]ポイント！
+            </div>
+
           </div>
           <div v-else-if="num_of_reviews < 40" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/Aplus-tsukuba-04.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+              <div style="font-size: 1.2rem;">
+              A+つくばランク：
+              <span class="badge rounded-pill bg-success text-light">
+                MASTER
+              </span>
+            </div>
+            <br>
+            <span class="badge rounded-pill bg-dark text-light">
+              GRAND MASTER
+            </span>
+            ランク昇格まであと[[40 - num_of_reviews]]ポイント！
+            </div>
+
+            
           </div>
+
+
+
           <div v-else class="text-center img-hidden" style="margin-bottom: 15px;">
-            <img src="{% static 'board/Aplus-tsukuba-06.png' %}" alt="img" class="mx-auto d-block logo-img">
+            <img src="{% static 'board/Aplus-tsukuba-05.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+              <div style="font-size: 1.2rem;">
+              A+つくばランク：
+              <span class="badge rounded-pill bg-dark text-light">
+                GRAND MASTER
+              </span>
+            </div>
+            <br>
+            最高ランク
+            <span class="badge rounded-pill bg-dark text-light">
+              GRAND MASTER
+            </span>
+            に到達しました！あなたの現在のポイントは[[num_of_reviews]]です！
+            </div>
+
+
           </div>
+
+          
+
+
+
+
+
+
           <div class="input-group mb-3">
             <span class="input-group-text">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
