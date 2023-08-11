@@ -10,6 +10,7 @@ Vue.createApp({
             inputText: "",
             selectTwitterBot: 1,
             thread_id: document.getElementById('thread_id').value,
+            num_of_reviews: 0,
         }
     },
     methods: {
@@ -62,6 +63,12 @@ Vue.createApp({
         },
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
+
+            // グローバル空間のREVIEWED.getCookies()を使用する
+            const reviewed_json = REVIEWED.getCookies();
+            const count = Object.keys(reviewed_json).length;
+            this.num_of_reviews = count;
+
             CHATAPP.reply_to = null;
             window.document.getElementById("allow_tweet_dropdown").style = "";
         },
