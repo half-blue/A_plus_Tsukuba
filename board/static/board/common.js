@@ -73,5 +73,7 @@ REVIEWED.setReviewed = function (thread_id) {
 
 const CHATAPP = {};
 CHATAPP.reply_to = null;
-let bookmark_json = REVIEWED.getCookies();
-REV_COUNT.COUNT = Object.keys(bookmark_json).length;
+
+REV_COUNT.COUNT = Object.keys(
+    REVIEWED.getCookies()
+).length;
