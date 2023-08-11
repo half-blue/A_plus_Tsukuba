@@ -65,8 +65,8 @@ Vue.createApp({
             //質問するボタンを押すと呼ばれる
 
             // グローバル空間のREVIEWED.getCookies()を使用する
-            let bookmark_json = REVIEWED.getCookies();
-            let count = Object.keys(bookmark_json).length;
+            const reviewed_json = REVIEWED.getCookies();
+            const count = Object.keys(reviewed_json).length;
             this.num_of_reviews = count;
 
             CHATAPP.reply_to = null;
