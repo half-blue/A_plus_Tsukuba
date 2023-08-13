@@ -121,18 +121,13 @@
           <div v-if="num_of_reviews < 3" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
 
-            <div class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
-              <div style="font-size: 1.2rem;">
-              A+つくばランク：
+            <div class="text-center">
+                現在のランク：
               <span class="badge rounded-pill bg-tsukuba-novice text-dark">
                 NOVICE
               </span>
-            </div>
             <br>
-            <span class="badge rounded-pill bg-tsukuba-bronze text-dark">
-              BRONZE
-            </span>
-            ランク昇格まであと[[3 - num_of_reviews]]ポイント！
+            あと[[3 - num_of_reviews]]件のレビューで次のランクに昇格！
             </div>
           </div>
           <div v-else-if="num_of_reviews < 10" class="text-center img-hidden" style="margin-bottom: 15px;">
