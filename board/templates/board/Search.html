@@ -113,14 +113,86 @@
   {% include 'header.html' %}
 
   <div id="main_container" class="container-fluid">
-    <div id="search_app">
+    <div id="search_app" v-cloak>
 
       <!-- ロゴ・検索ボックス（常時表示）-->
       <div class="row">
         <div class="col-12">
-          <div class="text-center img-hidden" style="margin-bottom: 15px;">
+          <div v-if="num_of_reviews < 3" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center">
+                現在のランク：
+              <span class="badge rounded-pill bg-tsukuba-novice text-light">
+                NOVICE
+              </span>
+            <br>
+            あと[[3 - num_of_reviews]]件のレビューで次のランクに昇格！
+            </div>
           </div>
+          <div v-else-if="num_of_reviews < 10" class="text-center img-hidden" style="margin-bottom: 15px;">
+            <img src="{% static 'board/Aplus-tsukuba-01.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center">
+              現在のランク：
+              <span class="badge rounded-pill bg-tsukuba-bronze text-light">
+                BRONZE
+              </span>
+            <br>
+            あと[[10 - num_of_reviews]]件のレビューで次のランクに昇格！
+            </div>
+          </div>
+          <div v-else-if="num_of_reviews < 20" class="text-center img-hidden" style="margin-bottom: 15px;">
+            <img src="{% static 'board/Aplus-tsukuba-02.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center">
+              現在のランク：
+              <span class="badge rounded-pill bg-tsukuba-silver text-dark">
+                SILVER
+              </span>
+            <br>
+            あと[[20 - num_of_reviews]]件のレビューで次のランクに昇格！
+            </div>
+          </div>
+          <div v-else-if="num_of_reviews < 30" class="text-center img-hidden" style="margin-bottom: 15px;">
+            <img src="{% static 'board/Aplus-tsukuba-03.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center">
+              現在のランク：
+              <span class="badge rounded-pill bg-tsukuba-gold text-dark">
+                GOLD
+              </span>
+            <br>
+            あと[[30 - num_of_reviews]]件のレビューで次のランクに昇格！
+            </div>
+          </div>
+          <div v-else-if="num_of_reviews < 40" class="text-center img-hidden" style="margin-bottom: 15px;">
+            <img src="{% static 'board/Aplus-tsukuba-04.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center">
+              現在のランク：
+              <span class="badge rounded-pill bg-success text-light">
+                MASTER
+              </span>
+            <br>
+            あと[[40 - num_of_reviews]]件のレビューで次のランクに昇格！
+            </div>
+          </div>
+          <div v-else class="text-center img-hidden" style="margin-bottom: 15px;">
+            <img src="{% static 'board/Aplus-tsukuba-05.png' %}" alt="img" class="mx-auto d-block logo-img">
+
+            <div class="text-center">
+             現在のランク：
+              <span class="badge rounded-pill bg-dark text-light">
+                👑GRAND MASTER👑
+              </span>
+            <br>
+            最高ランクに到達しました！
+            <br class="mobile-only">
+            [[num_of_reviews]]件ものレビューの投稿、ありがとうございます。
+            </div>
+          </div>
+
           <div class="input-group mb-3">
             <span class="input-group-text">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"

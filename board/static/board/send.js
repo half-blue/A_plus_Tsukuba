@@ -1,6 +1,9 @@
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
+const CHATAPP = {};
+CHATAPP.reply_to = null;
+
 Vue.createApp({
     delimiters: ['[[', ']]'],
     data() {
@@ -64,10 +67,7 @@ Vue.createApp({
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
 
-            // グローバル空間のREVIEWED.getCookies()を使用する
-            const reviewed_json = REVIEWED.getCookies();
-            const count = Object.keys(reviewed_json).length;
-            this.num_of_reviews = count;
+            this.num_of_reviews = REV_COUNT.COUNT;
 
             CHATAPP.reply_to = null;
             window.document.getElementById("allow_tweet_dropdown").style = "";
