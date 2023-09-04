@@ -178,5 +178,8 @@ class Textbooks(models.Model):
     ]
     """
 
+    class Meta:
+        verbose_name_plural = "Textbooks"
+
     def __str__(self):
         return self.thread.title + "の教科書情報JSON"
