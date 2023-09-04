@@ -1,6 +1,10 @@
+import json
+import html
+import urllib.parse
+
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Notice, Post, Reply, Subject, Thread, Review, Tag
+from .models import Notice, Post, Reply, Subject, Thread, Review, Tag, Textbooks
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormMixin
@@ -78,7 +82,34 @@ class ThreadView(FormMixin, ListView):
 
         tags.sort(key=lambda x: x['count'], reverse=True) # descending order
         context["review_tags"] = tags
+
+        ## 教科書情報
+        safe_html = ""
+        try:
+            textbooks_records = Textbooks.objects.filter(thread_id = thread_id).values()[0]
+            textbooks = json.loads(textbooks_records["textbooks_json_object"])
+            for row in textbooks["rows"]:
+                for block in row["row"]:
+                    if block["is_link"]:
+                        safe_html += self.__create_amazon_link(block["text"])
+                    else:
+                        safe_html += html.escape(block["text"])
+                safe_html += "<br>"
+            safe_html = safe_html[:-4]
+        except:
+            safe_html = ""
+        finally:
+            if safe_html != "":
+                context["textbooks"] = safe_html
+            else:
+                context["textbooks"] = "この科目の教科書情報は提供されていません。"
         return context
+
+    def __create_amazon_link(self, target):
+        html_escaped = html.escape(target)
+        uri_escaped = urllib.parse.quote(target)
+        link = f'<a class="textbook-link" target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=aplustsukuba-22&index=books&keywords={uri_escaped}">{html_escaped}</a>'
+        return link
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

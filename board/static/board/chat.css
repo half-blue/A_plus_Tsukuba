@@ -185,3 +185,13 @@
 .bg-tsukuba-gold {
     background-color: #F8B400;
 }
+
+.textbook-p {
+    overflow-wrap: anywhere;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.fs-textbook {
+    font-size: 0.8em;
+}
