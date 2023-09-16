@@ -1,24 +1,34 @@
 {% load static %}
-<div v-cloak id="textbooks_app">
-    <div class="d-flex justify-content-start">
-        <div class="h5">教科書</div>
-        <div class="badge bg-danger ms-1 mt-n2 align-self-start">beta</div>
-        <div class="align-self-center small ms-2">(情報が不正確である場合があります。)</div>    
+<div v-cloak id="textbooks_app" class="mb-4">
+    <div class="d-flex justify-content-between me-2">
+        <div class="d-flex align-self-center">
+            <div class="h5 m-0">教科書情報</div>
+            <div class="badge bg-danger ms-1">&#946;版</div>
+        </div>
+        <div class="btn btn-warning rounded-pill" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                詳細を見る
+        </div>  
     </div>
 
-    <!-- Prime Student PR -->
-    <div v-if="is_not_hide" class="alert alert-success alert-dismissible fade show d-flex align-items-center mx-1" role="alert">
-        <div class="ms-2 fs-textbook">
-            [PR] <a target="_blank" href="https://www.amazon.co.jp/b?node=2410972051&_encoding=UTF8&tag=aplustsukuba-22&linkCode=ur2&linkId=410d21f9285ec8d0f154a63354b0f77b&camp=247&creative=1211">Amazon Prime Student</a>
-            は<strong>月額300円（税込）</strong>でプライム会員になれるサービスです。
-            さらに、<strong><a target="_blank" href="https://www.amazon.co.jp/b?ie=UTF8&amp;node=5367902051&_encoding=UTF8&tag=aplustsukuba-22&linkCode=ur2&linkId=bb287cd2e51a1d24f375c4c400e5e56f&camp=247&creative=1211">
-            クーポンコード「STUBOOK」適用で、書籍3冊同時購入時に10%ポイント還元！</a></strong>
-            お得に教科書を購入したい方は、ぜひご利用ください。
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" v-on:click="push_hide"></button>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <!-- Prime Student PR -->
+            <div v-if="is_not_hide" class="alert alert-success alert-dismissible fade show d-flex align-items-center mx-1" role="alert">
+                <div class="ms-2 fs-textbook">
+                    [PR] <a target="_blank" href="https://www.amazon.co.jp/b?node=2410972051&_encoding=UTF8&tag=aplustsukuba-22&linkCode=ur2&linkId=410d21f9285ec8d0f154a63354b0f77b&camp=247&creative=1211">Amazon Prime Student</a>
+                    は<strong>月額300円（税込）</strong>でプライム会員になれるサービスです。
+                    さらに、<strong><a target="_blank" href="https://www.amazon.co.jp/b?ie=UTF8&amp;node=5367902051&_encoding=UTF8&tag=aplustsukuba-22&linkCode=ur2&linkId=bb287cd2e51a1d24f375c4c400e5e56f&camp=247&creative=1211">
+                    クーポンコード「STUBOOK」適用で、書籍3冊同時購入時に10%ポイント還元！</a></strong>
+                    お得に教科書を購入したい方は、ぜひご利用ください。
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" v-on:click="push_hide"></button>
+                </div>
+            </div>
+
+            <p class="textbook-p fs-textbook">
+                {{ textbooks | safe }}
+            </p>
+
+            <p class="textbook-p fs-textbook">※情報が不正確である場合があります。</p>            
         </div>
     </div>
-
-    <p class="textbook-p fs-textbook">
-        {{ textbooks | safe }}
-    </p>
 </div>
