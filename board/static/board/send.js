@@ -67,12 +67,13 @@ Vue.createApp({
         onSendButtonClick() {
             //質問するボタンを押すと呼ばれる
 
-            this.num_of_reviews = REV_COUNT.COUNT;
-
             CHATAPP.reply_to = null;
             window.document.getElementById("allow_tweet_dropdown").style = "";
         },
     },
+    mounted() {
+        this.num_of_reviews = REV_COUNT.COUNT;
+    }
 }).mount('#send_app');
 
 Vue.createApp({
