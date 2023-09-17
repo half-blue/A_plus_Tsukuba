@@ -5,9 +5,11 @@
             <div class="h5 m-0">教科書情報</div>
             <div class="badge bg-danger ms-1">&#946;版</div>
         </div>
-        <div class="btn btn-warning rounded-pill" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                詳細を見る
-        </div>  
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <span class="text-primary">
+                展開する
+            </span>
+        </button>
     </div>
 
     <div class="collapse" id="collapseExample">
@@ -28,7 +30,7 @@
                 {{ textbooks | safe }}
             </p>
 
-            <p class="textbook-p fs-textbook">※情報が不正確である場合があります。</p>            
+            <p class="textbook-p fs-textbook">※2023年7月時点での情報です。</p>            
         </div>
     </div>
 </div>
