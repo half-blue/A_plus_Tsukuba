@@ -137,3 +137,49 @@ class Review(models.Model):
 
     def __str__(self):
         return self.thread.title + "のレビュー"
+
+class Textbooks(models.Model):
+    thread = models.ForeignKey(Thread, verbose_name="スレッドid", on_delete=models.CASCADE)
+    textbooks_json_object = models.TextField(verbose_name="教科書情報JSON", blank=True, default="{}")
+
+    """
+    textbooks_json_objectは以下のようなJSONを想定している
+    文字列は本来PythonでUnicodeエスケープされている。
+    例えば、"\\u6559\\u79d1\\u66f8"は"教科書"である。
+    ここでは簡便のため、エスケープせず例を示す。
+
+    4676: データベース概論A
+    {
+    "rows": [
+        {
+            "row": [
+                {
+                    "text": "以下を教科書とする.",
+                    "is_link": false
+                }
+            ]
+        },
+        {
+            "row": [
+                {
+                    "text": "1. 北川博之 「",
+                    "is_link": false
+                },
+                {
+                    "text": "データベースシステム 改訂2版",
+                    "is_link": true
+                },
+                {
+                    "text": "」(オーム社)",
+                    "is_link": false
+                }
+            ]
+        }
+    ]
+    """
+
+    class Meta:
+        verbose_name_plural = "Textbooks"
+
+    def __str__(self):
+        return self.thread.title + "の教科書情報JSON"

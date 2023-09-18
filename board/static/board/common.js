@@ -1,9 +1,11 @@
 const BOOK_MARK = {}
 const REVIEWED = {}
 const REV_COUNT = {}
+const PRIME_STUDENT_ALERT = {}
 BOOK_MARK.EXPIRES = 365 * 6; // Bachelor and Master period
 REVIEWED.EXPIRES = 365 * 6; // Bachelor and Master period
 REV_COUNT.EXPIRES = 365 * 6; // Bachelor and Master period
+PRIME_STUDENT_ALERT.EXPIRES = 180; // 6 months
 REV_COUNT.COUNT = 0;
 
 
@@ -74,3 +76,11 @@ REVIEWED.setReviewed = function (thread_id) {
 REV_COUNT.COUNT = Object.keys(
     REVIEWED.getCookies()
 ).length;
+
+PRIME_STUDENT_ALERT.setCookieHide = function () {
+    Cookies.set("prime_student_alert_hide", "true", { expires: PRIME_STUDENT_ALERT.EXPIRES });
+}
+
+PRIME_STUDENT_ALERT.isNotHide = function () {
+    return !Cookies.get("prime_student_alert_hide"); //undefined は !false として扱われる
+}
