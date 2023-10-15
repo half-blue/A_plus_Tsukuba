@@ -6,6 +6,7 @@ from . import apis
 urlpatterns = [
     path('', views.Index.as_view(), name='index'),
     path('threads/<int:thread_id>/', views.ThreadView.as_view(), name='threads'),
+    path('threads/codes/<slug:subcode>/', views.ThreadViewBySubcode.as_view(), name='subcodes'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('search/new_questions/', views.NewQuestionsView.as_view(), name='new_questions'),
     path('api/get_subthreads', apis.get_subthreads.as_view(), name = "api_get_subthreads"),

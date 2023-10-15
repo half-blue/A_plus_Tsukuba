@@ -134,8 +134,17 @@ class ThreadView(FormMixin, ListView):
         messages.error(self.request, "レビューの投稿に失敗しました。")
         return response
     
-
-
+class ThreadViewBySubcode(ListView):
+    """科目コードからスレッドにリダイレクトを行う e.g. /threads/codes/GC13201"""
+    def get(self, request, *args, **kwargs):
+        subcode = self.kwargs['subcode']
+        try:
+            # FYI: MySQLでは大文字小文字を区別しない
+            thread_id = Subject.objects.filter(code = subcode).order_by("-year").values("thread_id")[0]["thread_id"]
+        except IndexError:
+            raise Http404()
+        return redirect("threads", thread_id=thread_id)
+        
 
 class AboutView(TemplateView):
     template_name = "board/About.html"
