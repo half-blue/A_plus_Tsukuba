@@ -24,13 +24,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="戻る"></button>
         </div>
         <div class="modal-body">
-          <div class="text-center m-3">
-            <button type="button" class="btn btn-danger"
-              onclick="location.href='{% url 'threads' 6304 %}'">
-              🐣新入生雑談スレッド
-            </button><br>
-            ㊗新入生の皆さん、ご入学おめでとうございます🌸
-          </div>
+        とくべつな雑談スレッド：
+          <ul class="list-group list-group-horizontal">
+            <a href="{% url 'threads' 6304 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-danger">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">🐣新入生スレッド</div>
+                </div>
+            </a>
+            <a href="{% url 'threads' 6302 %}"
+                class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-warning">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">🏮学園祭スレッド</div>
+                  </div>
+            </a>
+          </ul><br>            
           学群ごとの雑談スレッド：
           <ul class="list-group list-group-horizontal">
             <a href="{% url 'threads' 6292 %}"
