@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Reply, Subject
+from .models import Post, Reply, Subject, Review
 
 class GetPostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,3 +27,10 @@ class PostReplySerializer(serializers.ModelSerializer):
         model = Reply                   
         fields = ["reply_id","sender_name","text","created_at","emotion","post_id"]
         read_only_fields = ('reply_id',"created_at") 
+
+class GetSubjectScoresSerializer(serializers.Serializer):
+      subcode = serializers.CharField(max_length=128)
+      average_ratings_overall = serializers.FloatField()
+      average_ratings_easiness = serializers.FloatField()
+      average_ratings_content = serializers.FloatField()
+      count_ratings = serializers.IntegerField()
