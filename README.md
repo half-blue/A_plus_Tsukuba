@@ -22,3 +22,6 @@ A+つくばは、筑波大学情報学群が開講する
 プロジェクトに含まれるファイルの内`kdb.json`は
 [Make-IT-TSUKUBA](https://github.com/Make-IT-TSUKUBA)
 さんが公開している[`kdb.json`](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/blob/master/src/kdb.json)をMPL-2.0 licenseのもとで利用しております。
+
+## A+つくばとの連携について for Developers
+A+つくばでは筑波大学に関連するアプリを開発している人に向けて連携機能を提供しています。詳しくは[こちら](https://github.com/half-blue/A_plus_Tsukuba/wiki/A-%E3%81%A4%E3%81%8F%E3%81%B0-for-Developers)をご確認ください。
