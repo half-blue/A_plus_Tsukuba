@@ -8,7 +8,7 @@ def pytest():
     subprocess.run(["docker", "exec", "a_plus_tsukuba-web", "pytest"])
 
 def dbonly():
-    subprocess.run(["docker-compose", "up", "-d", "--build"])
+    subprocess.run(["docker compose", "up", "-d", "--build"])
     subprocess.run(["docker", "stop", "a_plus_tsukuba-web"])
 
 def stop():
