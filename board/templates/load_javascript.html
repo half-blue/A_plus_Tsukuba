@@ -6,7 +6,12 @@
 
 <!-- ITF checking -->
 <script src="{% static 'board/ITFchk.js' %}"></script>
-<script>ITF_CHECK.check();</script>
+<script>
+// UserAgentが「A+Tsukuba-flutter-App」の場合は、ITFチェックを行わない
+if (navigator.userAgent.indexOf('A+Tsukuba-flutter-App') == -1) {
+  ITF_CHECK.check();
+}
+</script>
 
 <!-- Bootstrap -->
 <!-- Optional JavaScript; choose one of the two! -->
