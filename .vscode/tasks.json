@@ -6,7 +6,7 @@
         {
             "label": "Pytest in container...",
             "type": "shell",
-            "command": "python tools/docker.py pytest",
+            "command": "docker exec a_plus_tsukuba-web pytest",
             "problemMatcher": [
                 {
                     "owner": "pytest_docker",
@@ -27,12 +27,15 @@
             "group": {
                 "kind": "test",
                 "isDefault": true
-            }
+            },
+            "dependsOn": [
+                "Build and Run docker a_puls_tsukuba..."
+            ]
         },
         {
             "label": "Build and Run docker a_puls_tsukuba...",
             "type": "shell",
-            "command": "docker-compose up -d --build",
+            "command": "docker compose up -d --build",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -42,13 +45,16 @@
         {
             "label": "Run the DB container only...",
             "type": "shell",
-            "command": "python tools/docker.py dbonly",
-            "problemMatcher": []
+            "command": "docker stop a_plus_tsukuba-web",
+            "problemMatcher": [],
+            "dependsOn": [
+                "Build and Run docker a_puls_tsukuba..."
+            ]
         },
         {
             "label": "Stop all containers...",
             "type": "shell",
-            "command": "python tools/docker.py stop",
+            "command": "docker stop a_plus_tsukuba-web a_plus_tsukuba-db",
             "problemMatcher": []
         }
     ]

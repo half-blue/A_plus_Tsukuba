@@ -1,0 +1,11 @@
+version: '3.8'
+ 
+# docker-compose.override.yml for M1 Macs
+# if you use M1 Macs, you need to use this file.
+# Please rename this file to docker-compose.override.yml
+
+services:
+ my_sql:
+   platform: linux/arm64/v8
+   image: mariadb:10.0.38
+   # the actual VPS DB version is 10.0.33 but this version does not support arm64.
