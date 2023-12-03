@@ -10,7 +10,6 @@ Vue.createApp({
             if (navigator.userAgent.indexOf('A+Tsukuba-flutter-App') == -1) {
                 this.is_flutter = false;
             }
-
         }
     },
     mounted() {
