@@ -53,7 +53,8 @@
   </div>
 
   <div id="advertise">
-    <div v-if="!bool_of_flutter" class="row">
+    <div v-if="!is_flutter" class="row">
+      <!-- iframeを利用した広告はネイティブアプリで非表示にすること -->
       <div class="col text-center ad-box col-lg-8 mx-auto">
         広告<br>
         <iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?o=9&p=12&l=ur1&category=amazonstudent&banner=1EXM3ZCBAGEJJSPD8ZG2&f=ifr&linkID=f40dcd63042699c6135180322a0b1d6a&t=aplustsukuba-22&tracking_id=aplustsukuba-22" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0" sandbox="allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"></iframe>    </div>

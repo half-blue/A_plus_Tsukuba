@@ -6,7 +6,7 @@ Vue.createApp({
             query: "",                          //検索キーワード
             latest_request_time : Date.now(),    //最新の検索実行要求時刻
             num_of_reviews: 0,    //レビュー数
-            bool_of_flutter: true, //ユーザーがFlutterを使っているかどうか
+            is_flutter: true, //ユーザーがFlutterを使っているかどうか
         };
     },
     methods: {
@@ -48,7 +48,7 @@ Vue.createApp({
             this.num_of_reviews = REV_COUNT.COUNT;
             // Flutterを使っているかどうかをユーザーエージェントから判定
             if (navigator.userAgent.indexOf('A+Tsukuba-flutter-App') == -1) {
-                this.bool_of_flutter = false;
+                this.is_flutter = false;
             }
         }
     },
