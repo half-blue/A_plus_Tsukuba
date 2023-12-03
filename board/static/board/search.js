@@ -43,19 +43,17 @@ Vue.createApp({
             if (text.length < max_length) return text;
             return text.substring(0, max_length) + suffix;
         },
-        loadrevcount() {
+        load() {
+            // レビュー数を取得
             this.num_of_reviews = REV_COUNT.COUNT;
             // Flutterを使っているかどうかをユーザーエージェントから判定
             if (navigator.userAgent.indexOf('A+Tsukuba-flutter-App') == -1) {
                 this.bool_of_flutter = false;
-                console.log("aaa");
-                console.log(this.bool_of_flutter);
-                console.log(navigator.userAgent);
             }
 
         }
     },
     mounted() {
-        this.loadrevcount();
+        this.load();
     }
 }).mount('#search_app')
