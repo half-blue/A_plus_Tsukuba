@@ -20,6 +20,9 @@ services:
      - data-volume:/var/lib/mysql
    healthcheck:
         test: mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD
+   networks:
+    - default
+    - aplus-network
      
  web:
     build: .
@@ -38,3 +41,7 @@ services:
  
 volumes:
  data-volume:
+
+networks:
+  aplus-network:
+    external: true
