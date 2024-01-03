@@ -195,6 +195,10 @@ class SearchView(ListView):
         notice = Notice.objects.filter(is_show=True).order_by('created_at').values("message")
         context["notice"] = notice
 
+        # UserAgent
+        ua = self.request.META['HTTP_USER_AGENT']
+        context["is_flutter_app"] =  (ua == "A+Tsukuba-flutter-App")
+
         return context
 
 class NewQuestionsView(ListView):
