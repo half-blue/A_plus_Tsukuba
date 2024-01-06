@@ -608,7 +608,9 @@
   </div>
   
   {% include 'load_javascript.html' %}
+  {% if not is_flutter_app %}
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  {% endif %}
   <script src="{% static 'board/search.js' %}"></script>
 </body>
 
