@@ -439,7 +439,9 @@
         <div class="container" style="padding: 15px;">
           <div class="row">
             <div class="card-group">
-
+              
+              <!-- 公式Twitter（アプリで無効）-->
+              {% if not is_flutter_app %}
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">
@@ -450,10 +452,10 @@
                     href="https://twitter.com/aplus_tsukuba?ref_src=twsrc%5Etfw">Posts by aplus_tsukuba</a>
                 </div>
               </div>
+              {% endif %}
 
-
-
-
+              <!-- Googleカレンダー（アプリで無効） -->
+              {% if not is_flutter_app %}
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">カレンダー📅</h5>
@@ -464,6 +466,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
 
               <div class="card">
                 <div class="card-body">
@@ -605,7 +608,9 @@
   </div>
   
   {% include 'load_javascript.html' %}
+  {% if not is_flutter_app %}
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  {% endif %}
   <script src="{% static 'board/search.js' %}"></script>
 </body>
 

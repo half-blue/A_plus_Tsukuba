@@ -108,7 +108,7 @@ class ThreadView(FormMixin, ListView):
     def __create_amazon_link(self, target):
         html_escaped = html.escape(target)
         uri_escaped = urllib.parse.quote(target)
-        link = f'<a class="textbook-link" target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=aplustsukuba-22&index=books&keywords={uri_escaped}">{html_escaped}</a>'
+        link = f'<a class="textbook-link" target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=aplustsukub08-22&index=books&keywords={uri_escaped}">{html_escaped}</a>'
         return link
 
     def post(self, request, *args, **kwargs):
@@ -194,6 +194,10 @@ class SearchView(ListView):
         # Notice
         notice = Notice.objects.filter(is_show=True).order_by('created_at').values("message")
         context["notice"] = notice
+
+        # UserAgent
+        ua = self.request.META['HTTP_USER_AGENT']
+        context["is_flutter_app"] =  (ua == "A+Tsukuba-flutter-App")
 
         return context
 
