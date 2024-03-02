@@ -40,9 +40,3 @@ if (navigator.userAgent.indexOf('A+Tsukuba-flutter-App') == -1) {
 
 <script src="{% static 'board/common.js' %}"></script>
 
-<!-- PWA -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-  };
-</script>
