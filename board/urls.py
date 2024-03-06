@@ -17,7 +17,6 @@ urlpatterns = [
     path('about/', views.AboutView.as_view(), name = "about"),
     path('terms/', views.TermsView.as_view(), name = "terms"),
     path('privacy/', views.PrivacyView.as_view(), name = "privacy"),
-    path('sw.js', views.ServiceWorkerView.as_view(), name = "sw_js"),
     path('app/', views.GetAppView.as_view(), name = "get_app"),
     path('api/subject/<slug:subcode>/scores', apis.get_subject_scores.as_view(), name = "api_subject_scores"),
 ]

@@ -34,8 +34,13 @@ ITF_CHECK.quiz = function () {
 }
 
 ITF_CHECK.check = function () {
-    //無限ループを防ぐための処置
+    //無限ループを防ぐための処置（aboutページはチェックしない）
     if (location.pathname == ITF_CHECK.MOVE_TO) {
+        return;
+    }
+
+    //appページをチェックの対象外にする
+    if (location.pathname == "/app/") {
         return;
     }
 
