@@ -54,6 +54,7 @@ Vue.createApp({
                 3: 'badge rounded-pill bg-primary',
                 4: 'badge rounded-pill bg-gray',
                 5: 'badge rounded-pill bg-orange',
+                6: 'badge rounded-pill bg-danger',
 
                 10: 'badge rounded-pill bg-gray',
                 11: 'badge rounded-pill bg-primary',
@@ -80,6 +81,7 @@ Vue.createApp({
                 3: '提案(^^)/~~~',
                 4: `ウンウン(´ー｀*)`,
                 5: '大丈夫？( *´艸｀)',
+                6: '※返信不要ヽ(｀Д´#)ﾉ',
 
                 10: "ｆｍ ˘ω ˘ *))ｆｍ",
                 11: "ぴえん🥺",
