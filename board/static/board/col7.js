@@ -7,6 +7,7 @@ Vue.createApp({
             replies: {},            //リプライの辞書 replies[post_id]=replyのjson
             thread_id: thread_id,   //スレッドID
             FETCH_INTERVAL : 3000,  //自動更新頻度(ms)
+            scrolledToComment: false, // スクロールしたかどうかを追跡するフラグ
         };
     },
     methods: {
@@ -16,6 +17,24 @@ Vue.createApp({
                 `/api/get_subthreads?thread_id=${thread_id}`
             );
             this.subthreads = res.data || [];
+            this.$nextTick(() => {
+                this.scrollToCommentFromURL();
+            });
+        },
+        scrollToCommentFromURL() {
+            if (this.scrolledToComment) {
+                // 既にスクロール済みの場合は何もしない
+                return;
+            }
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('post_id');
+            if (postId) {
+                const element = document.getElementById(postId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                    this.scrolledToComment = true; // スクロールしたことを記録
+                }
+            }
         },
         async fetchReplies(post_id) {
             //指定したサブスレッドのリプライ一覧をフェッチする
@@ -147,5 +166,9 @@ Vue.createApp({
     mounted() {
         this.loop();
         this.start();
+        // this.$nextTick(() => {
+        //     // マウント後にコメント位置へのスクロールを試みる
+        //     this.scrollToCommentFromURL();
+        // });
     },
 }).mount('#post_app')
