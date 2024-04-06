@@ -27,7 +27,12 @@ Vue.createApp({
                 return;
             }
             const params = new URLSearchParams(window.location.search);
-            const postId = params.get('post_id');
+            var postId = params.get('post_id');
+            // postIdは32文字の16進数であるため、ハイフンを挿入して8-4-4-4-12の形式にする
+            postId = postId.slice(0, 8) + '-' + postId.slice(8, 12) + '-' + postId.slice(12, 16) + '-' + postId.slice(16, 20) + '-' + postId.slice(20);
+            // postIdの接頭辞にpost_boxをつける
+            postId = 'post_box' + postId;
+            console.log(postId);
             if (postId) {
                 const element = document.getElementById(postId);
                 if (element) {
