@@ -17,9 +17,24 @@ Vue.createApp({
                 `/api/get_subthreads?thread_id=${thread_id}`
             );
             this.subthreads = res.data || [];
+        },
+        async fetchReplies(post_id) {
+            //指定したサブスレッドのリプライ一覧をフェッチする
+            const res = await axios.get(
+                `/api/get_replies?post_id=${post_id}`
+            );
+            this.replies[post_id] = res.data || [];
             this.$nextTick(() => {
                 this.scrollToCommentFromURL();
             });
+        },
+        getReplyCount(post_id) {
+            //指定したサブスレッドの現在のリプライ数を取得する
+            if(this.replies[post_id]) {
+                return this.replies[post_id].length;
+            }else{
+                return 0;
+            }
         },
         scrollToCommentFromURL() {
             if (this.scrolledToComment) {
@@ -39,21 +54,6 @@ Vue.createApp({
                     element.scrollIntoView({ behavior: 'smooth' });
                     this.scrolledToComment = true; // スクロールしたことを記録
                 }
-            }
-        },
-        async fetchReplies(post_id) {
-            //指定したサブスレッドのリプライ一覧をフェッチする
-            const res = await axios.get(
-                `/api/get_replies?post_id=${post_id}`
-            );
-            this.replies[post_id] = res.data || [];
-        },
-        getReplyCount(post_id) {
-            //指定したサブスレッドの現在のリプライ数を取得する
-            if(this.replies[post_id]) {
-                return this.replies[post_id].length;
-            }else{
-                return 0;
             }
         },
         formatTimeString(time) {
