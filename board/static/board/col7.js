@@ -47,7 +47,6 @@ Vue.createApp({
             postId = postId.slice(0, 8) + '-' + postId.slice(8, 12) + '-' + postId.slice(12, 16) + '-' + postId.slice(16, 20) + '-' + postId.slice(20);
             // postIdの接頭辞にpost_boxをつける
             postId = 'post_box' + postId;
-            console.log(postId);
             if (postId) {
                 const element = document.getElementById(postId);
                 if (element) {
@@ -171,9 +170,5 @@ Vue.createApp({
     mounted() {
         this.loop();
         this.start();
-        // this.$nextTick(() => {
-        //     // マウント後にコメント位置へのスクロールを試みる
-        //     this.scrollToCommentFromURL();
-        // });
     },
 }).mount('#post_app')
