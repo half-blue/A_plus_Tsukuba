@@ -17,6 +17,7 @@ A+つくばは、筑波大学情報学群が開講する
 学生有志による私的なプロジェクトとして開発を行っています。
 
 紹介動画：https://www.youtube.com/watch?v=dtbBatKRBvc
+公式Twitter(現：X)：https://x.com/aplus_tsukuba
 
 ## ライセンス等
 プロジェクトに含まれるファイルの内`kdb.json`は
