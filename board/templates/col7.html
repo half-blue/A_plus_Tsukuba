@@ -82,6 +82,7 @@
             <div v-if="getReplyCount(st.post_id) !== 0">
               <!-- 返信がゼロ件でないなら -->
               <button
+                :id="'#reply_box' + st.post_id"
                 class="btn dropdown-toggle"
                 type="button" 
                 data-bs-toggle="collapse"

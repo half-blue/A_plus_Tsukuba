@@ -46,8 +46,11 @@ Vue.createApp({
             // postIdは32文字の16進数であるため、ハイフンを挿入して8-4-4-4-12の形式にする
             postId = postId.slice(0, 8) + '-' + postId.slice(8, 12) + '-' + postId.slice(12, 16) + '-' + postId.slice(16, 20) + '-' + postId.slice(20);
             // postIdの接頭辞にpost_boxをつける
+            const replyId = 'reply_box' + postId;
+            const sharpreplyId = '#reply_box' + postId;
             postId = 'post_box' + postId;
             console.log(postId);
+            console.log(replyId);
             if (postId) {
                 const element = document.getElementById(postId);
                 if (element) {
@@ -55,6 +58,25 @@ Vue.createApp({
                     this.scrolledToComment = true; // スクロールしたことを記録
                 }
             }
+            // リプライの場合はcollapseを開く
+            // reply_idのreply_boxのボタンのaria-expandedをtrueにする
+            const PostOrReply = params.get('type');
+            // const replyId = params.get('reply_id');
+            // 1s待つ
+            setTimeout(() => {
+            if (PostOrReply === 'reply') {
+                const element = document.getElementById(replyId);
+                console.log(element);
+                // collapse showにする
+                element.classList.add('show');
+
+                // const elementButton = document.getElementById(sharpreplyId);
+                // console.log(elementButton);
+                // // aria-expandedをtrueにする
+                // elementButton.setAttribute('aria-expanded', 'true');
+            }
+        }, 4000);
+
         },
         formatTimeString(time) {
             //ISO 8601形式のtimeを表示用のテキストに変換する。
