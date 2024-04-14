@@ -7,6 +7,7 @@ Vue.createApp({
             replies: {},            //リプライの辞書 replies[post_id]=replyのjson
             thread_id: thread_id,   //スレッドID
             FETCH_INTERVAL : 3000,  //自動更新頻度(ms)
+            scrolledToComment: false, // スクロールしたかどうかを追跡するフラグ
         };
     },
     methods: {
@@ -16,6 +17,9 @@ Vue.createApp({
                 `/api/get_subthreads?thread_id=${thread_id}`
             );
             this.subthreads = res.data || [];
+            this.$nextTick(() => {
+                this.scrollToCommentFromURL();
+            });
         },
         async fetchReplies(post_id) {
             //指定したサブスレッドのリプライ一覧をフェッチする
@@ -31,6 +35,39 @@ Vue.createApp({
             }else{
                 return 0;
             }
+        },
+        scrollToCommentFromURL() {
+            if (this.scrolledToComment) {
+                // 既にスクロール済みの場合は何もしない
+                return;
+            }
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('post_id')) {
+                return;   
+            }
+            const postId = this.insertHyphenNonSeparateUUID(params.get('post_id'));
+            // postIdの接頭辞にpost_boxをつける
+            const postBoxElementId = 'post_box' + postId;
+            if (postId) {
+                const element = document.getElementById(postBoxElementId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                    this.scrolledToComment = true; // スクロールしたことを記録
+                }
+            }
+        },
+        insertHyphenNonSeparateUUID(non_separate_uuid) {
+          // ハイフンを挿入して8-4-4-4-12の形式にする
+            return non_separate_uuid.slice(0, 8) + '-' + non_separate_uuid.slice(8, 12) + '-' + non_separate_uuid.slice(12, 16) + '-' + non_separate_uuid.slice(16, 20) + '-' + non_separate_uuid.slice(20);  
+        },
+        isThatPostIdScrollTarget(post_id) {
+            //受け取ったpost_idがURLのクエリパラメータのpost_idと一致するかどうかを返す
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('post_id')) {
+                return false;   
+            }
+            const target_post_id = this.insertHyphenNonSeparateUUID(params.get('post_id'));
+            return post_id === target_post_id;
         },
         formatTimeString(time) {
             //ISO 8601形式のtimeを表示用のテキストに変換する。

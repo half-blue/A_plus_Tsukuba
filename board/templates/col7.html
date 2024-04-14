@@ -93,7 +93,9 @@
                 </span>
               </button>
             </div>
-          </div>
+            <div v-else class="placeholder bg-transparent opacity-0" style="height: 38px; width: 100%;"> <!-- ボタンと同じ高さのプレースホルダー -->
+              <!-- 透明なプレースホルダー-->
+            </div>
           <div class="d-inline-flex col justify-content-end">
             <button class="btn btn-primary comment-btn" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"
@@ -102,9 +104,9 @@
             </button>
           </div>
         </div>
-        <!-- 返信の表示 -->
-        <div class="collapse" :id="'reply_box' + st.post_id">
-          <div class="rows">
+        <!-- 返信の表示 URLパラメータのpost_idの返信なら最初から展開しておく-->
+        <div class="collapse" :class="{'show': isThatPostIdScrollTarget(st.post_id)}" :id="'reply_box' + st.post_id">
+          <div v-if="getReplyCount(st.post_id) > 0" class="rows">
             <div class="cols">
               <div v-for="reply in replies[st.post_id]" :key="reply.reply_id">
                 <div class="post_box reply_box">
