@@ -3,7 +3,7 @@ import html
 import urllib.parse
 
 from django.shortcuts import render
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from .models import Notice, Post, Reply, Subject, Thread, Review, Tag, Textbooks
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
@@ -213,3 +213,18 @@ class NewQuestionsView(ListView):
 
 class GetAppView(TemplateView):
     template_name = "board/App.html"
+
+
+def assetlinks_json(request):
+    data = [{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.aplus.tsukuba2023",
+            "sha256_cert_fingerprints": [
+                "64:2C:3A:D4:5D:A9:F7:E4:83:5B:F6:1C:49:0C:95:42:E6:A1:1C:E5:9D:F9:25:DA:E0:38:B5:81:6C:19:B7:1B"
+            ]
+        }
+    }]
+    ## `safe=False`は今日においてはセキュリティ上の問題とはならないらしい
+    return JsonResponse(data, safe=False)
