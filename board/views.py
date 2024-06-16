@@ -228,3 +228,23 @@ def assetlinks_json(request):
     }]
     ## `safe=False`は今日においてはセキュリティ上の問題とはならないらしい
     return JsonResponse(data, safe=False)
+
+def apple_app_site_association(request):
+    data = {
+        "applinks": {
+            "apps": [],
+            "details": [
+                {
+                    "appID": "com.aplus.tsukuba2023",
+                    "components": []
+                }
+            ]
+        },
+        "webcredentials": {
+            "apps": ["com.aplus.tsukuba2023"]
+        },
+        "appclips": {
+            "apps": ["com.aplus.tsukuba2023"]
+        }
+    }
+    return JsonResponse(data, safe=False)
