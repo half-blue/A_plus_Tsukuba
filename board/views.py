@@ -163,37 +163,10 @@ class SearchView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['post_list'] = self.model.objects.all().order_by('-created_at')[:5]
-
-        # emergency ranking
-        thread_dict = dict() # thread_dict[thread_id] = 非常事態数
-        # post
-        target_data = Post.objects.filter(emotion=0)
-        groupby_data = target_data.values("thread_id").annotate(total=Count("thread_id"))
-        for col in groupby_data:
-            thread_dict[col["thread_id"]] = col["total"]
-        # reply
-        target_data = Reply.objects.filter(emotion=0)
-        groupby_data = target_data.values("post_id").annotate(total=Count("post_id"))
-        for col in groupby_data:
-            thread_id = Post.objects.filter(post_id=col["post_id"]).values("thread")[0]["thread"]
-            if thread_id in thread_dict.keys():
-                thread_dict[thread_id] += col["total"]
-            else:
-                thread_dict[thread_id] = col["total"]
         
-        ranking = []
-        ranking_nums = sorted(thread_dict.items(), key=lambda x:x[1], reverse=True)[:5]
-        for tid , num  in ranking_nums:
-            title = Thread.objects.filter(pk=tid).values("title")[0]["title"]
-            ranking.append(
-                (tid, title, num)
-            )
-
-        context["ranking"] = ranking
-
-        # Notice
-        notice = Notice.objects.filter(is_show=True).order_by('created_at').values("message")
-        context["notice"] = notice
+        # Review
+        review_list = Review.objects.all().select_related('thread').order_by('-created_at')[:3]
+        context["review_list"] = review_list
 
         # UserAgent
         ua = self.request.META['HTTP_USER_AGENT']

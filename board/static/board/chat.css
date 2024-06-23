@@ -152,6 +152,19 @@
 
 /* 星0 */
 
+/* ホーム画面用に小さい星を表示する */
+.small-star {
+    font-size: 1em;
+    /* 基本サイズに戻す */
+}
+
+.small-star:before,
+.small-star:after {
+    font-size: 1em !important;
+    /* 星のサイズを小さくする */
+}
+
+
 /* 匿名アイコンのサイジング */
 .review-anon-icon {
     width: 55px;
