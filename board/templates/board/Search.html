@@ -329,22 +329,27 @@
                             <p class="fw-bold d-inline-block my-0 me-2">総合評価</p>
                             <span class="star5_rating small-star" id="star5-rating" data-rate="{{ review.ratings_overall|floatformat:1 }}"></span>
                         </div>
-                        <div>
-                          <table class="table table-sm table-borderless mb-0">
-                              <tbody>
-                                  <tr>
-                                      <td class="review-anon-icon align-top">
-                                          <img src="{% static 'board/anonymous_icon.png' %}" alt="user icon" class="img-fluid mx-auto mt-1">
-                                      </td>
-                                      <td class="fw-light h-auto">
-                                          <div class="review-comment-box">
-                                              {{ review.comment|default:"..."|truncatechars:30 }}
-                                          </div>
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                        </div>
+                        <table class="table table-sm table-borderless mb-0">
+                          <tbody>
+                              <tr>
+                                  <td class="review-anon-icon align-top">
+                                      {% if review.is_anonymous %}
+                                      <img src="{% static 'board/robot_icon.png' %}" alt="robot icon" class="img-fluid mx-auto mt-1">
+                                      {% else %}
+                                      <img src="{% static 'board/anonymous_icon.png' %}" alt="user icon" class="img-fluid mx-auto mt-1">
+                                      {% endif %}
+                                  </td>
+                                  <td class="fw-light h-auto">
+                                      <div class="review-comment-box">
+                                          {{ review.comment|truncatechars:30 }}
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                        </table>
+                        {% if review.is_anonymous %}
+                        <p class="fw-bold review-comment-note mb-0">※システムによるコメントです</p>
+                        {% endif %}
                       </li>
                       {% endfor %}
                     </ol>
