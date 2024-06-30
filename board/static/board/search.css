@@ -6,6 +6,115 @@
     color: #6290FF;
 }
 
+/* ------------新しいレビュー用のスター--------- */
+.star5_rating {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    white-space: nowrap;
+    color: #cecece;
+    /* グレーカラー 自由に設定化 */
+}
+
+.star5_rating:before,
+.star5_rating:after {
+    content: '★★★★★';
+    font-size: 2em;
+}
+
+.star5_rating:after {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #fbc634;
+    /* イエローカラー 自由に設定化 */
+}
+
+.star5_rating[data-rate="5.0"]:after {
+    width: 100%;
+}
+
+/* 星5 */
+.star5_rating[data-rate="4.5"]:after {
+    width: 90%;
+}
+
+/* 星4.5 */
+.star5_rating[data-rate="4.0"]:after {
+    width: 80%;
+}
+
+/* 星4 */
+.star5_rating[data-rate="3.5"]:after {
+    width: 70%;
+}
+
+/* 星3.5 */
+.star5_rating[data-rate="3.0"]:after {
+    width: 60%;
+}
+
+/* 星3 */
+.star5_rating[data-rate="2.5"]:after {
+    width: 50%;
+}
+
+/* 星2.5 */
+.star5_rating[data-rate="2.0"]:after {
+    width: 40%;
+}
+
+/* 星2 */
+.star5_rating[data-rate="1.5"]:after {
+    width: 30%;
+}
+
+/* 星1.5 */
+.star5_rating[data-rate="1.0"]:after {
+    width: 20%;
+}
+
+/* 星1 */
+.star5_rating[data-rate="0.5"]:after {
+    width: 10%;
+}
+
+/* 星0.5 */
+.star5_rating[data-rate="0.0"]:after {
+    width: 0%;
+}
+
+/* 星0 */
+
+/* ホーム画面用に小さい星を表示する */
+.small-star {
+    font-size: 1em;
+    /* 基本サイズに戻す */
+}
+
+.small-star:before,
+.small-star:after {
+    font-size: 1em !important;
+    /* 星のサイズを小さくする */
+}
+
+
+/* 匿名アイコンのサイジング */
+.review-anon-icon {
+    width: 55px;
+}
+
+.review-comment-box {
+    padding: 10px;
+    background-color: lavender;
+    border-radius: 15px;
+    overflow-wrap: anywhere;
+    min-height: 57px;
+}
+
 @media (max-width: 768px) {
     /* md 以下の画面 */
     .pc-only {
@@ -15,6 +124,14 @@
     .logo-img{
         width: 80%;
     }
+    
+    .review-anon-icon {
+        width: 45px;
+    }
+    .review-comment-box {
+        min-height: 47px;
+    }
+
 }
 
 .newpost-thread {
