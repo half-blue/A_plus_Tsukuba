@@ -1,6 +1,7 @@
 import json
 import html
 import urllib.parse
+import random
 
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -160,40 +161,28 @@ class SearchView(ListView):
     template_name = "board/Search.html"
     model = Post
 
+    # 新しいレビュー用のコメント ※ユーザがコメントを入力していなかった場合に表示する
+    DEFAULT_COMMENTS = {
+        1: ["と゛お゛し゛て゛た゛よ゛お゛お゛お゛ーー!!!", "今日は風が騒がしいな…", "猛者はテス勉しないって？私は落単よ"],
+        2: ["おもしれー授業(棒読み)", "授業への熱冷めちゃった", "おぼろげながら浮かんできたんですCという文字が"],
+        3: ["ベリー・オーディナリー、普通の授業だった", "担当の先生に告白しようと思ってる。授業の皆には悪いけど、抜け駆けで。", "計画通り(ﾆﾔﾘ"],
+        4: ["う゛め゛ー゛っ゛悪゛魔゛的゛だ", "俺はこれより難しい授業に会いに行く", "やれやれだぜ"],
+        5: ["グレートですよ、こいつはァ", "高評価と心の中で思ったなら！ その時既に行動は終わっている！", "君は落単したのか？俺はA+だが"]
+    }
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['post_list'] = self.model.objects.all().order_by('-created_at')[:5]
-
-        # emergency ranking
-        thread_dict = dict() # thread_dict[thread_id] = 非常事態数
-        # post
-        target_data = Post.objects.filter(emotion=0)
-        groupby_data = target_data.values("thread_id").annotate(total=Count("thread_id"))
-        for col in groupby_data:
-            thread_dict[col["thread_id"]] = col["total"]
-        # reply
-        target_data = Reply.objects.filter(emotion=0)
-        groupby_data = target_data.values("post_id").annotate(total=Count("post_id"))
-        for col in groupby_data:
-            thread_id = Post.objects.filter(post_id=col["post_id"]).values("thread")[0]["thread"]
-            if thread_id in thread_dict.keys():
-                thread_dict[thread_id] += col["total"]
-            else:
-                thread_dict[thread_id] = col["total"]
         
-        ranking = []
-        ranking_nums = sorted(thread_dict.items(), key=lambda x:x[1], reverse=True)[:5]
-        for tid , num  in ranking_nums:
-            title = Thread.objects.filter(pk=tid).values("title")[0]["title"]
-            ranking.append(
-                (tid, title, num)
-            )
-
-        context["ranking"] = ranking
-
-        # Notice
-        notice = Notice.objects.filter(is_show=True).order_by('created_at').values("message")
-        context["notice"] = notice
+        # Review
+        review_list = Review.objects.all().select_related('thread').order_by('-created_at')[:3]
+        for review in review_list:
+            if not review.comment:
+                overall_rating = int(review.ratings_overall)
+                # 定型文からランダムに選択
+                review.comment = random.choice(self.DEFAULT_COMMENTS.get(overall_rating, ["コメントがありません。"]))
+                review.is_anonymous = True  # 新しいフラグを追加してアイコンを変更する
+        context["review_list"] = review_list
 
         # UserAgent
         ua = self.request.META['HTTP_USER_AGENT']
