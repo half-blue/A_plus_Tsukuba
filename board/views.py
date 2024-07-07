@@ -180,7 +180,8 @@ class SearchView(ListView):
             if not review.comment:
                 overall_rating = int(review.ratings_overall)
                 # 定型文からランダムに選択
-                review.comment = random.choice(self.DEFAULT_COMMENTS.get(overall_rating, ["コメントがありません。"]))
+                random_obj = random.Random()
+                review.comment = random_obj.choice(self.DEFAULT_COMMENTS.get(overall_rating, ["コメントがありません。"]))
                 review.is_anonymous = True  # 新しいフラグを追加してアイコンを変更する
         context["review_list"] = review_list
 
