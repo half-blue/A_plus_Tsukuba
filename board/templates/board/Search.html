@@ -313,62 +313,45 @@
                 </div>
               </div>
               <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">非常事態のスレッドランキング🔥</h5>
-                  <ol class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <img src="{% static 'board/crown/f5-1.png' %}" alt="第1位" class="img-fluid" width="45">
-                          <a href="/threads/{{ ranking.0.0 }}/">
-                            {{ ranking.0.1 | truncatechars:25}}</a>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="card-title">新しいレビュー🤗</h5>
+                    </div>
+                    <ol class="list-group list-group-flush">
+                      {% for review in review_list %}
+                      <li class="list-group-item">
+                        <a href="{% url 'threads' review.thread_id %}">
+                            {{ review.thread.title | truncatechars:20}}
+                        </a>
+                        
+                        <br />
+                        <div class="d-flex align-items-center">
+                            <p class="fw-bold d-inline-block my-0 me-2">総合評価</p>
+                            <span class="star5_rating small-star" id="star5-rating" data-rate="{{ review.ratings_overall|floatformat:1 }}"></span>
                         </div>
-                        <div>
-                          {{ ranking.0.2 }}件
-                        </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <img src="{% static 'board/crown/f5-2.png' %}" alt="第1位" class="img-fluid" width="45">
-                          <a href="/threads/{{ ranking.1.0 }}/">
-                            {{ ranking.1.1 | truncatechars:25}}</a>
-                        </div>
-                        <div>
-                          {{ ranking.1.2 }}件
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="list-group-item">
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <img src="{% static 'board/crown/f5-3.png' %}" alt="第1位" class="img-fluid" width="45">
-                          <a href="/threads/{{ ranking.2.0 }}/">
-                            {{ ranking.2.1 | truncatechars:25}}</a>
-                        </div>
-                        <div>
-                          {{ ranking.2.2 }}件
-                        </div>
-                      </div>
-                    </li>
-                  </ol>
-                  <br>
-                  <h5 class="card-title">運営からのお知らせℹ️</h5>
-                  <ul>
-                    {% if notice %}
-                    {% for info in notice %}
-                    <li>
-                      {{ info.message | safe }}
-                    </li>
-                    {% endfor %}
-                    {% else %}
-                    現在お知らせする情報はありません。
-                    {% endif %}
-                  </ul>
+                        <table class="table table-sm table-borderless mb-0">
+                          <tbody>
+                              <tr>
+                                  <td class="review-anon-icon align-top">
+                                      {% if review.is_anonymous %}
+                                      <img src="{% static 'board/robot_icon.png' %}" alt="robot icon" class="img-fluid mx-auto mt-1">
+                                      {% else %}
+                                      <img src="{% static 'board/anonymous_icon.png' %}" alt="user icon" class="img-fluid mx-auto mt-1">
+                                      {% endif %}
+                                  </td>
+                                  <td class="fw-light h-auto">
+                                      <div class="review-comment-box">
+                                          {{ review.comment|truncatechars:30 }}
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </li>
+                      {% endfor %}
+                    </ol>
+                  </div>
                 </div>
-              </div>
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">便利リンク集🔗</h5>
