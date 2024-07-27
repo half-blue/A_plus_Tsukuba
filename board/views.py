@@ -235,16 +235,16 @@ def apple_app_site_association(request):
             "apps": [],
             "details": [
                 {
-                    "appID": "com.aplus.tsukuba2023",
-                    "components": []
+                    "appIDs": ["3GU5DR2BZM.com.aplus.tsukuba2023"],
+                    "paths": ["*"],
                 }
             ]
         },
         "webcredentials": {
-            "apps": ["com.aplus.tsukuba2023"]
+            "apps": ["3GU5DR2BZM.com.aplus.tsukuba2023"]
         },
         "appclips": {
-            "apps": ["com.aplus.tsukuba2023"]
+            "apps": ["3GU5DR2BZM.com.aplus.tsukuba2023"]
         }
     }
     return JsonResponse(data, safe=False)
