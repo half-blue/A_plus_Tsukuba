@@ -14,6 +14,8 @@ from django.contrib import messages
 from django.db.models import Count, Avg
 from django.urls import reverse_lazy
 
+from A_plus_Tsukuba.settings import DEBUG
+
 class Index(ListView):
     def get(self, request, *args, **kwargs):
         return redirect("search/")
@@ -212,7 +214,9 @@ def assetlinks_json(request):
             "namespace": "android_app",
             "package_name": "com.aplus.tsukuba2023",
             "sha256_cert_fingerprints": [
+                # 製品版と開発寺で鍵が違うので注意
                 "64:2C:3A:D4:5D:A9:F7:E4:83:5B:F6:1C:49:0C:95:42:E6:A1:1C:E5:9D:F9:25:DA:E0:38:B5:81:6C:19:B7:1B"
+                if DEBUG else "44:B4:70:3E:70:59:E9:20:2C:13:06:82:C9:39:E2:F7:9D:62:40:B7:A7:60:2F:3C:E9:B4:F4:73:A3:81:0F:6E"
             ]
         }
     }]
