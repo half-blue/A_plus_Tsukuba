@@ -6,6 +6,7 @@ Vue.createApp({
             query: "",                          //検索キーワード
             latest_request_time : Date.now(),    //最新の検索実行要求時刻
             num_of_reviews: 0,    //レビュー数
+            PC_bool: false,
         };
     },
     methods: {
@@ -48,5 +49,6 @@ Vue.createApp({
     },
     mounted() {
         this.loadrevcount();
+        this.PC_bool = !(navigator.userAgent.indexOf('A+Tsukuba-flutter-App') == -1)
     }
 }).mount('#search_app')

@@ -128,6 +128,8 @@
         <div class="col-12">
           <div v-if="num_of_reviews < 3" class="text-center img-hidden" style="margin-bottom: 15px;">
             <img src="{% static 'board/new_logo.png' %}" alt="img" class="mx-auto d-block logo-img">
+            
+            
 
             <div class="text-center">
                 現在のランク：
@@ -279,6 +281,15 @@
           </div>
         </div>
       </div>
+      <div v-if="PC_bool" class="container">
+        <div class="row  d-flex justify-content-center">
+          <div class="col-md-6 alert alert-warning">
+            アプリの<b>最新版</b>では、左下の「通知管理」ボタンから学群ごとの通知をまとめて受け取れるようになりました！アップデートをお願いします！
+          </div>
+        </div>
+      </div>
+      
+
 
       <!-- 情報カード（検索ボックスが空のときのみ表示） -->
       <div v-show="!query">
