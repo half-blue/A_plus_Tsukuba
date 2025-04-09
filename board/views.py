@@ -4,7 +4,7 @@ import urllib.parse
 import random
 
 from django.shortcuts import render
-from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, Http404, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from .models import Notice, Post, Reply, Subject, Thread, Review, Tag, Textbooks
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
@@ -115,6 +115,15 @@ class ThreadView(FormMixin, ListView):
         return link
 
     def post(self, request, *args, **kwargs):
+        # レビューが許可されていないスレッドに対する処理
+        try:
+            thread = Thread.objects.get(id = self.kwargs['thread_id'])
+        except Thread.DoesNotExist:
+            raise Http404() # ここが呼ばれることはないはず
+        if not thread.enable_review:
+            return HttpResponseNotAllowed(permitted_methods=["GET"])
+        
+        # リクエスト内容のバリデーションを行う
         self.object_list = self.get_queryset()
         form = self.get_form()
         if form.is_valid():
