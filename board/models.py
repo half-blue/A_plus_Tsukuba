@@ -133,7 +133,7 @@ class Review(models.Model):
     ratings_overall = models.IntegerField(choices=RATINGS, verbose_name='総合評価',default=3)
     ratings_easiness = models.IntegerField(choices=RATINGS, verbose_name='楽単度',default=3)
     ratings_content = models.IntegerField(choices=RATINGS, verbose_name='充実度',default=3)
-    comment = models.TextField(verbose_name='コメント', blank=True, max_length=100)
+    comment = models.TextField(verbose_name='コメント', blank=True, max_length=200)
     tags = models.ManyToManyField(Tag, verbose_name='タグ', blank=True)
     created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
 
