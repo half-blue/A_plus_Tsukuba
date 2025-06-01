@@ -6,7 +6,7 @@
     color: #6290FF;
 }
 
-/* ------------集会場ボタン専用--------- */
+/* ------------学生ラウンジボタン専用--------- */
 .btn-wrapper {
   height: 52px; 
   display: flex;
@@ -14,17 +14,17 @@
   justify-content: center;
 }
 
-.btn-custom-purple {
-  background-color: #b28dff;
+.btn-custom-red {
+  background-color: #ff4b4b; /* 明るめの赤色 */
   color: white;
-  border-bottom: 5px solid #7d57c9;
+  border-bottom: 5px solid #c0392b; /* 濃い赤色の境界線 */
   transition: all 0.2s ease;
 }
 
-.btn-custom-purple:hover {
-  background-color: #9a73e0;
+.btn-custom-red:hover {
+  background-color: #e74c3c; /* やや濃い赤色 */
   margin-top: 3px;
-  border-bottom: 2px solid #7d57c9;
+  border-bottom: 2px solid #a93226; /* より濃い赤色 */
   color: white;
 }
 
