@@ -6,7 +6,14 @@
     color: #6290FF;
 }
 
-/* ------------学生ラウンジボタン専用--------- */
+/* ------------集会場ボタン専用--------- */
+.btn-wrapper {
+  height: 52px; 
+  display: flex;
+  align-items: flex-start; 
+  justify-content: center;
+}
+
 .btn-custom-purple {
   background-color: #b28dff;
   color: white;

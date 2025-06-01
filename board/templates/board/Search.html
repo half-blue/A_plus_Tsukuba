@@ -228,15 +228,16 @@
             </span>
             <input v-on:input="inputEvent" type="text" class="form-control" placeholder="科目名・科目番号・学類などを入力してください。">
           </div>
-          <div v-if="!query" class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+          <div v-show="!query" class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
             <!-- 履修している講義スレッドに参加して、
             <br class="mobile-only">
             協力してA+を目指そう！<br> -->
             <p class="fw-bold text-center mb-1">＼どこに書き込むか迷った時はこちら／</p>
-            <a class="btn btn-custom-purple btn-lg me-2 mb-md-0 mb-2 mt-md-0 btn-radius btn-cubic position-relative" href="{% url 'threads' 6304 %}">
-            筑波大生集会所
-            </a>
-            <div class="d-block w-100"></div>
+            <div class="btn-wrapper me-2 mb-md-0 mb-2 mt-md-0">
+              <a class="btn btn-custom-purple btn-lg me-2 mb-md-0 mb-2 mt-md-0 btn-radius btn-cubic position-relative" href="{% url 'threads' 6304 %}">
+              筑波大生集会所
+              </a>
+            </div>
           </div>
         </div>
       </div>
