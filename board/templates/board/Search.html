@@ -24,7 +24,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="戻る"></button>
         </div>
         <div class="modal-body">
-        とくべつな雑談スレッド：
+        <!-- とくべつな雑談スレッド：
           <ul class="list-group list-group-horizontal">
             <a href="{% url 'threads' 6304 %}"
                 class="list-group-item d-flex list-group-item-action justify-content-between align-items-center list-group-item-danger">
@@ -38,7 +38,7 @@
                     <div class="fw-bold">🏮学園祭スレッド</div>
                   </div>
             </a>
-          </ul><br>            
+          </ul><br>             -->
           学群ごとの雑談スレッド：
           <ul class="list-group list-group-horizontal">
             <a href="{% url 'threads' 6292 %}"
@@ -228,16 +228,16 @@
             </span>
             <input v-on:input="inputEvent" type="text" class="form-control" placeholder="科目名・科目番号・学類などを入力してください。">
           </div>
-          <div v-if="!query" class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
-            履修している講義スレッドに参加して、
+          <div v-show="!query" class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
+            <!-- 履修している講義スレッドに参加して、
             <br class="mobile-only">
-            協力してA+を目指そう！<br>
-            <a class="btn btn-danger btn-sm me-2 mb-md-0 mb-2 mt-2 mt-md-0" href="{% url 'threads' 6304 %}">
-              🐣新入生スレッドはこちら
-            </a>
-            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#chatModal">
-              雑談スレッドはこちら
-            </button>
+            協力してA+を目指そう！<br> -->
+            <p class="fw-bold text-center mb-1">＼どこに書き込むか迷った時はこちら／</p>
+            <div class="btn-wrapper me-2 mb-md-0 mb-2 mt-md-0">
+              <a class="btn btn-custom-red btn-lg me-2 mb-md-0 mb-2 mt-md-0 btn-radius btn-cubic position-relative" href="{% url 'threads' 6304 %}">
+              筑波大生集会所
+              </a>
+            </div>
           </div>
         </div>
       </div>

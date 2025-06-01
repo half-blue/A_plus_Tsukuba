@@ -6,6 +6,36 @@
     color: #6290FF;
 }
 
+/* ------------学生ラウンジボタン専用--------- */
+.btn-wrapper {
+  height: 52px; 
+  display: flex;
+  align-items: flex-start; 
+  justify-content: center;
+}
+
+.btn-custom-red {
+  background-color: #ff4b4b; /* 明るめの赤色 */
+  color: white;
+  border-bottom: 5px solid #c0392b; /* 濃い赤色の境界線 */
+  transition: all 0.2s ease;
+}
+
+.btn-custom-red:hover {
+  background-color: #e74c3c; /* やや濃い赤色 */
+  margin-top: 3px;
+  border-bottom: 2px solid #a93226; /* より濃い赤色 */
+  color: white;
+}
+
+.btn-radius {
+  border-radius: 100vh;
+}
+
+.btn-cubic {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+}
+
 /* ------------新しいレビュー用のスター--------- */
 .star5_rating {
     position: relative;
