@@ -6,6 +6,29 @@
     color: #6290FF;
 }
 
+/* ------------学生ラウンジボタン専用--------- */
+.btn-custom-purple {
+  background-color: #b28dff;
+  color: white;
+  border-bottom: 5px solid #7d57c9;
+  transition: all 0.2s ease;
+}
+
+.btn-custom-purple:hover {
+  background-color: #9a73e0;
+  margin-top: 3px;
+  border-bottom: 2px solid #7d57c9;
+  color: white;
+}
+
+.btn-radius {
+  border-radius: 100vh;
+}
+
+.btn-cubic {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+}
+
 /* ------------新しいレビュー用のスター--------- */
 .star5_rating {
     position: relative;
