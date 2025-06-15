@@ -183,7 +183,7 @@ class SearchView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['post_list'] = self.model.objects.all().order_by('-created_at')[:5]
+        context['post_list'] = self.model.objects.exclude(thread_id=6291).order_by('-created_at')[:5]
         
         # Review
         review_list = Review.objects.all().select_related('thread').order_by('-created_at')[:3]
@@ -209,7 +209,7 @@ class NewQuestionsView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['post_list'] = self.model.objects.all().order_by('-created_at')[:40]
+        context['post_list'] = self.model.objects.exclude(thread_id=6291).order_by('-created_at')[:40]
         return context
 
 class GetAppView(TemplateView):
