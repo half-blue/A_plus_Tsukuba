@@ -1,5 +1,3 @@
-version: '3.8'
- 
 # docker-compose.override.yml for M1 Macs
 # if you use M1 Macs, you need to use this file.
 # Please rename this file to docker-compose.override.yml
