@@ -1,5 +1,3 @@
-version: '3.8'
- 
 services:
  my_sql:
    platform: linux/amd64

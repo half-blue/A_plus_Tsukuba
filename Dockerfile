@@ -2,7 +2,7 @@
 
 # Download python image
 # Python version is same as the production.
-FROM python:3.8.10-buster
+FROM python:3.8.20-bullseye
 
 # Cast a spell
 ENV PYTHONUNBUFFERED 1
@@ -14,12 +14,8 @@ RUN apt-get -y install default-mysql-client
 RUN mkdir /a_plus_tsukuba
 
 # Install poerty
-ENV POETRY_HOME=/opt/poetry
-RUN curl -sSL https://install.python-poetry.org | python - && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
-    # venv is not used in the container
+RUN pip install poetry==1.8.2
+RUN poetry config virtualenvs.create false
 
 # Set working dir
 WORKDIR /a_plus_tsukuba
