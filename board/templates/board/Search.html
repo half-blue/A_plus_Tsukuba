@@ -228,6 +228,34 @@
             </span>
             <input v-on:input="inputEvent" type="text" class="form-control" placeholder="科目名・科目番号・学類などを入力してください。">
           </div>
+          <div id="termination_notice" class="container my-3" v-show="!query">
+        <div id="termination_notice" class="container my-3" v-show="!query">
+        <div class="accordion" id="accordionTermination">
+          <div class="accordion-item border-warning">
+            <h2 class="accordion-header" id="headingTermination">
+              <button class="accordion-button collapsed bg-warning-subtle fw-bold" 
+                      type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapseTermination" 
+                      aria-expanded="false" aria-controls="collapseTermination">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-exclamation-triangle flex-shrink-0 me-2" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M7.938 2.016a.13.13 0 0 1 .125 0l6.857 11.856c.03.053.03.119 0 .172a.145.145 0 0 1-.125.064H1.205a.145.145 0 0 1-.125-.064.196.196 0 0 1 0-.172L7.938 2.016zM8 4.58a.75.75 0 0 0-.75.75v3.5a.75.75 0 1 0 1.5 0v-3.5A.75.75 0 0 0 8 4.58zm0 6.9a.905.905 0 1 0 0 1.81.905.905 0 0 0 0-1.81z"/>
+                </svg>
+                【重要】A+つくば 近日中サービス終了のお知らせ
+              </button>
+            </h2>
+            <div id="collapseTermination" class="accordion-collapse collapse" 
+                aria-labelledby="headingTermination" 
+                data-bs-parent="#accordionTermination">
+              <div class="accordion-body text-center">
+                <img src="{% static 'board/service_termination_aplus_tsukuba.jpg' %}" 
+                    alt="A+つくば サービス終了の詳細説明" 
+                    class="img-fluid rounded mx-auto d-block" 
+                    style="max-width: 100%;">
+              </div>
+            </div>
+          </div>
+        </div>
           <div v-show="!query" class="text-center" style="margin-bottom: 15px; margin-top: 15px;">
             <!-- 履修している講義スレッドに参加して、
             <br class="mobile-only">
