@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 静的ファイルを Django (gunicorn) から配信する。Cloud Run には別の Web サーバーがないため。
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -121,6 +123,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# collectstatic で圧縮版 (gzip) も作り、WhiteNoise から配信する。
+# ファイル名にハッシュを付ける Manifest 系は、テンプレートが存在しないファイルを参照すると 500 になるので使わない。
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # added
 # STATICFILES_DIRS = (
@@ -137,6 +142,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATABASES = {
     'default': env.db(),
+}
+
+# HTTPS を終端するプロキシ (Cloud Run など) の後ろで動かすときの設定。
+# 既定値はローカル (docker compose) での動作を変えない値にしてあり、本番では環境変数で有効にする。
+if env.bool('USE_X_FORWARDED_PROTO', default=False):
+    # Cloud Run はアプリへ HTTP で転送し、元のスキームを X-Forwarded-Proto で渡す
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', default=False)
+CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', default=False)
+
+# ログを標準エラー出力に出す (Cloud Run では Cloud Logging に送られる)。
+# Django の既定では DEBUG=False のときエラーが console に出ず、500 の原因を追えないため。
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': env('DJANGO_LOG_LEVEL', default='INFO'),
+            'propagate': False,
+        },
+    },
 }
 
 # bootstrap5を使用するための設定
