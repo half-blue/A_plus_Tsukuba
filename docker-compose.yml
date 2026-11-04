@@ -23,9 +23,7 @@ services:
     - aplus-network
      
  web:
-    build:
-      context: .
-      target: dev # Dockerfile の dev ステージ (本番用の prod ステージではない)
+    build: .
     container_name: a_plus_tsukuba-web
     ports:
       - 8000:8000

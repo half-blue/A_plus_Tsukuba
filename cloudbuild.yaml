@@ -1,13 +1,3 @@
-# main ブランチへの push で、Cloud Build トリガーから実行される。
-# トリガーと、置換変数 (_REGION など) の値は aplus-infra (aplus-gcp/cloudbuild.tf) の Terraform で管理している。
-#
-#   _REGION        : asia-northeast1
-#   _REPOSITORY    : Artifact Registry のリポジトリ名
-#   _SERVICE       : Cloud Run サービス名 (イメージ名にも使う)
-#   _MIGRATE_JOB   : マイグレーション用の Cloud Run Job 名
-#   _RUN_SA_EMAIL  : Cloud Run サービスの実行 SA
-#
-# Cloud Run のサービス・ジョブの設定 (環境変数、Secret、スケーリングなど) は Terraform 側にあり、ここではイメージだけを差し替える。
 steps:
   - id: build
     name: gcr.io/cloud-builders/docker
@@ -25,30 +15,6 @@ steps:
       - --all-tags
       - $_REGION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_SERVICE
 
-  # デプロイの前に、新しいイメージで本番 DB のマイグレーションを流す。失敗したらデプロイしない。
-  - id: update-migrate-job
-    name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    entrypoint: gcloud
-    args:
-      - run
-      - jobs
-      - update
-      - $_MIGRATE_JOB
-      - --image=$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_SERVICE:$SHORT_SHA
-      - --region=$_REGION
-      - --quiet
-
-  - id: migrate
-    name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    entrypoint: gcloud
-    args:
-      - run
-      - jobs
-      - execute
-      - $_MIGRATE_JOB
-      - --region=$_REGION
-      - --wait
-
   - id: deploy
     name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
@@ -61,10 +27,7 @@ steps:
       - --service-account=$_RUN_SA_EMAIL
       - --quiet
 
-timeout: 1200s
-
 options:
-  # トリガーに専用の SA を指定しているので、ログは Cloud Logging だけに出す
   logging: CLOUD_LOGGING_ONLY
 
 images:
