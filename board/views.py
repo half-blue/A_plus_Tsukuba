@@ -197,7 +197,7 @@ class SearchView(ListView):
         context["review_list"] = review_list
 
         # UserAgent
-        ua = self.request.META['HTTP_USER_AGENT']
+        ua = self.request.META.get('HTTP_USER_AGENT', '')
         context["is_flutter_app"] =  (ua == "A+Tsukuba-flutter-App")
 
         return context
