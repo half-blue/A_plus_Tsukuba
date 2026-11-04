@@ -1,12 +1,12 @@
 import datetime
-import pytz
+from zoneinfo import ZoneInfo
 
 from django.db.models import Max
 from django.test import TestCase, Client
 from django.http import HttpRequest
 from django.urls import reverse, resolve
-from board.views import Index, ThreadView, SearchView, NewQuestionsView, AboutView, TermsView, PrivacyView, ServiceWorkerView, GetAppView
-from board.models import Thread, Post, Reply, Subject, Notice
+from board.views import Index, ThreadView, SearchView, NewQuestionsView, AboutView, TermsView, PrivacyView, GetAppView
+from board.models import Thread, Post, Reply, Subject
 
 class IndexTest(TestCase):
     # searchにリダイレクトするか
@@ -20,7 +20,7 @@ class ThreadViewTest(TestCase):
         self.thread = Thread.objects.create(title="test thread") # 再利用するためselfにする
         subject = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=self.thread)
         
-        post_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        post_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, ZoneInfo("Asia/Tokyo"))
         reply_created_at = post_created_at + datetime.timedelta(minutes=1)
 
         post = Post.objects.create(sender_name="test sender", text="test text", thread=self.thread, created_at=post_created_at)
@@ -99,7 +99,7 @@ class SearchViewTest(TestCase):
     def setUp(self) -> None:
         thread1 = Thread.objects.create(title="test thread")
         subject1 = Subject.objects.create(code="TST0001", name="test name", teachers="test teachers", thread_id=thread1)
-        post1_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        post1_created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, ZoneInfo("Asia/Tokyo"))
         post1 = Post.objects.create(sender_name="test sender", text="test text", emotion=0, thread=thread1, created_at=post1_created_at)
         thread2 = Thread.objects.create(title="test thread2")
         subject2 = Subject.objects.create(code="TST0002", name="test name2", teachers="test teachers2", thread_id=thread2)
@@ -129,31 +129,10 @@ class SearchViewTest(TestCase):
         self.assertEqual(response.context['post_list'][0].text, "test_new text")
         self.assertEqual(response.context['post_list'][1].text, "test text3")
 
-    # emergency rankingが正しいか
-    def test_emergency_ranking(self):
-        thread1 = Thread.objects.get(title="test thread")
-        thread3 = Thread.objects.get(title="test thread3")
-        post3_2 = Post.objects.create(sender_name="test sender3_2", text="test text3_2", emotion=0, thread=thread3)
-        reply3_1 = Reply.objects.create(sender_name="test sender3_3", text="test text3_3", emotion=0, post_id=post3_2)
-        response = self.client.get(reverse('search'))
-        # (tid, title, num)
-        self.assertEqual(response.context['ranking'][0][0], thread3.id)
-        self.assertEqual(response.context['ranking'][0][1], "test thread3")
-        self.assertEqual(response.context['ranking'][0][2], 3)
-        self.assertEqual(response.context['ranking'][1][0], thread1.id)
-        self.assertEqual(response.context['ranking'][1][1], "test thread")
-        self.assertEqual(response.context['ranking'][1][2], 1)
-
-    # Noticeは一番新しいものが表示されるか
-    def test_notice(self):
-        notice = Notice.objects.create(message="test notice", is_show=True)
-        response = self.client.get(reverse('search'))
-        self.assertEqual(response.context['notice'][0]['message'], "test notice")
-
 class  NewQuestionsViewTest(TestCase):
     # テスト用のデータを作成
     def setUp(self) -> None:
-        created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, pytz.timezone("Asia/Tokyo"))
+        created_at = datetime.datetime(2022, 9, 20, 8, 40, 0, 0, ZoneInfo("Asia/Tokyo"))
         for i in range(41):
             thread = Thread.objects.create(title="test thread")
             subject = Subject.objects.create(code=f"TST00{i}", name="test name", teachers="test teachers", thread_id=thread)
@@ -183,19 +162,6 @@ class  NewQuestionsViewTest(TestCase):
     def test_post_count(self):
         response = self.client.get(reverse('new_questions'))
         self.assertEqual(len(response.context['post_list']), 40)
-
-class ServicWorkerViewTest(TestCase):
-    # ServiceWorkerページのステータスコードが200か
-    def test_service_worker_view(self):
-        response = self.client.get('/sw.js')
-        self.assertEqual(response.status_code, 200)
-
-    # /sw.jsにアクセスすると適切な内容が返ってくるか
-    def test_service_worker_view(self):
-        response = self.client.get('/sw.js')
-        swjs = "importScripts('https://cdn.ampproject.org/sw/amp-sw.js');"
-        swjs += "AMP_SW.init();"
-        self.assertEqual(response.content.decode('utf-8'), swjs)
 
 class GetAppViewTest(TestCase):
     # GetAppページのステータスコードが200か

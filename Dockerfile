@@ -1,11 +1,11 @@
 # Dockerfile for A_plus_tsukuba service container
 
 # Download python image
-# Python version is same as the production.
-FROM python:3.8.20-bullseye
+# Python version is same as the production (half-blue/aplus-web-v1).
+FROM python:3.12-bookworm
 
 # Cast a spell
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # MySQL Connector
 RUN apt-get update
@@ -14,7 +14,7 @@ RUN apt-get -y install default-mysql-client
 RUN mkdir /a_plus_tsukuba
 
 # Install poerty
-RUN pip install poetry==1.8.2
+RUN pip install poetry==1.8.5
 RUN poetry config virtualenvs.create false
 
 # Set working dir

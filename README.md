@@ -20,6 +20,33 @@ A+つくばは、筑波大学情報学群が開講する
 
 公式Twitter(現：X)：https://x.com/aplus_tsukuba
 
+## 開発環境
+
+Python 3.12・Django 5.2 (LTS)・MySQL 8.4 で動かします (`docker compose up -d --build`)。
+
+### Python 3.8・Django 3.2 の環境から移るとき
+
+ローカルの DB を MariaDB 10.0 から MySQL 8.4 に変えたので、既存の DB のボリュームはそのままでは使えません。
+手元のデータは消えるので、要るものは先に退避してください。
+
+```bash
+docker compose down -v
+```
+
+```bash
+docker compose up -d --build
+```
+
+```bash
+docker exec a_plus_tsukuba-web python manage.py makemigrations board
+```
+
+```bash
+docker exec a_plus_tsukuba-web python manage.py migrate
+```
+
+FCM サーバー (aplus_mobile_fcm_server) も手元で動かしている場合は、その DB (`vhoi5_aplus_mobile_fcm_server`) も作り直しになります。
+
 ## ライセンス等
 プロジェクトに含まれるファイルの内`kdb.json`は
 [Make-IT-TSUKUBA](https://github.com/Make-IT-TSUKUBA)
