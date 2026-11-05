@@ -1,7 +1,7 @@
 services:
  my_sql:
    platform: linux/amd64
-   image: mariadb:10.0.33 # Same as ConoHa DB Server
+   image: mysql:8.4 # 本番 (Cloud SQL for MySQL 8.4) と同じ。Django 5.2 は MariaDB 10.0 に対応していない
    container_name: a_plus_tsukuba-db
    environment:
      MYSQL_PORT: 3306
@@ -10,10 +10,9 @@ services:
      TZ: Asia/Tokyo  
    ports:
      - 3307:3306 # To avoid port conflict, use 3307.
-   # 文字コード設定とsql_modeをconohaに合わせる 
-   # ConoHa DBサーバーではデータベース権限しかもらえない
-   # utf8mb4とsql_modeの設定は.env側（django側＝セッションスコープ変数）で行うことで権限不足を回避する
-   command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --sql_mode=""
+   # 文字コードとsql_modeを本番 (ConoHa から移したデータ) に合わせる
+   # utf8mb4とsql_modeの設定は.env側（django側＝セッションスコープ変数）で行う
+   command: mysqld --character-set-server=utf8mb3 --collation-server=utf8mb3_general_ci --sql_mode=""
    volumes:
      - data-volume:/var/lib/mysql
    healthcheck:
