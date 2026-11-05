@@ -32,6 +32,10 @@ DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
+# Host ヘッダーと違うオリジンから POST を受けるとき (リバースプロキシが Host を書き換える場合など) に、そのオリジンを入れる。
+# 例: CSRF_TRUSTED_ORIGINS=https://maint.example.com (カンマ区切り)。未設定なら空
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+
 # Application definition
 
 INSTALLED_APPS = [
