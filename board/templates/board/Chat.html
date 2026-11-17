@@ -13,6 +13,12 @@
   <meta property="og:title" content="{{ sub_title }} | A+つくば" />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary" />
+  {% if recaptcha_site_key %}
+  <!-- 投稿を bot から守る reCAPTCHA (board/static/board/recaptcha.js、board/recaptcha.py)。
+       Vue のテンプレートの外 (head) に置く (Vue は mount 先の中の script を取り除くため) -->
+  {{ recaptcha_site_key|json_script:"recaptcha-site-key" }}
+  <script src="https://www.google.com/recaptcha/enterprise.js?render={{ recaptcha_site_key|urlencode }}" defer></script>
+  {% endif %}
 </head>
 <body class="bg-light">
   {% include 'chat_modals.html' %}
@@ -32,6 +38,7 @@
 
   {% include 'load_javascript.html' %}
   <script src="{% static 'board/col7.js' %}"></script>
+  <script src="{% static 'board/recaptcha.js' %}"></script>
   <script src="{% static 'board/send.js' %}"></script>
   <script src="{% static 'board/share.js' %}"></script>
   <script src="{% static 'board/bookmark_btn.js' %}"></script>

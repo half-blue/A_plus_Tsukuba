@@ -61,6 +61,10 @@ class Post(models.Model):
     thread  = models.ForeignKey(Thread, on_delete=models.CASCADE)
     emotion = models.IntegerField(choices=EMOTION, default=0)
     allow_tweet = models.BooleanField(verbose_name="ツイートする", default=True)
+    # 投稿したときの reCAPTCHA の点数 (0.0 から 1.0。低いほど bot らしい。board/recaptcha.py)。
+    # 評価できなかった投稿 (reCAPTCHA を使っていない、トークンがない・正しくない、評価の API を呼べない) と、これより前の投稿は空。
+    # サーバーだけが入れる (API・フォームからは書けない)
+    recaptcha_score = models.FloatField(verbose_name='点数 (reCAPTCHA)', null=True, blank=True, editable=False)
 
     def __str__(self):
         return str(self.post_id)
@@ -102,6 +106,10 @@ class Reply(models.Model):
     text = models.TextField(verbose_name='本文', blank=False, max_length=500)
     created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
     emotion = models.IntegerField(choices=EMOTION, default=0)
+    # 投稿したときの reCAPTCHA の点数 (0.0 から 1.0。低いほど bot らしい。board/recaptcha.py)。
+    # 評価できなかった投稿 (reCAPTCHA を使っていない、トークンがない・正しくない、評価の API を呼べない) と、これより前の投稿は空。
+    # サーバーだけが入れる (API・フォームからは書けない)
+    recaptcha_score = models.FloatField(verbose_name='点数 (reCAPTCHA)', null=True, blank=True, editable=False)
 
     def __str__(self):
         return str(self.reply_id)
@@ -136,6 +144,10 @@ class Review(models.Model):
     comment = models.TextField(verbose_name='コメント', blank=True, max_length=200)
     tags = models.ManyToManyField(Tag, verbose_name='タグ', blank=True)
     created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now)
+    # 投稿したときの reCAPTCHA の点数 (0.0 から 1.0。低いほど bot らしい。board/recaptcha.py)。
+    # 評価できなかった投稿 (reCAPTCHA を使っていない、トークンがない・正しくない、評価の API を呼べない) と、これより前の投稿は空。
+    # サーバーだけが入れる (API・フォームからは書けない)
+    recaptcha_score = models.FloatField(verbose_name='点数 (reCAPTCHA)', null=True, blank=True, editable=False)
 
     def __str__(self):
         return self.thread.title + "のレビュー"

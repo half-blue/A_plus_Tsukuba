@@ -26,7 +26,11 @@
                 </div>
             </div>
 
-            <p class="textbook-p fs-textbook">
+            {% comment %}
+            #textbooks_app の中は Vue がテンプレートとしてコンパイルするので、教科書情報に区切り文字 [[ ]] が
+            あると式として実行される。サーバーで描画したデータは v-pre で対象から外す
+            {% endcomment %}
+            <p class="textbook-p fs-textbook" v-pre>
                 {{ textbooks | safe }}
             </p>
 

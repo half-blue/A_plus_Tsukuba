@@ -49,6 +49,10 @@
             <div class="modal-body modal-precautions">
                 
                 {% csrf_token %}
+                {% if recaptcha_site_key %}
+                <!-- 送信の直前に reCAPTCHA のトークンを入れる (board/static/board/recaptcha.js) -->
+                <input type="hidden" name="recaptcha_token" value="">
+                {% endif %}
                 {{ form.non_field_errors }}
                 <span class="h5">総合評価</span> <span class="small">（その授業をどれぐらい後輩におすすめしたいか）</span>
                     {{form.ratings_overall|add_class:"form-select mt-1"}}
@@ -82,7 +86,14 @@
 
                     <label class="form-label mt-2" for="{{ form.tags.auto_id }}">タグを選択</label><br>
                     {{ form.tags }} <!-- use custom widgets -->
-                    
+
+                    <p class="small text-secondary mt-3 mb-0">
+                        投稿することにより、<a href="/terms/" target="_blank" rel="noopener">利用規約</a>に同意したものとみなされます。
+                        {% if recaptcha_site_key %}
+                        <br>このサイトは reCAPTCHA で保護されており、Google の<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>と<a href="https://policies.google.com/terms" target="_blank" rel="noopener">利用規約</a>が適用されます。
+                        {% endif %}
+                    </p>
+
             </div>
             <div id="review_Form_post_button" class="modal-footer">
                 <input class="btn btn-primary" v-on:click="onPostClick" type="submit" value="投稿"></input>

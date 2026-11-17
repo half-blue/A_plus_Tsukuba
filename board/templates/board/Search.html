@@ -328,7 +328,11 @@
                       <a href="{% url 'new_questions' %}" class="btn btn-outline-secondary btn-sm">もっと見る</a>
                     </span>
                   </div>
-                  <ol class="list-group list-group-flush">
+                  {% comment %}
+                  #search_app の中は Vue がテンプレートとしてコンパイルするので、投稿本文やスレッド名に
+                  区切り文字 [[ ]] があると式として実行される。サーバーで描画したデータは v-pre で対象から外す
+                  {% endcomment %}
+                  <ol class="list-group list-group-flush" v-pre>
                     {% for newpost in post_list %}
                     <li class="list-group-item">
                       <span style="overflow-wrap: anywhere;">
@@ -350,7 +354,8 @@
                     <div class="d-flex justify-content-between">
                       <h5 class="card-title">新しいレビュー🤗</h5>
                     </div>
-                    <ol class="list-group list-group-flush">
+                    {# レビューのコメントも同じ理由で v-pre を付ける #}
+                    <ol class="list-group list-group-flush" v-pre>
                       {% for review in review_list %}
                       <li class="list-group-item">
                         <a href="{% url 'threads' review.thread_id %}">

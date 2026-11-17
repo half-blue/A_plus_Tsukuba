@@ -3,14 +3,18 @@ from .models import Post, Thread, Reply, Subject, Notice, Review, Tag, Textbooks
 # Register your models here.
 
 class PostModelAdmin(admin.ModelAdmin):
-    list_display = ('sender_name','emotion','created_at')
+    list_display = ('sender_name','emotion','created_at','recaptcha_score')
     ordering = ('-created_at',)
     list_filter = ('emotion',)
+    # reCAPTCHA の点数 (board/recaptcha.py) は見るだけで、書き換えない
+    readonly_fields = ('recaptcha_score',)
 
 class ReplyModelAdmin(admin.ModelAdmin):
-    list_display = ('sender_name','emotion','created_at')
+    list_display = ('sender_name','emotion','created_at','recaptcha_score')
     ordering = ('-created_at',)
     list_filter = ('emotion',)
+    # reCAPTCHA の点数 (board/recaptcha.py) は見るだけで、書き換えない
+    readonly_fields = ('recaptcha_score',)
 
 @admin.action(description="選択したthreadのレビュー機能を無効化する")
 def disable_review(modeladmin, request, queryset):
@@ -33,9 +37,11 @@ class SubjectModelAdmin(admin.ModelAdmin):
     search_fields = ['code', 'name', 'teachers']
 
 class ReviewModelAdmin(admin.ModelAdmin):
-    list_display = ('thread', 'ratings_overall', 'ratings_easiness', 'ratings_content', 'comment','created_at')
+    list_display = ('thread', 'ratings_overall', 'ratings_easiness', 'ratings_content', 'comment','created_at','recaptcha_score')
     search_fields = ('thread__title', 'comment')
     filter_horizontal = ('tags',)
+    # reCAPTCHA の点数 (board/recaptcha.py) は見るだけで、書き換えない
+    readonly_fields = ('recaptcha_score',)
 
 class TagModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')

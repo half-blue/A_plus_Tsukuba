@@ -1,9 +1,10 @@
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound, MethodNotAllowed
+from rest_framework.exceptions import NotFound, MethodNotAllowed, PermissionDenied
 from .serializers import *
 from .models import Post, Thread, Reply, Review
+from . import recaptcha
 from django.db.models import Avg
 from django.db.models import Q
 
@@ -28,13 +29,28 @@ class search_subjects(ListAPIView):
         q :str = self.request.query_params.get("q", "")
         return Subject.objects.filter(Q(name__icontains = q) | Q(code__startswith = q) | Q(schools__icontains = q) | Q(colleges__icontains = q)).order_by('code')[:500]
 
-class post_subthreads(ListCreateAPIView):
+class RecaptchaProtectedCreateMixin:
+    """入力が正しい投稿だけを reCAPTCHA で確かめ、点数と一緒に保存する (board/recaptcha.py)。
+    入力の誤りで断る投稿には評価を作らない (評価の数だけ課金されるため)。
+    点数 (recaptcha_score) はシリアライザーの fields に入れていないので、クライアントからは書けない"""
+    recaptcha_action = None
+
+    def perform_create(self, serializer):
+        token = recaptcha.token_from(self.request.data)
+        verdict = recaptcha.verify(self.request, token, self.recaptcha_action)
+        if not verdict.allowed:
+            raise PermissionDenied(recaptcha.REJECTED_MESSAGE)
+        serializer.save(recaptcha_score=verdict.score)
+
+class post_subthreads(RecaptchaProtectedCreateMixin, ListCreateAPIView):
     serializer_class = PostPostSerializer
     queryset = Post.objects.all()
+    recaptcha_action = recaptcha.ACTION_POST_QUESTION
 
-class post_replies(ListCreateAPIView):
+class post_replies(RecaptchaProtectedCreateMixin, ListCreateAPIView):
     queryset = Reply.objects.all()
     serializer_class = PostReplySerializer
+    recaptcha_action = recaptcha.ACTION_POST_REPLY
 
 class get_subject_scores(APIView):
 

@@ -73,7 +73,10 @@
         <input type="button" class="form-control btn btn-primary" value="投稿する" data-bs-dismiss="offcanvas"
           v-on:click="onPostButtonClick" />
           <small class="text-secondary">
-            投稿前に<a href="/terms/">利用規約</a>をご確認ください。
+            投稿することにより、<a href="/terms/" target="_blank" rel="noopener">利用規約</a>に同意したものとみなされます。
+            {% if recaptcha_site_key %}
+            <br>このサイトは reCAPTCHA で保護されており、Google の<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>と<a href="https://policies.google.com/terms" target="_blank" rel="noopener">利用規約</a>が適用されます。
+            {% endif %}
           </small>
       </div>
     </div>
