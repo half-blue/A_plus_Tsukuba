@@ -36,6 +36,22 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 # 例: CSRF_TRUSTED_ORIGINS=https://maint.example.com (カンマ区切り)。未設定なら空
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
+# 新着の投稿・返信・レビューを知らせる、モデレーション用の Discord の Webhook の URL (board/moderation.py)。
+# 未設定なら知らせない。URL を知っていれば誰でもそのチャンネルに書き込めるので、リポジトリには書かない
+DISCORD_MODERATION_WEBHOOK_URL = env.str('DISCORD_MODERATION_WEBHOOK_URL', default='')
+# その通知に載せる管理画面のリンクの先頭 (例: https://www.example.com)。未設定ならパス (/kanri/...) だけを載せる
+DISCORD_MODERATION_ADMIN_BASE_URL = env.str('DISCORD_MODERATION_ADMIN_BASE_URL', default='')
+
+# 質問・返信・レビューの投稿を reCAPTCHA (score 型の鍵) で bot から守る (board/recaptcha.py)。
+# 鍵 (RECAPTCHA_SITE_KEY。ページに埋め込む公開の値) と鍵のある Google Cloud プロジェクトの ID (RECAPTCHA_PROJECT_ID) の
+# どちらかが未設定なら使わない
+RECAPTCHA_SITE_KEY = env.str('RECAPTCHA_SITE_KEY', default='')
+RECAPTCHA_PROJECT_ID = env.str('RECAPTCHA_PROJECT_ID', default='')
+# log: 評価して記録するだけで断らない。enforce: しきい値未満などの投稿を断る
+RECAPTCHA_MODE = env.str('RECAPTCHA_MODE', default='log')
+# enforce のとき、点数 (0.0 から 1.0。低いほど bot らしい) がこれ未満の投稿を断る
+RECAPTCHA_SCORE_THRESHOLD = env.float('RECAPTCHA_SCORE_THRESHOLD', default=0.5)
+
 # Application definition
 
 INSTALLED_APPS = [

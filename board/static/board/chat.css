@@ -190,3 +190,9 @@
 .fs-textbook {
     font-size: 0.8em;
 }
+
+/* reCAPTCHA のバッジ (右下に固定で出る) は、右下の「質問する」ボタンや画面の下に固定しているフッターに重なるので隠す。
+   代わりに、reCAPTCHA を使っていることを投稿フォームに書いている (send.html、chat_modals.html。Google が認める書き方) */
+.grecaptcha-badge {
+  visibility: hidden;
+}

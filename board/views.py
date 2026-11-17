@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormMixin
 from .forms import ReviewForm
+from . import recaptcha
 from django.contrib import messages
 from django.db.models import Count, Avg
 from django.urls import reverse_lazy
@@ -39,6 +40,9 @@ class ThreadView(FormMixin, ListView):
         # スレッド情報
         context['thread_title'] = thread.title
         context['thread_id'] = thread_id
+
+        # 投稿を守る reCAPTCHA の鍵。使わないときは空文字列 (board/recaptcha.py)
+        context['recaptcha_site_key'] = recaptcha.site_key()
 
         # 科目情報
         sub_col = Subject.objects.filter(thread_id = thread_id).values()[0]
@@ -126,10 +130,16 @@ class ThreadView(FormMixin, ListView):
         # リクエスト内容のバリデーションを行う
         self.object_list = self.get_queryset()
         form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
+        if not form.is_valid():
             return self.form_invalid(form)
+        # 入力が正しいレビューだけを reCAPTCHA で確かめる (評価の数だけ課金されるため。board/recaptcha.py)
+        verdict = recaptcha.verify(request, recaptcha.token_from(request.POST), recaptcha.ACTION_POST_REVIEW)
+        if not verdict.allowed:
+            form.add_error(None, recaptcha.REJECTED_MESSAGE)
+            return self.form_invalid(form)
+        # 点数はフォームの fields に入れていないので、利用者からは書けない。ここで入れる
+        form.instance.recaptcha_score = verdict.score
+        return self.form_valid(form)
 
     def form_valid(self, form):
         review = form.save(commit=False)
